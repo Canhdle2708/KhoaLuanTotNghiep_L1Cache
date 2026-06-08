@@ -1,0 +1,42 @@
+[*]
+[*] CASE 6 - Same-line VBUF hazard and RTAB dependencies
+[dumpfile] "/media/sf_cv-hpdcache/rtl/tb/logs/run_unique_set_42_cleanwave.vcd"
+[savefile] "/media/sf_cv-hpdcache/rtl/tb/scripts/gtkwave/wb_case6_vbuf_hazard_rtab.gtkw"
+[timestart] 0
+[size] 1854 1001
+[pos] -1 -1
+*-12.000000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[treeopen] i_top.
+[treeopen] i_top.hpdcache_wrapper.
+[treeopen] i_top.hpdcache_wrapper.i_hpdcache.
+[sst_width] 360
+[signals_width] 650
+[sst_expanded] 1
+[sst_vpaned_height] 520
+@28
+i_top.hpdcache_wrapper.i_hpdcache.clk_i
+i_top.hpdcache_wrapper.i_hpdcache.rst_ni
+i_top.hpdcache_wrapper.i_hpdcache.VBUF_REPLACEMENT_OWNER_EN
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_check_hit
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_vbuf_check_hit_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_vbuf_fwd_hit_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_rtab_vbuf_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_rtab_mshr_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rtab_alloc
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rtab_deps.vbuf_hit
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rtab_deps.mshr_hit
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rtab_check
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rtab_check_hit
+i_top.hpdcache_wrapper.i_hpdcache.miss_mshr_check
+i_top.hpdcache_wrapper.i_hpdcache.miss_mshr_hit
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_mshr_hit_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st2_mshr_alloc_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_q
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_writeback_done
+i_top.hpdcache_wrapper.i_hpdcache.refill_updt_rtab
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_captured_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_writeback_done_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.miss_mshr_check_nline[50:0]
+[pattern_trace] 1
+[pattern_trace] 0

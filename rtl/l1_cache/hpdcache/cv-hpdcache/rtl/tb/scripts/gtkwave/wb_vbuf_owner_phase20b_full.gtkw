@@ -1,0 +1,317 @@
+[*]
+[*] GTKWave save file for HPDCache write-back + VBUF owner + Phase 20B forwarding.
+[*] Dump used for the clean PASS run:
+[*]   make run SEQUENCE=unique_set LOG_LEVEL=1 NTRANSACTIONS=500 SEED=42 TRACE=1 LOG_SUFFIX=_cleanwave
+[*]
+[dumpfile] "/media/sf_cv-hpdcache/rtl/tb/logs/run_unique_set_42_cleanwave.vcd"
+[savefile] "/media/sf_cv-hpdcache/rtl/tb/scripts/gtkwave/wb_vbuf_owner_phase20b_full.gtkw"
+[timestart] 0
+[size] 1854 1001
+[pos] -1 -1
+*-12.000000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[treeopen] i_top.
+[treeopen] i_top.hpdcache_wrapper.
+[treeopen] i_top.hpdcache_wrapper.i_hpdcache.
+[treeopen] i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.
+[treeopen] i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.
+[treeopen] i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.
+[treeopen] i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.
+[sst_width] 360
+[signals_width] 650
+[sst_expanded] 1
+[sst_vpaned_height] 520
+@28
+i_top.hpdcache_wrapper.i_hpdcache.clk_i
+i_top.hpdcache_wrapper.i_hpdcache.rst_ni
+i_top.hpdcache_wrapper.i_hpdcache.VBUF_REPLACEMENT_OWNER_EN
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.read_enable_i
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.wb_enable_i
+@22
+i_top.hpdcache_wrapper.i_hpdcache.HPDCACHE_VBUF_WRITE_ID[3:0]
+@200
+-
+@c00200
+-GLOBAL - request/response/admission overview
+@28
+i_top.hpdcache_wrapper.core_req_valid[0]
+i_top.hpdcache_wrapper.core_req_ready[0]
+i_top.hpdcache_wrapper.core_rsp_valid[0]
+i_top.hpdcache_wrapper.i_hpdcache.core_req_valid_i[0]
+i_top.hpdcache_wrapper.i_hpdcache.core_req_ready_o[0]
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_valid_o[0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.core_req_valid_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.core_req_ready_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.rtab_req_valid_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.rtab_req_ready_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.scrub_req_valid_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.scrub_req_ready_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.refill_req_valid_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.refill_req_ready_o
+@22
+i_top.hpdcache_wrapper.core_req[0].addr_offset[11:0]
+i_top.hpdcache_wrapper.core_req[0].wdata[0][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_o[0].rdata[0][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_o[0].sid[2:0]
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_o[0].tid[5:0]
+@200
+-
+@c00200
+-CASE 1 - WB store hit: cacheable store writes cache, no WBUF, dirty bit follows in ST2
+@28
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_valid_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_store
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_load
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_uncacheable
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.cachedir_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.force_cacheable_store_wb
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_wt_decoded
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_wb_decoded
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_auto_decoded
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_wt
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_wb
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_auto
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_cachedata_write
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_cachedata_write_enable
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_dir_updt_valid_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_dir_updt_wback_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_dir_updt_dirty_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.wbuf_write_o
+@22
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_addr[55:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_word[1:0]
+@200
+-
+@c00200
+-CASE 2 - WB store miss / write-allocate: miss allocates MSHR, refill, replay store marks dirty
+@200
+-2A detect store miss in Stage 1
+@28
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_valid_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_store
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_uncacheable
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.cachedir_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_wb
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.wbuf_write_o
+@22
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_addr[55:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_nline[50:0]
+@200
+-2B allocate MSHR for a true miss
+@28
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_wback_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_dirty_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_need_rsp_q
+i_top.hpdcache_wrapper.i_hpdcache.miss_mshr_alloc
+i_top.hpdcache_wrapper.i_hpdcache.miss_mshr_alloc_ready
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_read_miss_valid
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_read_miss_ready
+@22
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_addr_q[55:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_nline_o[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_tid_q[5:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_sid_q[2:0]
+i_top.hpdcache_wrapper.i_hpdcache.miss_mshr_alloc_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_read_miss.mem_req_addr[63:0]
+@200
+-2C refill request/data/response for allocated miss
+@28
+i_top.hpdcache_wrapper.i_hpdcache.refill_req_valid
+i_top.hpdcache_wrapper.i_hpdcache.refill_req_ready
+i_top.hpdcache_wrapper.i_hpdcache.refill_busy
+i_top.hpdcache_wrapper.i_hpdcache.refill_write_dir
+i_top.hpdcache_wrapper.i_hpdcache.refill_write_data
+i_top.hpdcache_wrapper.i_hpdcache.refill_core_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.refill_updt_rtab
+i_top.hpdcache_wrapper.i_hpdcache.mem_resp_read_miss_valid
+i_top.hpdcache_wrapper.i_hpdcache.mem_resp_read_miss_ready
+@22
+i_top.hpdcache_wrapper.i_hpdcache.refill_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.refill_word[1:0]
+i_top.hpdcache_wrapper.i_hpdcache.refill_data[0][63:0]
+@200
+-2D replayed store writes cache and marks dirty
+@28
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_cachedata_write_enable
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_dir_updt_valid_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_dir_updt_dirty_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.wbuf_write_o
+@200
+-
+@c00200
+-CASE 3 - Dirty replacement owner: VBUF owns dirty victim, flush/MSHR blocked until safe
+@28
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_dir_victim_dirty_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_vbuf_victim_safe_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st2_flush_alloc_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st2_vbuf_alloc_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st2_mshr_alloc_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_rtab_alloc_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rtab_alloc
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_flush_alloc_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_vbuf_alloc_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_q
+i_top.hpdcache_wrapper.i_hpdcache.ctrl_flush_alloc
+i_top.hpdcache_wrapper.i_hpdcache.ctrl_vbuf_alloc
+@22
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_victim_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.ctrl_vbuf_alloc_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.flush_alloc_nline[50:0]
+@200
+-
+@c00200
+-CASE 4 - VBUF active read: request, grant, capture, safe, consume
+@28
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_capture_pending
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_data_read
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_data_read_ready
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.data_read_accept
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.data_read_accept_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.data_vbuf_read_accept
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_capture_done
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_entry_ready
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_safe_to_overwrite
+i_top.hpdcache_wrapper.i_hpdcache.ctrl_vbuf_safe_consume
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_empty
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_full
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_busy
+@22
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.state_q[2:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.beat_count_q[0:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_captured_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_safe_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_data_read_word[1:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_data_read_data[0][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.victim_line_q[0][0][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.victim_line_q[0][1][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.victim_line_q[0][2][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.victim_line_q[0][3][63:0]
+@200
+-
+@c00200
+-CASE 5 - VBUF memory write-back: VBUF writes RAM, flush does not own dirty replacement
+@28
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_vbuf_valid
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_vbuf_ready
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_vbuf_data_valid
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_vbuf_data_ready
+i_top.hpdcache_wrapper.i_hpdcache.mem_resp_write_vbuf_valid
+i_top.hpdcache_wrapper.i_hpdcache.mem_resp_write_vbuf_ready
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.wb_data_fire
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.wb_done_fire
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_writeback_done
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_flush_valid
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_flush_data_valid
+i_top.hpdcache_wrapper.i_hpdcache.mem_resp_write_flush_valid
+i_top.hpdcache_wrapper.i_hpdcache.flush_data_read
+i_top.hpdcache_wrapper.i_hpdcache.flush_ack
+@22
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_vbuf.mem_req_addr[63:0]
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_vbuf_data.mem_req_w_data[255:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_writeback_done_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.flush_ack_nline[50:0]
+@200
+-
+@c00200
+-CASE 6 - Same-line hazards and replay dependencies: VBUF first, then MSHR
+@28
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_check_hit
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_vbuf_check_hit_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_vbuf_fwd_hit_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_rtab_vbuf_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_rtab_mshr_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rtab_alloc
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rtab_deps.vbuf_hit
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rtab_deps.mshr_hit
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rtab_check
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rtab_check_hit
+i_top.hpdcache_wrapper.i_hpdcache.miss_mshr_check
+i_top.hpdcache_wrapper.i_hpdcache.miss_mshr_hit
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_mshr_hit_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st2_mshr_alloc_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_q
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_writeback_done
+i_top.hpdcache_wrapper.i_hpdcache.refill_updt_rtab
+@22
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_captured_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_writeback_done_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.miss_mshr_check_nline[50:0]
+@200
+-
+@c00200
+-CASE 7 - Phase 20B load forwarding from VBUF: no RAM read, no RTAB wait, response from VBUF
+@28
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_valid_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_load
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_store
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_uncacheable
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.cachedir_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_fwd_req
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_fwd_hit
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.fwd_entry_valid
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_vbuf_fwd_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.core_rsp_vbuf_fwd_valid
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_fwd_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.core_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_valid_o[0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rtab_alloc
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_rtab_vbuf_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_rtab_mshr_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st2_mshr_alloc_o
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_read_miss_valid
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_writeback_done
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_vbuf_valid
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_vbuf_data_valid
+@22
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_fwd_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_captured_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_fwd_word[1:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_fwd_data[0][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.core_rsp_vbuf_fwd_data[0][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_o[0].rdata[0][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_o[0].tid[5:0]
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_o[0].sid[2:0]
+@200
+-
+@c00200
+-DATARAM arbitration sanity: one data RAM client at a time
+@28
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.data_req_read_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.data_req_write_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.data_amo_write_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.data_refill_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.data_flush_read_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.data_vbuf_read_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.data_vbuf_read_ready_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.data_vbuf_read_accept
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.data_err_read_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.data_err_write_i
+@22
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.data_way[3:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.data_vbuf_read_word_i[1:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.data_vbuf_read_data_o[0][63:0]
+@200
+-
+@c00200
+-Response mux sanity: identify response source
+@28
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.core_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.core_rsp_vbuf_fwd_valid
+i_top.hpdcache_wrapper.i_hpdcache.refill_core_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.uc_core_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.cmo_core_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_valid_o[0]
+@22
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.core_rsp_vbuf_fwd_data[0][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_o[0].rdata[0][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_o[0].tid[5:0]
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_o[0].sid[2:0]
+@200
+-
+[pattern_trace] 1
+[pattern_trace] 0

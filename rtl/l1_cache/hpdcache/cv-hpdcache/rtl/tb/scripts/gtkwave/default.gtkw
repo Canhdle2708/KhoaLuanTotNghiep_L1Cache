@@ -1,0 +1,191 @@
+[*]
+[*] GTKWave save file for HPDCache write-back + VBUF owner-mode verification
+[*] Read top-to-bottom by case.
+[*]
+[dumpfile] "/media/sf_cv-hpdcache/rtl/tb/logs/run_unique_set_42_owner_full.vcd"
+[savefile] "/media/sf_cv-hpdcache/rtl/tb/scripts/gtkwave/default.gtkw"
+[timestart] 0
+[size] 1854 1001
+[pos] -1 -1
+*-12.000000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[treeopen] i_top.
+[treeopen] i_top.hpdcache_wrapper.
+[treeopen] i_top.hpdcache_wrapper.i_hpdcache.
+[treeopen] i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.
+[treeopen] i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.
+[treeopen] i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.
+[treeopen] i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.
+[sst_width] 360
+[signals_width] 520
+[sst_expanded] 1
+[sst_vpaned_height] 520
+@28
+i_top.hpdcache_wrapper.i_hpdcache.clk_i
+i_top.hpdcache_wrapper.i_hpdcache.rst_ni
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.read_enable_i
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.wb_enable_i
+@200
+-
+@c00200
+-CASE 1 - WB store hit: cacheable store writes cache and sets dirty
+@28
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_valid_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_store
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_load
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_uncacheable
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.cachedir_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.force_cacheable_store_wb
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_wt_decoded
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_wb_decoded
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_auto_decoded
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_wt
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_wb
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_auto
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_cachedata_write_enable
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_dir_updt_dirty_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.wbuf_write_o
+@22
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_nline[50:0]
+@1401200
+-CASE 1 - WB store hit: cacheable store writes cache and sets dirty
+@200
+-
+@c00200
+-CASE 2 - WB store miss / write-allocate: read by phase, match address/nline
+@200
+-2A detect store miss in Stage 1
+@28
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_valid_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_store
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_uncacheable
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.cachedir_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_wb
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.wbuf_write_o
+@22
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_addr[55:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_nline[50:0]
+@200
+-2B allocate MSHR for that miss
+@28
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_wback_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_dirty_q
+@22
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_addr_q[55:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_nline_o[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_sid_q[2:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_tid_q[5:0]
+@200
+-2C refill request/response for an allocated miss
+@28
+i_top.hpdcache_wrapper.i_hpdcache.refill_req_valid
+i_top.hpdcache_wrapper.i_hpdcache.refill_req_ready
+i_top.hpdcache_wrapper.i_hpdcache.refill_write_dir
+i_top.hpdcache_wrapper.i_hpdcache.refill_write_data
+i_top.hpdcache_wrapper.i_hpdcache.refill_core_rsp_valid
+@22
+i_top.hpdcache_wrapper.i_hpdcache.refill_nline[50:0]
+@200
+-2D replayed store writes cache and marks dirty
+@28
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_cachedata_write_enable
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_dir_updt_dirty_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.wbuf_write_o
+@1401200
+-CASE 2 - WB store miss / write-allocate: read by phase, match address/nline
+@200
+-
+@c00200
+-CASE 3 - Dirty replacement owner: VBUF allocs, flush/MSHR blocked until safe
+@28
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_dir_victim_dirty_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_vbuf_victim_safe_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st2_flush_alloc_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st2_vbuf_alloc_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st2_mshr_alloc_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rtab_alloc
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_flush_alloc_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_vbuf_alloc_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_q
+@22
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_victim_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_nline[50:0]
+@1401200
+-CASE 3 - Dirty replacement owner: VBUF allocs, flush/MSHR blocked until safe
+@200
+-
+@c00200
+-CASE 4 - VBUF active read: grant, capture, safe, consume
+@28
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_capture_pending
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_data_read
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_data_read_ready
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.data_read_accept
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.data_vbuf_read_accept
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_capture_done
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_entry_ready
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_safe_to_overwrite
+i_top.hpdcache_wrapper.i_hpdcache.ctrl_vbuf_safe_consume
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_empty
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_full
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_busy
+@22
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_captured_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_safe_nline[50:0]
+@1401200
+-CASE 4 - VBUF active read: grant, capture, safe, consume
+@200
+-
+@c00200
+-CASE 5 - VBUF memory write-back: VBUF writes RAM, flush does not own replacement
+@28
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_vbuf_valid
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_vbuf_ready
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_vbuf_data_valid
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_vbuf_data_ready
+i_top.hpdcache_wrapper.i_hpdcache.mem_resp_write_vbuf_valid
+i_top.hpdcache_wrapper.i_hpdcache.mem_resp_write_vbuf_ready
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_writeback_done
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_flush_valid
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_flush_data_valid
+i_top.hpdcache_wrapper.i_hpdcache.mem_resp_write_flush_valid
+i_top.hpdcache_wrapper.i_hpdcache.flush_data_read
+i_top.hpdcache_wrapper.i_hpdcache.flush_ack
+@22
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_writeback_done_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.flush_ack_nline[50:0]
+@1401200
+-CASE 5 - VBUF memory write-back: VBUF writes RAM, flush does not own replacement
+@200
+-
+@c00200
+-CASE 6 - Same-line VBUF hazard: block refill until VBUF writeback done
+@28
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_check_hit
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_vbuf_check_hit_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_rtab_vbuf_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rtab_alloc
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st2_mshr_alloc_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_q
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_writeback_done
+@22
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_captured_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_writeback_done_nline[50:0]
+@1401200
+-CASE 6 - Same-line VBUF hazard: block refill until VBUF writeback done
+@200
+-
+@c00200
+-Response sanity: core/refill response path
+@28
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.refill_core_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.uc_core_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.cmo_core_rsp_valid
+@22
+i_top.hpdcache_wrapper.i_hpdcache.refill_nline[50:0]
+@1401200
+-Response sanity: core/refill response path
+[pattern_trace] 1
+[pattern_trace] 0

@@ -1,0 +1,44 @@
+[*]
+[*] CASE 1 - WB store hit: cacheable store writes cache, no WBUF, dirty follows in ST2
+[dumpfile] "/media/sf_cv-hpdcache/rtl/tb/logs/run_unique_set_42_cleanwave.vcd"
+[savefile] "/media/sf_cv-hpdcache/rtl/tb/scripts/gtkwave/wb_case1_store_hit.gtkw"
+[timestart] 0
+[size] 1854 1001
+[pos] -1 -1
+*-12.000000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[treeopen] i_top.
+[treeopen] i_top.hpdcache_wrapper.
+[treeopen] i_top.hpdcache_wrapper.i_hpdcache.
+[sst_width] 360
+[signals_width] 650
+[sst_expanded] 1
+[sst_vpaned_height] 520
+@28
+i_top.hpdcache_wrapper.i_hpdcache.clk_i
+i_top.hpdcache_wrapper.i_hpdcache.rst_ni
+i_top.hpdcache_wrapper.i_hpdcache.VBUF_REPLACEMENT_OWNER_EN
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.read_enable_i
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.wb_enable_i
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_valid_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_store
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_load
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_uncacheable
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.cachedir_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.force_cacheable_store_wb
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_wt_decoded
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_wb_decoded
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_auto_decoded
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_wt
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_wb
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_auto
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_cachedata_write
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_cachedata_write_enable
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_dir_updt_valid_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_dir_updt_wback_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_dir_updt_dirty_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.wbuf_write_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_addr[55:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_word[1:0]
+[pattern_trace] 1
+[pattern_trace] 0

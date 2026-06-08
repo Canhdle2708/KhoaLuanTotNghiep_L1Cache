@@ -1,0 +1,44 @@
+[*]
+[*] CASE 4 - VBUF active read: grant, capture, safe_to_overwrite, safe consume
+[dumpfile] "/media/sf_cv-hpdcache/rtl/tb/logs/run_unique_set_42_cleanwave.vcd"
+[savefile] "/media/sf_cv-hpdcache/rtl/tb/scripts/gtkwave/wb_case4_vbuf_capture_safe.gtkw"
+[timestart] 0
+[size] 1854 1001
+[pos] -1 -1
+*-12.000000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[treeopen] i_top.
+[treeopen] i_top.hpdcache_wrapper.
+[treeopen] i_top.hpdcache_wrapper.i_hpdcache.
+[sst_width] 360
+[signals_width] 650
+[sst_expanded] 1
+[sst_vpaned_height] 520
+@28
+i_top.hpdcache_wrapper.i_hpdcache.clk_i
+i_top.hpdcache_wrapper.i_hpdcache.rst_ni
+i_top.hpdcache_wrapper.i_hpdcache.VBUF_REPLACEMENT_OWNER_EN
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_capture_pending
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_data_read
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_data_read_ready
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.data_read_accept
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.data_read_accept_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_memctrl_i.data_vbuf_read_accept
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_capture_done
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_entry_ready
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_safe_to_overwrite
+i_top.hpdcache_wrapper.i_hpdcache.ctrl_vbuf_safe_consume
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_empty
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_full
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_busy
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.state_q[2:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.beat_count_q[0:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_captured_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_safe_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_data_read_word[1:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_data_read_data[0][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.victim_line_q[0][0][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.victim_line_q[0][1][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.victim_line_q[0][2][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.victim_line_q[0][3][63:0]
+[pattern_trace] 1
+[pattern_trace] 0

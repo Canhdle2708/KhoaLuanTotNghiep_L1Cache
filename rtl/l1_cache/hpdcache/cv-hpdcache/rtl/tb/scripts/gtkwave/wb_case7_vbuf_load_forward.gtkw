@@ -1,0 +1,52 @@
+[*]
+[*] CASE 7 - Phase 20B load forwarding from VBUF: response from VBUF, no RAM miss read
+[dumpfile] "/media/sf_cv-hpdcache/rtl/tb/logs/run_unique_set_42_cleanwave.vcd"
+[savefile] "/media/sf_cv-hpdcache/rtl/tb/scripts/gtkwave/wb_case7_vbuf_load_forward.gtkw"
+[timestart] 0
+[size] 1854 1001
+[pos] -1 -1
+*-12.000000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[treeopen] i_top.
+[treeopen] i_top.hpdcache_wrapper.
+[treeopen] i_top.hpdcache_wrapper.i_hpdcache.
+[sst_width] 360
+[signals_width] 650
+[sst_expanded] 1
+[sst_vpaned_height] 520
+@28
+i_top.hpdcache_wrapper.i_hpdcache.clk_i
+i_top.hpdcache_wrapper.i_hpdcache.rst_ni
+i_top.hpdcache_wrapper.i_hpdcache.VBUF_REPLACEMENT_OWNER_EN
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_valid_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_load
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_store
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_uncacheable
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.cachedir_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_fwd_req
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_fwd_hit
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_i.fwd_entry_valid
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_vbuf_fwd_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.core_rsp_vbuf_fwd_valid
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_fwd_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.core_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_valid_o[0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_rtab_alloc
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_rtab_vbuf_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st1_rtab_mshr_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.hpdcache_ctrl_pe_i.st2_mshr_alloc_o
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_read_miss_valid
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_writeback_done
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_vbuf_valid
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_write_vbuf_data_valid
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_fwd_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_captured_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_fwd_word[1:0]
+i_top.hpdcache_wrapper.i_hpdcache.vbuf_fwd_data[0][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.core_rsp_vbuf_fwd_data[0][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_o[0].rdata[0][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_o[0].tid[5:0]
+i_top.hpdcache_wrapper.i_hpdcache.core_rsp_o[0].sid[2:0]
+[pattern_trace] 1
+[pattern_trace] 0

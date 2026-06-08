@@ -1,0 +1,56 @@
+[*]
+[*] CASE 2 - WB store miss/write-allocate: MSHR alloc, RAM read, refill, replay store, dirty
+[dumpfile] "/media/sf_cv-hpdcache/rtl/tb/logs/run_unique_set_42_cleanwave.vcd"
+[savefile] "/media/sf_cv-hpdcache/rtl/tb/scripts/gtkwave/wb_case2_store_miss_write_allocate.gtkw"
+[timestart] 0
+[size] 1854 1001
+[pos] -1 -1
+*-12.000000 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+[treeopen] i_top.
+[treeopen] i_top.hpdcache_wrapper.
+[treeopen] i_top.hpdcache_wrapper.i_hpdcache.
+[sst_width] 360
+[signals_width] 650
+[sst_expanded] 1
+[sst_vpaned_height] 520
+@28
+i_top.hpdcache_wrapper.i_hpdcache.clk_i
+i_top.hpdcache_wrapper.i_hpdcache.rst_ni
+i_top.hpdcache_wrapper.i_hpdcache.VBUF_REPLACEMENT_OWNER_EN
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_valid_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_store
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_is_uncacheable
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.cachedir_hit_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_wr_wb
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.wbuf_write_o
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_addr[55:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_wback_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_dirty_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_need_rsp_q
+i_top.hpdcache_wrapper.i_hpdcache.miss_mshr_alloc
+i_top.hpdcache_wrapper.i_hpdcache.miss_mshr_alloc_ready
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_read_miss_valid
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_read_miss_ready
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_addr_q[55:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_mshr_alloc_nline_o[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.miss_mshr_alloc_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.mem_req_read_miss.mem_req_addr[63:0]
+i_top.hpdcache_wrapper.i_hpdcache.refill_req_valid
+i_top.hpdcache_wrapper.i_hpdcache.refill_req_ready
+i_top.hpdcache_wrapper.i_hpdcache.refill_busy
+i_top.hpdcache_wrapper.i_hpdcache.mem_resp_read_miss_valid
+i_top.hpdcache_wrapper.i_hpdcache.mem_resp_read_miss_ready
+i_top.hpdcache_wrapper.i_hpdcache.refill_write_dir
+i_top.hpdcache_wrapper.i_hpdcache.refill_write_data
+i_top.hpdcache_wrapper.i_hpdcache.refill_core_rsp_valid
+i_top.hpdcache_wrapper.i_hpdcache.refill_updt_rtab
+i_top.hpdcache_wrapper.i_hpdcache.refill_nline[50:0]
+i_top.hpdcache_wrapper.i_hpdcache.refill_word[1:0]
+i_top.hpdcache_wrapper.i_hpdcache.refill_data[0][63:0]
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st1_req_cachedata_write_enable
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_dir_updt_valid_q
+i_top.hpdcache_wrapper.i_hpdcache.hpdcache_ctrl_i.st2_dir_updt_dirty_q
+[pattern_trace] 1
+[pattern_trace] 0

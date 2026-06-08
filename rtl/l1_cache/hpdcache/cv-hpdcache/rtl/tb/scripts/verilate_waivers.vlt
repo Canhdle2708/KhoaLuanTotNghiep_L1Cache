@@ -1,0 +1,20 @@
+// DESCRIPTION: Verilator output: Waivers generated with --waiver-output
+
+`verilator_config
+
+// Below you find suggested waivers. You have three options:
+//   1. Fix the reason for the linter warning
+//   2. Keep the waiver permanently if you are sure this is okay
+//   3. Keep the waiver temporarily to suppress the output
+
+lint_off -file "axi_pkg.sv"
+lint_off -rule UNUSEDSIGNAL    -file "*" -match "Bits of signal are not used*"
+lint_off -rule PINCONNECTEMPTY -file "*" -match "Cell pin connected by name with empty reference*"
+
+// The simulation wrapper reset net is intentionally consumed by both
+// synchronous and asynchronous logic in the Verilator testbench.
+lint_off -rule SYNCASYNCNET -file "*hpdcache_wrapper.sv"
+
+// cmo_ready keeps the existing combinational dependency structure in the RTL.
+// Waive Verilator's flattening warning without changing functional logic.
+lint_off -rule UNOPTFLAT -file "*hpdcache.sv" -match "Signal unoptimizable: Circular combinational logic: 'hpdcache_wrapper.i_hpdcache.cmo_ready'"
