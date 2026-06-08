@@ -1,0 +1,11 @@
+E4_FIX2 summary
+Generated: Wed May 27 07:15:29 AM UTC 2026
+Purpose: Verilator lint smoke with tc_sram lint-only blackbox
+Real DUT: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/cva6_icache.sv
+Real SRAM still present: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/vendor/tech_cells_generic/tc_sram.sv
+Lint-only SRAM blackbox: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/tc_sram_verilator_blackbox.sv
+Verilator filelist: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/cva6_icache_full_verilator_lint.f
+Lint script: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/lint_icache_only.sh
+Compile/lint log: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/logs/compile_icache_only.log
+Lint status: 1
+Result: FAIL. Next action must inspect compile_icache_only.log.

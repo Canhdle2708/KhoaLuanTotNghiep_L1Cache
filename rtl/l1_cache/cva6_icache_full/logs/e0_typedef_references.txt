@@ -1,0 +1,993 @@
+/media/sf_source_env/cva6-master/core/include/ariane_pkg.sv:37:  // if CVA6Cfg.DCacheType = cva6_config_pkg::WT
+/media/sf_source_env/cva6-master/core/include/ariane_pkg.sv:41:  // if CVA6Cfg.DCacheType = cva6_config_pkg::WB
+/media/sf_source_env/cva6-master/core/include/ariane_pkg.sv:113:  function automatic logic [63:0] smode_status_read_mask(config_pkg::cva6_cfg_t Cfg);
+/media/sf_source_env/cva6-master/core/include/ariane_pkg.sv:146:  function automatic logic [31:0] hs_deleg_interrupts(config_pkg::cva6_cfg_t Cfg);
+/media/sf_source_env/cva6-master/core/include/ariane_pkg.sv:151:  function automatic logic [31:0] vs_deleg_interrupts(config_pkg::cva6_cfg_t Cfg);
+/media/sf_source_env/cva6-master/core/include/ariane_pkg.sv:685:  } frontend_exception_t;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:3:  function automatic config_pkg::cva6_cfg_t build_config(config_pkg::cva6_user_cfg_t CVA6Cfg);
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:4:    bit IS_XLEN32 = (CVA6Cfg.XLEN == 32) ? 1'b1 : 1'b0;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:5:    bit IS_XLEN64 = (CVA6Cfg.XLEN == 32) ? 1'b0 : 1'b1;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:6:    bit FpPresent = CVA6Cfg.RVF | CVA6Cfg.RVD | CVA6Cfg.XF16 | CVA6Cfg.XF16ALT | CVA6Cfg.XF8;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:7:    bit NSX = CVA6Cfg.XF16 | CVA6Cfg.XF16ALT | CVA6Cfg.XF8 | CVA6Cfg.XFVec;  // Are non-standard extensions present?
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:8:    int unsigned FLen = CVA6Cfg.RVD ? 64 :  // D ext.
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:9:    CVA6Cfg.RVF ? 32 :  // F ext.
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:10:    CVA6Cfg.XF16 ? 16 :  // Xf16 ext.
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:11:    CVA6Cfg.XF16ALT ? 16 :  // Xf16alt ext.
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:12:    CVA6Cfg.XF8 ? 8 :  // Xf8 ext.
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:16:    bit RVFVec     = CVA6Cfg.RVF     & CVA6Cfg.XFVec & FLen>32; // FP32 vectors available if vectors and larger fmt enabled
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:17:    bit XF16Vec    = CVA6Cfg.XF16    & CVA6Cfg.XFVec & FLen>16; // FP16 vectors available if vectors and larger fmt enabled
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:18:    bit XF16ALTVec = CVA6Cfg.XF16ALT & CVA6Cfg.XFVec & FLen>16; // FP16ALT vectors available if vectors and larger fmt enabled
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:19:    bit XF8Vec     = CVA6Cfg.XF8     & CVA6Cfg.XFVec & FLen>8;  // FP8 vectors available if vectors and larger fmt enabled
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:21:    bit EnableAccelerator = CVA6Cfg.RVV;  // Currently only used by V extension (Ara)
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:22:    int unsigned NrWbPorts = (CVA6Cfg.CvxifEn || EnableAccelerator) ? 5 : 4;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:24:    int unsigned ICACHE_INDEX_WIDTH = $clog2(CVA6Cfg.IcacheByteSize / CVA6Cfg.IcacheSetAssoc);
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:25:    int unsigned DCACHE_INDEX_WIDTH = $clog2(CVA6Cfg.DcacheByteSize / CVA6Cfg.DcacheSetAssoc);
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:26:    int unsigned DCACHE_OFFSET_WIDTH = $clog2(CVA6Cfg.DcacheLineWidth / 8);
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:29:    int unsigned VpnLen = (CVA6Cfg.XLEN == 64) ? (CVA6Cfg.RVH ? 29 : 27) : 20;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:30:    int unsigned PtLevels = (CVA6Cfg.XLEN == 64) ? 3 : 2;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:32:    config_pkg::cva6_cfg_t cfg;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:34:    cfg.XLEN = CVA6Cfg.XLEN;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:35:    cfg.VLEN = CVA6Cfg.VLEN;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:36:    cfg.PLEN = (CVA6Cfg.XLEN == 32) ? 34 : 56;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:37:    cfg.GPLEN = (CVA6Cfg.XLEN == 32) ? 34 : 41;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:40:    cfg.XLEN_ALIGN_BYTES = $clog2(CVA6Cfg.XLEN / 8);
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:41:    cfg.ASID_WIDTH = (CVA6Cfg.XLEN == 64) ? 16 : 1;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:42:    cfg.VMID_WIDTH = (CVA6Cfg.XLEN == 64) ? 14 : 1;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:44:    cfg.FpgaEn = CVA6Cfg.FpgaEn;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:45:    cfg.FpgaAlteraEn = CVA6Cfg.FpgaAlteraEn;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:46:    cfg.TechnoCut = CVA6Cfg.TechnoCut;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:48:    cfg.SuperscalarEn = CVA6Cfg.SuperscalarEn;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:49:    cfg.NrCommitPorts = CVA6Cfg.SuperscalarEn ? unsigned'(2) : CVA6Cfg.NrCommitPorts;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:50:    cfg.NrIssuePorts = unsigned'(CVA6Cfg.SuperscalarEn ? 2 : 1);
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:51:    cfg.SpeculativeSb = CVA6Cfg.SuperscalarEn;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:53:    cfg.NrALUs = CVA6Cfg.SuperscalarEn ? unsigned'(2) : unsigned'(1);
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:54:    cfg.ALUBypass = CVA6Cfg.SuperscalarEn ? bit'(CVA6Cfg.ALUBypass) : bit'(0);
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:56:    cfg.NrLoadPipeRegs = CVA6Cfg.NrLoadPipeRegs;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:57:    cfg.NrStorePipeRegs = CVA6Cfg.NrStorePipeRegs;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:58:    cfg.AxiAddrWidth = CVA6Cfg.AxiAddrWidth;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:59:    cfg.AxiDataWidth = CVA6Cfg.AxiDataWidth;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:60:    cfg.AxiIdWidth = CVA6Cfg.AxiIdWidth;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:61:    cfg.AxiUserWidth = CVA6Cfg.AxiUserWidth;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:62:    cfg.MEM_TID_WIDTH = CVA6Cfg.MemTidWidth;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:63:    cfg.NrLoadBufEntries = CVA6Cfg.NrLoadBufEntries;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:64:    cfg.RVF = CVA6Cfg.RVF;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:65:    cfg.RVD = CVA6Cfg.RVD;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:66:    cfg.XF16 = CVA6Cfg.XF16;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:67:    cfg.XF16ALT = CVA6Cfg.XF16ALT;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:68:    cfg.XF8 = CVA6Cfg.XF8;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:69:    cfg.RVA = CVA6Cfg.RVA;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:70:    cfg.RVB = CVA6Cfg.RVB;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:71:    cfg.ZKN = CVA6Cfg.ZKN;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:72:    cfg.RVV = CVA6Cfg.RVV;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:73:    cfg.RVC = CVA6Cfg.RVC;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:74:    cfg.RVH = CVA6Cfg.RVH;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:75:    cfg.RVZCB = CVA6Cfg.RVZCB;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:76:    cfg.RVZCMT = CVA6Cfg.RVZCMT;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:77:    cfg.RVZCMP = CVA6Cfg.RVZCMP;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:78:    cfg.XFVec = CVA6Cfg.XFVec;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:79:    cfg.CvxifEn = CVA6Cfg.CvxifEn;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:80:    cfg.CoproType = CVA6Cfg.CoproType;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:81:    cfg.RVZiCond = CVA6Cfg.RVZiCond;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:82:    cfg.RVZiCbom = CVA6Cfg.RVZiCbom;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:83:    cfg.RVZicntr = CVA6Cfg.RVZicntr;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:84:    cfg.RVZihpm = CVA6Cfg.RVZihpm;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:85:    cfg.NR_SB_ENTRIES = CVA6Cfg.NrScoreboardEntries;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:86:    cfg.TRANS_ID_BITS = $clog2(CVA6Cfg.NrScoreboardEntries);
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:96:    cfg.NrRgprPorts = unsigned'(CVA6Cfg.SuperscalarEn ? 4 : 2);
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:97:    // cfg.NrRgprPorts = unsigned'(CVA6Cfg.SuperscalarEn ? 6 : 3);
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:100:    cfg.PerfCounterEn = CVA6Cfg.PerfCounterEn;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:101:    cfg.MmuPresent = CVA6Cfg.MmuPresent;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:102:    cfg.RVS = CVA6Cfg.RVS;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:103:    cfg.RVU = CVA6Cfg.RVU;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:104:    cfg.SoftwareInterruptEn = CVA6Cfg.SoftwareInterruptEn;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:106:    cfg.HaltAddress = CVA6Cfg.HaltAddress;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:107:    cfg.ExceptionAddress = CVA6Cfg.ExceptionAddress;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:108:    cfg.RASDepth = CVA6Cfg.RASDepth;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:109:    cfg.BTBEntries = CVA6Cfg.BTBEntries;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:110:    cfg.BPType = CVA6Cfg.BPType;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:111:    cfg.BHTEntries = CVA6Cfg.BHTEntries;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:112:    cfg.BHTHist = CVA6Cfg.BHTHist;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:113:    cfg.DmBaseAddress = CVA6Cfg.DmBaseAddress;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:114:    cfg.TvalEn = CVA6Cfg.TvalEn;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:115:    cfg.DirectVecOnly = CVA6Cfg.DirectVecOnly;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:116:    cfg.NrPMPEntries = CVA6Cfg.NrPMPEntries;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:117:    cfg.PMPCfgRstVal = CVA6Cfg.PMPCfgRstVal;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:118:    cfg.PMPAddrRstVal = CVA6Cfg.PMPAddrRstVal;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:119:    cfg.PMPEntryReadOnly = CVA6Cfg.PMPEntryReadOnly;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:120:    cfg.PMPNapotEn = CVA6Cfg.PMPNapotEn;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:121:    cfg.NOCType = CVA6Cfg.NOCType;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:122:    cfg.NrNonIdempotentRules = CVA6Cfg.NrNonIdempotentRules;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:123:    cfg.NonIdempotentAddrBase = CVA6Cfg.NonIdempotentAddrBase;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:124:    cfg.NonIdempotentLength = CVA6Cfg.NonIdempotentLength;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:125:    cfg.NrExecuteRegionRules = CVA6Cfg.NrExecuteRegionRules;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:126:    cfg.ExecuteRegionAddrBase = CVA6Cfg.ExecuteRegionAddrBase;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:127:    cfg.ExecuteRegionLength = CVA6Cfg.ExecuteRegionLength;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:128:    cfg.NrCachedRegionRules = CVA6Cfg.NrCachedRegionRules;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:129:    cfg.CachedRegionAddrBase = CVA6Cfg.CachedRegionAddrBase;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:130:    cfg.CachedRegionLength = CVA6Cfg.CachedRegionLength;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:131:    cfg.MaxOutstandingStores = CVA6Cfg.MaxOutstandingStores;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:132:    cfg.DebugEn = CVA6Cfg.DebugEn;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:133:    cfg.SDTRIG = CVA6Cfg.SDTRIG;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:134:    cfg.Mcontrol6 = CVA6Cfg.Mcontrol6;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:135:    cfg.Icount = CVA6Cfg.Icount;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:136:    cfg.Etrigger = CVA6Cfg.Etrigger;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:137:    cfg.Itrigger = CVA6Cfg.Itrigger;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:138:    cfg.NonIdemPotenceEn = (CVA6Cfg.NrNonIdempotentRules > 0) && (CVA6Cfg.NonIdempotentLength > 0);
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:139:    cfg.AxiBurstWriteEn = CVA6Cfg.AxiBurstWriteEn;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:141:    cfg.ICACHE_SET_ASSOC = CVA6Cfg.IcacheSetAssoc;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:142:    cfg.ICACHE_SET_ASSOC_WIDTH = CVA6Cfg.IcacheSetAssoc > 1 ? $clog2(CVA6Cfg.IcacheSetAssoc) :
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:143:        CVA6Cfg.IcacheSetAssoc;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:146:    cfg.ICACHE_LINE_WIDTH = CVA6Cfg.IcacheLineWidth;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:147:    cfg.ICACHE_USER_LINE_WIDTH = (CVA6Cfg.AxiUserWidth == 1) ? 4 : CVA6Cfg.IcacheLineWidth;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:148:    cfg.DCacheType = CVA6Cfg.DCacheType;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:149:    cfg.DcacheIdWidth = CVA6Cfg.DcacheIdWidth;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:150:    cfg.DCACHE_SET_ASSOC = CVA6Cfg.DcacheSetAssoc;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:151:    cfg.DCACHE_SET_ASSOC_WIDTH = CVA6Cfg.DcacheSetAssoc > 1 ? $clog2(CVA6Cfg.DcacheSetAssoc) :
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:152:        CVA6Cfg.DcacheSetAssoc;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:155:    cfg.DCACHE_LINE_WIDTH = CVA6Cfg.DcacheLineWidth;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:156:    cfg.DCACHE_USER_LINE_WIDTH = (CVA6Cfg.AxiUserWidth == 1) ? 4 : CVA6Cfg.DcacheLineWidth;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:157:    cfg.DCACHE_USER_WIDTH = CVA6Cfg.AxiUserWidth;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:161:    cfg.DCACHE_MAX_TX = unsigned'(2 ** CVA6Cfg.MemTidWidth);
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:163:    cfg.DcacheFlushOnFence = CVA6Cfg.DcacheFlushOnFence;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:164:    cfg.DcacheFlushOnFenceI = CVA6Cfg.DcacheFlushOnFenceI;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:165:    cfg.DcacheInvalidateOnFlush = CVA6Cfg.DcacheInvalidateOnFlush;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:167:    cfg.DATA_USER_EN = CVA6Cfg.DataUserEn;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:168:    cfg.WtDcacheWbufDepth = CVA6Cfg.WtDcacheWbufDepth;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:169:    cfg.FETCH_USER_WIDTH = CVA6Cfg.FetchUserWidth;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:170:    cfg.FETCH_USER_EN = CVA6Cfg.FetchUserEn;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:171:    cfg.AXI_USER_EN = CVA6Cfg.DataUserEn | CVA6Cfg.FetchUserEn;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:173:    cfg.FETCH_WIDTH = unsigned'(CVA6Cfg.SuperscalarEn ? 64 : 32);
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:175:    cfg.INSTR_PER_FETCH = cfg.FETCH_WIDTH / (CVA6Cfg.RVC ? 16 : 32);
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:178:    cfg.ModeW = (CVA6Cfg.XLEN == 32) ? 1 : 4;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:179:    cfg.ASIDW = (CVA6Cfg.XLEN == 32) ? 9 : 16;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:180:    cfg.VMIDW = (CVA6Cfg.XLEN == 32) ? 7 : 14;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:181:    cfg.PPNW = (CVA6Cfg.XLEN == 32) ? 22 : 44;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:182:    cfg.GPPNW = (CVA6Cfg.XLEN == 32) ? 22 : 29;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:183:    cfg.MODE_SV = (CVA6Cfg.XLEN == 32) ? config_pkg::ModeSv32 : config_pkg::ModeSv39;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:186:    cfg.InstrTlbEntries = CVA6Cfg.InstrTlbEntries;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:187:    cfg.DataTlbEntries = CVA6Cfg.DataTlbEntries;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:188:    cfg.UseSharedTlb = CVA6Cfg.UseSharedTlb;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:189:    cfg.SvnapotEn = CVA6Cfg.SvnapotEn;
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv:190:    cfg.SharedTlbDepth = CVA6Cfg.SharedTlbDepth;
+/media/sf_source_env/cva6-master/core/include/config_pkg.sv:438:  } cva6_cfg_t;
+/media/sf_source_env/cva6-master/core/include/config_pkg.sv:442:  localparam cva6_cfg_t cva6_cfg_empty = cva6_cfg_t'(0);
+/media/sf_source_env/cva6-master/core/include/config_pkg.sv:446:  function automatic void check_cfg(cva6_cfg_t Cfg);
+/media/sf_source_env/cva6-master/core/include/config_pkg.sv:472:  function automatic logic is_inside_nonidempotent_regions(cva6_cfg_t Cfg, logic [63:0] address);
+/media/sf_source_env/cva6-master/core/include/config_pkg.sv:481:  function automatic logic is_inside_execute_regions(cva6_cfg_t Cfg, logic [63:0] address);
+/media/sf_source_env/cva6-master/core/include/config_pkg.sv:495:  function automatic logic is_inside_cacheable_regions(cva6_cfg_t Cfg, logic [63:0] address);
+/media/sf_source_env/cva6-master/core/cache_subsystem/amo_alu.sv:15:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty
+/media/sf_source_env/cva6-master/core/cache_subsystem/axi_adapter.sv:20:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/axi_adapter.sv:34:    input logic [CVA6Cfg.XLEN-1:0] addr_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/axi_adapter.sv:36:    input logic [(DATA_WIDTH/CVA6Cfg.AxiDataWidth)-1:0][CVA6Cfg.AxiDataWidth-1:0] wdata_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/axi_adapter.sv:37:    input logic [(DATA_WIDTH/CVA6Cfg.AxiDataWidth)-1:0][(CVA6Cfg.AxiDataWidth/8)-1:0] be_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/axi_adapter.sv:39:    input logic [CVA6Cfg.AxiIdWidth-1:0] id_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/axi_adapter.sv:42:    output logic [(DATA_WIDTH/CVA6Cfg.AxiDataWidth)-1:0][CVA6Cfg.AxiDataWidth-1:0] rdata_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/axi_adapter.sv:43:    output logic [CVA6Cfg.AxiIdWidth-1:0] id_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/axi_adapter.sv:45:    output logic [CVA6Cfg.AxiDataWidth-1:0] critical_word_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/axi_adapter.sv:51:  localparam BURST_SIZE = (DATA_WIDTH / CVA6Cfg.AxiDataWidth) - 1;
+/media/sf_source_env/cva6-master/core/cache_subsystem/axi_adapter.sv:53:      DATA_WIDTH / CVA6Cfg.AxiDataWidth
+/media/sf_source_env/cva6-master/core/cache_subsystem/axi_adapter.sv:55:      DATA_WIDTH / CVA6Cfg.AxiDataWidth
+/media/sf_source_env/cva6-master/core/cache_subsystem/axi_adapter.sv:57:  localparam MAX_OUTSTANDING_AW = CVA6Cfg.MaxOutstandingStores;
+/media/sf_source_env/cva6-master/core/cache_subsystem/axi_adapter.sv:82:  logic [(DATA_WIDTH/CVA6Cfg.AxiDataWidth)-1:0][CVA6Cfg.AxiDataWidth-1:0]
+/media/sf_source_env/cva6-master/core/cache_subsystem/axi_adapter.sv:85:  logic [(DATA_WIDTH/CVA6Cfg.AxiDataWidth)-1:0] addr_offset_d, addr_offset_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/axi_adapter.sv:86:  logic [CVA6Cfg.AxiIdWidth-1:0] id_d, id_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:25:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:40:    output logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] req_o,  // req is valid
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:41:    output logic [CVA6Cfg.DCACHE_INDEX_WIDTH-1:0] addr_o,  // address into cache array
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:45:    output logic [CVA6Cfg.DCACHE_TAG_WIDTH-1:0] tag_o,  //valid one cycle later
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:46:    input cache_line_t [CVA6Cfg.DCACHE_SET_ASSOC-1:0] data_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:48:    input logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] hit_way_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:82:    logic [CVA6Cfg.DCACHE_INDEX_WIDTH-1:0] index;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:83:    logic [CVA6Cfg.DCACHE_TAG_WIDTH-1:0]   tag;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:84:    logic [CVA6Cfg.DcacheIdWidth-1:0]      id;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:85:    logic [(CVA6Cfg.XLEN/8)-1:0]           be;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:88:    logic [CVA6Cfg.XLEN-1:0]               wdata;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:93:  logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] hit_way_d, hit_way_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:100:  logic [CVA6Cfg.DCACHE_LINE_WIDTH-1:0] cl_i;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:104:    for (int unsigned i = 0; i < CVA6Cfg.DCACHE_SET_ASSOC; i++)
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:114:    automatic logic [$clog2(CVA6Cfg.DCACHE_LINE_WIDTH)-1:0] cl_offset;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:115:    automatic logic [$clog2(CVA6Cfg.AxiDataWidth)-1:0] axi_offset;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:118:    cl_offset = mem_req_q.index[CVA6Cfg.DCACHE_OFFSET_WIDTH-1:$clog2(CVA6Cfg.XLEN/8)] <<
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:119:        $clog2(CVA6Cfg.XLEN);  // shift by log2(XLEN) to the left
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:121:    axi_offset = (mem_req_q.index >> $clog2(CVA6Cfg.XLEN / 8)) << $clog2(CVA6Cfg.XLEN);
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:219:            req_port_o.data_rdata = cl_i[cl_offset+:CVA6Cfg.XLEN];
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:265:                  CVA6Cfg, {{{64 - CVA6Cfg.PLEN} {1'b0}}, tag_o, {CVA6Cfg.DCACHE_INDEX_WIDTH{1'b0}}}
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:318:          be_o.data[cl_offset>>3+:CVA6Cfg.XLEN/8] = mem_req_q.be;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:319:          data_o.data[cl_offset+:CVA6Cfg.XLEN]    = mem_req_q.wdata;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:366:        miss_req_o.be[axi_offset>>3+:CVA6Cfg.XLEN/8] = mem_req_q.be;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:369:        miss_req_o.wdata[axi_offset+:CVA6Cfg.XLEN] = mem_req_q.wdata;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:408:          req_port_o.data_rdata  = critical_word_i[axi_offset+:CVA6Cfg.XLEN];
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:437:          req_port_o.data_rdata = bypass_data_i[axi_offset+:CVA6Cfg.XLEN];
+/media/sf_source_env/cva6-master/core/cache_subsystem/cache_ctrl.sv:473:    assert (CVA6Cfg.DCACHE_LINE_WIDTH == 128)
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_if_adapter.sv:16:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_if_adapter.sv:82:          CVA6Cfg,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_if_adapter.sv:84:            {64 - CVA6Cfg.DCACHE_TAG_WIDTH{1'b0}}
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_if_adapter.sv:86:            , {CVA6Cfg.DCACHE_INDEX_WIDTH{1'b0}}
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_if_adapter.sv:194:        if (CVA6Cfg.RVZiCbom) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_if_adapter.sv:232:          CVA6Cfg,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_if_adapter.sv:234:            {64 - CVA6Cfg.DCACHE_TAG_WIDTH{1'b0}}
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_if_adapter.sv:236:            {CVA6Cfg.DCACHE_INDEX_WIDTH{1'b0}}
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_if_adapter.sv:242:      if (CVA6Cfg.XLEN == 64) begin : amo_data_64_gen
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_if_adapter.sv:329:      if (CVA6Cfg.XLEN == 64) begin : amo_resp_64_gen
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:19:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:20:    parameter type icache_areq_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:21:    parameter type icache_arsp_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:22:    parameter type icache_dreq_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:23:    parameter type icache_drsp_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:24:    parameter type icache_req_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:25:    parameter type icache_rtrn_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:69:    input icache_areq_t icache_areq_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:71:    output icache_arsp_t icache_areq_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:73:    input icache_dreq_t icache_dreq_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:75:    output icache_drsp_t icache_dreq_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:143:  icache_req_t icache_miss;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:146:  icache_rtrn_t icache_miss_resp;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:148:  localparam int ICACHE_RDTXID = 1 << (CVA6Cfg.MEM_TID_WIDTH - 1);
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:151:      .CVA6Cfg(CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:152:      .icache_areq_t(icache_areq_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:153:      .icache_arsp_t(icache_arsp_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:154:      .icache_dreq_t(icache_dreq_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:155:      .icache_drsp_t(icache_drsp_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:156:      .icache_req_t(icache_req_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:157:      .icache_rtrn_t(icache_rtrn_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:195:    userCfg.paWidth = CVA6Cfg.PLEN;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:196:    userCfg.wordWidth = CVA6Cfg.XLEN;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:197:    userCfg.sets = CVA6Cfg.DCACHE_NUM_WORDS;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:198:    userCfg.ways = CVA6Cfg.DCACHE_SET_ASSOC;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:199:    userCfg.clWords = CVA6Cfg.DCACHE_LINE_WIDTH / CVA6Cfg.XLEN;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:201:    userCfg.reqTransIdWidth = CVA6Cfg.DcacheIdWidth;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:204:    userCfg.dataWaysPerRamWord = __minu(CVA6Cfg.DCACHE_SET_ASSOC, 128 / CVA6Cfg.XLEN);
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:205:    userCfg.dataSetsPerRam = CVA6Cfg.DCACHE_NUM_WORDS;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:207:    userCfg.accessWords = __maxu(CVA6Cfg.AxiDataWidth / CVA6Cfg.XLEN, userCfg.reqWords);
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:208:    userCfg.mshrSets = CVA6Cfg.NrLoadBufEntries < 16 ? 1 : CVA6Cfg.NrLoadBufEntries / 2;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:209:    userCfg.mshrWays = CVA6Cfg.NrLoadBufEntries < 16 ? CVA6Cfg.NrLoadBufEntries : 2;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:210:    userCfg.mshrWaysPerRamWord = CVA6Cfg.NrLoadBufEntries < 16 ? CVA6Cfg.NrLoadBufEntries : 2;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:211:    userCfg.mshrSetsPerRam = CVA6Cfg.NrLoadBufEntries < 16 ? 1 : CVA6Cfg.NrLoadBufEntries / 2;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:213:    userCfg.mshrUseRegbank = (CVA6Cfg.NrLoadBufEntries < 16);
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:214:    userCfg.cbufEntries = CVA6Cfg.WtDcacheWbufDepth;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:216:    if (CVA6Cfg.NOCType == config_pkg::NOC_TYPE_L15_BIG_ENDIAN || CVA6Cfg.NOCType == config_pkg::NOC_TYPE_L15_LITTLE_ENDIAN) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:220:      userCfg.refillFifoDepth = 2 * (CVA6Cfg.DCACHE_LINE_WIDTH / CVA6Cfg.AxiDataWidth);
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:222:    userCfg.wbufDirEntries = CVA6Cfg.WtDcacheWbufDepth;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:223:    userCfg.wbufDataEntries = CVA6Cfg.WtDcacheWbufDepth;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:227:    userCfg.flushEntries = CVA6Cfg.WtDcacheWbufDepth;  /*FIXME add additional CVA6 parameter*/
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:228:    userCfg.flushFifoDepth = CVA6Cfg.WtDcacheWbufDepth;  /*FIXME add additional CVA6 parameter*/
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:229:    userCfg.memAddrWidth = CVA6Cfg.AxiAddrWidth;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:230:    userCfg.memIdWidth = CVA6Cfg.MEM_TID_WIDTH;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:231:    userCfg.memDataWidth = CVA6Cfg.AxiDataWidth;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:233:        (CVA6Cfg.DCacheType == config_pkg::HPDCACHE_WT) ||
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:234:        (CVA6Cfg.DCacheType == config_pkg::HPDCACHE_WT_WB);
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:236:        (CVA6Cfg.DCacheType == config_pkg::HPDCACHE_WB) ||
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:237:        (CVA6Cfg.DCacheType == config_pkg::HPDCACHE_WT_WB);
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:292:      .CVA6Cfg(CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:369:  if (CVA6Cfg.NOCType == config_pkg::NOC_TYPE_L15_BIG_ENDIAN || CVA6Cfg.NOCType == config_pkg::NOC_TYPE_L15_LITTLE_ENDIAN) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:389:        .CVA6Cfg(CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:397:        .HPDcacheMemDataWidth(CVA6Cfg.DCACHE_LINE_WIDTH),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:400:        .icache_req_t  (icache_req_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:401:        .icache_rtrn_t (icache_rtrn_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:459:        .CVA6Cfg              (CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:465:        .icache_req_t         (icache_req_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:466:        .icache_rtrn_t        (icache_rtrn_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:468:        .AxiAddrWidth (CVA6Cfg.AxiAddrWidth),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:469:        .AxiDataWidth (CVA6Cfg.AxiDataWidth),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:470:        .AxiIdWidth   (CVA6Cfg.AxiIdWidth),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:471:        .AxiUserWidth (CVA6Cfg.AxiUserWidth),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:527:    assert (CVA6Cfg.MEM_TID_WIDTH >= ($clog2(HPDcacheCfg.u.mshrSets * HPDcacheCfg.u.mshrWays) + 1))
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:529:    assert (CVA6Cfg.MEM_TID_WIDTH >= ($clog2(HPDcacheCfg.u.wbufDirEntries) + 1))
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem.sv:531:    assert (CVA6Cfg.MEM_TID_WIDTH <= CVA6Cfg.AxiIdWidth)
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:19:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:25:    parameter type icache_req_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:26:    parameter type icache_rtrn_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:52:    input  icache_req_t      icache_miss_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:56:    output icache_rtrn_t icache_miss_resp_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:95:  localparam int MEM_RESP_RT_DEPTH = (1 << CVA6Cfg.MEM_TID_WIDTH);
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:97:  typedef logic [CVA6Cfg.ICACHE_LINE_WIDTH-1:0] icache_resp_data_t;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:102:  localparam int ICACHE_UC_WORD_INDEX = CVA6Cfg.AxiDataWidth > 64 ? $clog2(
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:103:      CVA6Cfg.AxiDataWidth / 64
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:105:  localparam int ICACHE_CL_SIZE = $clog2(CVA6Cfg.ICACHE_LINE_WIDTH / 8);
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:108:    (CVA6Cfg.ICACHE_LINE_WIDTH + CVA6Cfg.AxiDataWidth - 1)/CVA6Cfg.AxiDataWidth;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:110:    (CVA6Cfg.AxiDataWidth <= CVA6Cfg.ICACHE_LINE_WIDTH) ?
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:112:      CVA6Cfg.AxiDataWidth / 8
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:171:    if (CVA6Cfg.AxiDataWidth < CVA6Cfg.ICACHE_LINE_WIDTH) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:189:          .WR_WIDTH(CVA6Cfg.AxiDataWidth),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:190:          .RD_WIDTH(CVA6Cfg.ICACHE_LINE_WIDTH),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:229:      if (CVA6Cfg.AxiDataWidth > 64) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:235:      icache_miss_rdata = {{CVA6Cfg.ICACHE_LINE_WIDTH - 64{1'b0}}, icache_miss_word};
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:414:    assert (CVA6Cfg.MEM_TID_WIDTH <= AxiIdWidth)
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:417:    assert (CVA6Cfg.AxiDataWidth <= CVA6Cfg.ICACHE_LINE_WIDTH)
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv:420:    assert (CVA6Cfg.AxiDataWidth <= CVA6Cfg.DCACHE_LINE_WIDTH)
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_l15_adapter.sv:34:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,  // contains cacheable regions
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_l15_adapter.sv:47:    parameter type icache_req_t   = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_l15_adapter.sv:48:    parameter type icache_rtrn_t  = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_l15_adapter.sv:77:    input  icache_req_t icache_miss_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_l15_adapter.sv:80:    output icache_rtrn_t icache_miss_resp_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_l15_adapter.sv:119:  typedef logic [CVA6Cfg.ICACHE_LINE_WIDTH-1:0] icache_resp_data_t;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_l15_adapter.sv:132:    logic [CVA6Cfg.PLEN-1:0] mem_inval;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_l15_adapter.sv:138:  localparam int ICACHE_CL_WORDS = CVA6Cfg.ICACHE_LINE_WIDTH / 64;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_l15_adapter.sv:140:  localparam int ICACHE_CL_SIZE = $clog2(CVA6Cfg.ICACHE_LINE_WIDTH / 8);
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_l15_adapter.sv:141:  localparam int ICACHE_WORD_SIZE = $clog2(CVA6Cfg.XLEN / 8);
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_l15_adapter.sv:142:  localparam int ICACHE_MEM_REQ_CL_LEN  = (CVA6Cfg.ICACHE_LINE_WIDTH + HPDcacheMemDataWidth - 1)/HPDcacheMemDataWidth;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_l15_adapter.sv:143:  localparam int ICACHE_MEM_REQ_CL_SIZE = (HPDcacheMemDataWidth <= CVA6Cfg.ICACHE_LINE_WIDTH) ? $clog2(
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_l15_adapter.sv:200:  logic             [CVA6Cfg.PLEN-1:0] icache_miss_resp_inval_address;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_l15_adapter.sv:208:        icache_miss_resp_inval_address[CVA6Cfg.ICACHE_INDEX_WIDTH-1:4], 4'b0000
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_l15_adapter.sv:218:      icache_miss_resp_data_rdata = icache_miss_resp_wdata.mem_resp_r_data[CVA6Cfg.ICACHE_LINE_WIDTH-1:0],
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_subsystem_l15_adapter.sv:407:      .SwapEndianness(CVA6Cfg.NOCType == config_pkg::NOC_TYPE_L15_BIG_ENDIAN),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_wrapper.sv:19:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_wrapper.sv:154:          .CVA6Cfg              (CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_wrapper.sv:192:        .CVA6Cfg              (CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_hpdcache_wrapper.sv:201:        .InvalidateOnFlush    (CVA6Cfg.DcacheInvalidateOnFlush),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:32:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:33:    parameter type icache_areq_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:34:    parameter type icache_arsp_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:35:    parameter type icache_dreq_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:36:    parameter type icache_drsp_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:37:    parameter type icache_req_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:38:    parameter type icache_rtrn_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:40:    parameter logic [CVA6Cfg.MEM_TID_WIDTH-1:0] RdTxId = 0
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:52:    input  icache_areq_t areq_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:53:    output icache_arsp_t areq_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:55:    input  icache_dreq_t dreq_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:56:    output icache_drsp_t dreq_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:59:    input  icache_rtrn_t mem_rtrn_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:62:    output icache_req_t  mem_data_o
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:65:  localparam ICACHE_OFFSET_WIDTH = $clog2(CVA6Cfg.ICACHE_LINE_WIDTH / 8);
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:66:  localparam ICACHE_NUM_WORDS = 2 ** (CVA6Cfg.ICACHE_INDEX_WIDTH - ICACHE_OFFSET_WIDTH);
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:70:  function automatic logic [CVA6Cfg.ICACHE_SET_ASSOC-1:0] icache_way_bin2oh(
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:71:      input logic [CVA6Cfg.ICACHE_SET_ASSOC_WIDTH-1:0] in);
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:72:    logic [CVA6Cfg.ICACHE_SET_ASSOC-1:0] out;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:80:  logic [CVA6Cfg.VLEN-1:0] vaddr_d, vaddr_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:82:  logic [CVA6Cfg.ICACHE_SET_ASSOC-1:0] cl_hit;  // hit from tag compare
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:92:  logic [CVA6Cfg.ICACHE_SET_ASSOC_WIDTH-1:0] inv_way;  // first non-valid encountered
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:93:  logic [CVA6Cfg.ICACHE_SET_ASSOC_WIDTH-1:0] rnd_way;  // random index for replacement
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:94:  logic [CVA6Cfg.ICACHE_SET_ASSOC_WIDTH-1:0] repl_way;  // way to replace
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:95:  logic [CVA6Cfg.ICACHE_SET_ASSOC-1:0] repl_way_oh_d, repl_way_oh_q;  // way to replace (onehot)
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:106:  logic [CVA6Cfg.ICACHE_SET_ASSOC-1:0] cl_req;  // request to memory array
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:109:  logic [CVA6Cfg.ICACHE_TAG_WIDTH-1:0] cl_tag_d, cl_tag_q;  // this is the cache tag
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:110:  logic [CVA6Cfg.ICACHE_TAG_WIDTH-1:0]          cl_tag_rdata [CVA6Cfg.ICACHE_SET_ASSOC-1:0]; // these are the tags coming from the tagmem
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:111:  logic [CVA6Cfg.ICACHE_LINE_WIDTH-1:0]         cl_rdata     [CVA6Cfg.ICACHE_SET_ASSOC-1:0]; // these are the cachelines coming from the cache
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:112:  logic [CVA6Cfg.ICACHE_USER_LINE_WIDTH-1:0]    cl_ruser[CVA6Cfg.ICACHE_SET_ASSOC-1:0]; // these are the cachelines coming from the user cache
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:113:  logic [CVA6Cfg.ICACHE_SET_ASSOC-1:0][CVA6Cfg.FETCH_WIDTH-1:0] cl_sel;  // selected word from each cacheline
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:114:  logic [CVA6Cfg.ICACHE_SET_ASSOC-1:0][CVA6Cfg.FETCH_USER_WIDTH-1:0] cl_user;  // selected word from each cacheline
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:115:  logic [CVA6Cfg.ICACHE_SET_ASSOC-1:0] vld_req;  // bit enable for valid regs
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:117:  logic [CVA6Cfg.ICACHE_SET_ASSOC-1:0] vld_wdata;  // valid bits to write
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:118:  logic [CVA6Cfg.ICACHE_SET_ASSOC-1:0] vld_rdata;  // valid bits coming from valid regs
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:137:  assign cl_tag_d  = (areq_i.fetch_valid) ? areq_i.fetch_paddr[CVA6Cfg.ICACHE_TAG_WIDTH+CVA6Cfg.ICACHE_INDEX_WIDTH-1:CVA6Cfg.ICACHE_INDEX_WIDTH] : cl_tag_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:141:      CVA6Cfg, {{64 - CVA6Cfg.PLEN{1'b0}}, cl_tag_d, {CVA6Cfg.ICACHE_INDEX_WIDTH{1'b0}}}
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:150:  assign areq_o.fetch_vaddr = (vaddr_q >> CVA6Cfg.FETCH_ALIGN_BITS) << CVA6Cfg.FETCH_ALIGN_BITS;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:153:  assign cl_index = vaddr_d[CVA6Cfg.ICACHE_INDEX_WIDTH-1:ICACHE_OFFSET_WIDTH];
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:156:  if (CVA6Cfg.NOCType == config_pkg::NOC_TYPE_AXI4_ATOP) begin : gen_axi_offset
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:158:    assign cl_offset_d = ( dreq_o.ready & dreq_i.req)      ? (dreq_i.vaddr >> CVA6Cfg.FETCH_ALIGN_BITS) << CVA6Cfg.FETCH_ALIGN_BITS :
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:162:    assign mem_data_o.paddr = (paddr_is_nc) ? {cl_tag_d, vaddr_q[CVA6Cfg.ICACHE_INDEX_WIDTH-1:3], 3'b0} :                                         // align to 64bit
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:163:        {cl_tag_d, vaddr_q[CVA6Cfg.ICACHE_INDEX_WIDTH-1:ICACHE_OFFSET_WIDTH], {ICACHE_OFFSET_WIDTH{1'b0}}}; // align to cl
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:170:    assign mem_data_o.paddr = (paddr_is_nc) ? {cl_tag_d, vaddr_q[CVA6Cfg.ICACHE_INDEX_WIDTH-1:2], 2'b0} :                                         // align to 32bit
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:171:        {cl_tag_d, vaddr_q[CVA6Cfg.ICACHE_INDEX_WIDTH-1:ICACHE_OFFSET_WIDTH], {ICACHE_OFFSET_WIDTH{1'b0}}}; // align to cl
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:190:      CVA6Cfg, {{64 - CVA6Cfg.PLEN{1'b0}}, areq_i.fetch_paddr}
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:270:        if (areq_i.fetch_valid && (!dreq_i.spec || ((CVA6Cfg.NonIdemPotenceEn && !addr_ni) || (!CVA6Cfg.NonIdemPotenceEn)))) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:374:                    (inv_en)         ? mem_rtrn_i.inv.idx[CVA6Cfg.ICACHE_INDEX_WIDTH-1:ICACHE_OFFSET_WIDTH] :
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:401:      .WIDTH(CVA6Cfg.ICACHE_SET_ASSOC)
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:411:      .OutWidth (CVA6Cfg.ICACHE_SET_ASSOC_WIDTH)
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:424:  logic [CVA6Cfg.ICACHE_SET_ASSOC_WIDTH-1:0] hit_idx;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:426:  for (genvar i = 0; i < CVA6Cfg.ICACHE_SET_ASSOC; i++) begin : gen_tag_cmpsel
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:428:    assign cl_sel[i] = cl_rdata[i][{cl_offset_q, 3'b0}+:CVA6Cfg.FETCH_WIDTH];
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:429:    assign cl_user[i] = CVA6Cfg.FETCH_USER_EN ? cl_ruser[i][{cl_offset_q, 3'b0}+:CVA6Cfg.FETCH_USER_WIDTH] : '0;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:434:      .WIDTH(CVA6Cfg.ICACHE_SET_ASSOC)
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:444:      dreq_o.user = CVA6Cfg.FETCH_USER_EN ? cl_user[hit_idx] : '0;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:446:      dreq_o.data = mem_rtrn_i.data[{cl_offset_q, 3'b0}+:CVA6Cfg.FETCH_WIDTH];
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:447:      dreq_o.user = CVA6Cfg.FETCH_USER_EN ? mem_rtrn_i.user[{cl_offset_q, 3'b0}+:CVA6Cfg.FETCH_USER_WIDTH] : '0;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:456:  logic [CVA6Cfg.ICACHE_TAG_WIDTH:0] cl_tag_valid_rdata[CVA6Cfg.ICACHE_SET_ASSOC-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:458:  for (genvar i = 0; i < CVA6Cfg.ICACHE_SET_ASSOC; i++) begin : gen_sram
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:462:        .DATA_WIDTH (CVA6Cfg.ICACHE_TAG_WIDTH + 1),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:464:        .TECHNO_CUT (CVA6Cfg.TechnoCut),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:481:    assign cl_tag_rdata[i] = cl_tag_valid_rdata[i][CVA6Cfg.ICACHE_TAG_WIDTH-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:482:    assign vld_rdata[i]    = cl_tag_valid_rdata[i][CVA6Cfg.ICACHE_TAG_WIDTH];
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:486:        .USER_WIDTH (CVA6Cfg.ICACHE_USER_LINE_WIDTH),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:487:        .DATA_WIDTH (CVA6Cfg.ICACHE_LINE_WIDTH),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:488:        .USER_EN    (CVA6Cfg.FETCH_USER_EN),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:490:        .TECHNO_CUT (CVA6Cfg.TechnoCut),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:562:  logic vld_mirror[ICACHE_NUM_WORDS-1:0][CVA6Cfg.ICACHE_SET_ASSOC-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:563:  logic [CVA6Cfg.ICACHE_TAG_WIDTH-1:0] tag_mirror[ICACHE_NUM_WORDS-1:0][CVA6Cfg.ICACHE_SET_ASSOC-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:564:  logic [CVA6Cfg.ICACHE_SET_ASSOC-1:0] tag_write_duplicate_test;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:571:      for (int i = 0; i < CVA6Cfg.ICACHE_SET_ASSOC; i++) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:580:  for (genvar i = 0; i < CVA6Cfg.ICACHE_SET_ASSOC; i++) begin : gen_tag_dupl
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv:592:    assert (CVA6Cfg.ICACHE_INDEX_WIDTH <= 12)
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:20:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:21:    parameter type icache_areq_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:22:    parameter type icache_arsp_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:23:    parameter type icache_dreq_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:24:    parameter type icache_drsp_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:25:    parameter type icache_req_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:26:    parameter type icache_rtrn_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:38:    input icache_areq_t areq_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:39:    output icache_arsp_t areq_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:41:    input icache_dreq_t dreq_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:42:    output icache_drsp_t dreq_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:48:  localparam AxiNumWords = (CVA6Cfg.ICACHE_LINE_WIDTH/CVA6Cfg.AxiDataWidth) * (CVA6Cfg.ICACHE_LINE_WIDTH  > CVA6Cfg.DCACHE_LINE_WIDTH)  +
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:49:                           (CVA6Cfg.DCACHE_LINE_WIDTH/CVA6Cfg.AxiDataWidth) * (CVA6Cfg.ICACHE_LINE_WIDTH <= CVA6Cfg.DCACHE_LINE_WIDTH) ;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:52:  icache_rtrn_t                            icache_mem_rtrn;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:55:  icache_req_t                             icache_mem_data;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:59:  logic         [CVA6Cfg.AxiAddrWidth-1:0] axi_rd_addr;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:62:  logic         [  CVA6Cfg.AxiIdWidth-1:0] axi_rd_id_in;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:67:  logic         [CVA6Cfg.AxiDataWidth-1:0] axi_rd_data;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:68:  logic         [  CVA6Cfg.AxiIdWidth-1:0] axi_rd_id_out;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:72:  icache_req_t req_data_d, req_data_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:74:  logic [CVA6Cfg.ICACHE_LINE_WIDTH/CVA6Cfg.AxiDataWidth-1:0][CVA6Cfg.AxiDataWidth-1:0]
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:86:  assign axi_rd_addr           = CVA6Cfg.AxiAddrWidth'(req_data_d.paddr);
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:89:  assign axi_rd_blen           = (req_data_d.nc) ? '0 : CVA6Cfg.ICACHE_LINE_WIDTH / 64 - 1;
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:90:  assign axi_rd_size           = $clog2(CVA6Cfg.AxiDataWidth / 8);  // Maximum
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:110:      .CVA6Cfg(CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:111:      .icache_areq_t(icache_areq_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:112:      .icache_arsp_t(icache_arsp_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:113:      .icache_dreq_t(icache_dreq_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:114:      .icache_drsp_t(icache_drsp_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:115:      .icache_req_t(icache_req_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:116:      .icache_rtrn_t(icache_rtrn_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:139:      .CVA6Cfg    (CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:186:      if (CVA6Cfg.ICACHE_LINE_WIDTH == CVA6Cfg.AxiDataWidth) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv:189:        rd_shift_d = {axi_rd_data, rd_shift_q[CVA6Cfg.ICACHE_LINE_WIDTH/CVA6Cfg.AxiDataWidth-1:1]};
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:23:    parameter config_pkg::cva6_cfg_t CVA6Cfg      = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:63:    output logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] req_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:64:    output logic [CVA6Cfg.DCACHE_INDEX_WIDTH-1:0] addr_o,  // address into cache array
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:67:    input cache_line_t [CVA6Cfg.DCACHE_SET_ASSOC-1:0] data_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:75:  function automatic logic [CVA6Cfg.DCACHE_SET_ASSOC_WIDTH-1:0] one_hot_to_bin(
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:76:      input logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] in);
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:77:    for (int unsigned i = 0; i < CVA6Cfg.DCACHE_SET_ASSOC; i++) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:82:  function automatic logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] get_victim_cl(
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:83:      input logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] valid_dirty);
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:85:    logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] oh = '0;
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:86:    for (int unsigned i = 0; i < CVA6Cfg.DCACHE_SET_ASSOC; i++) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:115:  logic [CVA6Cfg.DCACHE_INDEX_WIDTH-1:0] cnt_d, cnt_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:116:  logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] evict_way_d, evict_way_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:145:  logic                [         CVA6Cfg.DCACHE_LINE_WIDTH-1:0]       req_fsm_miss_wdata;
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:147:  logic                [     (CVA6Cfg.DCACHE_LINE_WIDTH/8)-1:0]       req_fsm_miss_be;
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:153:  logic                [    (CVA6Cfg.DCACHE_LINE_WIDTH/64)-1:0][63:0] data_miss_fsm;
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:157:  logic                [          CVA6Cfg.DCACHE_SET_ASSOC-1:0]       lfsr_oh;
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:158:  logic                [$clog2(CVA6Cfg.DCACHE_SET_ASSOC-1)-1:0]       lfsr_bin;
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:165:  logic                [ $clog2(CVA6Cfg.DCACHE_LINE_WIDTH)-1:0]       cl_offset;
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:171:    automatic logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] evict_way, valid_way;
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:173:    for (int unsigned i = 0; i < CVA6Cfg.DCACHE_SET_ASSOC; i++) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:259:            mshr_d.addr = miss_req_addr[i][CVA6Cfg.DCACHE_TAG_WIDTH+CVA6Cfg.DCACHE_INDEX_WIDTH-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:272:        addr_o  = mshr_q.addr[CVA6Cfg.DCACHE_INDEX_WIDTH-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:288:            cnt_d = mshr_q.addr[CVA6Cfg.DCACHE_INDEX_WIDTH-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:313:        cl_offset = mshr_q.addr[CVA6Cfg.DCACHE_OFFSET_WIDTH-1:3] << 6;
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:317:          addr_o = mshr_q.addr[CVA6Cfg.DCACHE_INDEX_WIDTH-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:322:          data_o.tag   = mshr_q.addr[CVA6Cfg.DCACHE_TAG_WIDTH+CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.DCACHE_INDEX_WIDTH];
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:353:          cnt_q[CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.DCACHE_OFFSET_WIDTH],
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:354:          {{CVA6Cfg.DCACHE_OFFSET_WIDTH} {1'b0}}
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:395:          cnt_d       = cnt_q + (1'b1 << CVA6Cfg.DCACHE_OFFSET_WIDTH);
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:402:          if (cnt_q[CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.DCACHE_OFFSET_WIDTH] == CVA6Cfg.DCACHE_NUM_WORDS - 1) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:424:        cnt_d       = cnt_q + (1'b1 << CVA6Cfg.DCACHE_OFFSET_WIDTH);
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:426:        if (cnt_q[CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.DCACHE_OFFSET_WIDTH] == CVA6Cfg.DCACHE_NUM_WORDS - 1)
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:511:      if (mshr_q.valid && mshr_addr_i[i][55:CVA6Cfg.DCACHE_OFFSET_WIDTH] == mshr_q.addr[55:CVA6Cfg.DCACHE_OFFSET_WIDTH]) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:516:      if (mshr_q.valid && mshr_addr_i[i][CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.DCACHE_OFFSET_WIDTH] == mshr_q.addr[CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.DCACHE_OFFSET_WIDTH]) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:583:      .MAX_OUTSTANDING_REQ(CVA6Cfg.MaxOutstandingStores),
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:601:  logic [CVA6Cfg.XLEN-1:0] bypass_addr;
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:605:      .CVA6Cfg              (CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:607:      .CACHELINE_BYTE_OFFSET(CVA6Cfg.DCACHE_OFFSET_WIDTH),
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:616:      .id_i(({{CVA6Cfg.AxiIdWidth - 4{1'b0}}, bypass_adapter_req.id})),
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:636:  logic [CVA6Cfg.XLEN-1:0] miss_addr;
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:640:      .CVA6Cfg              (CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:641:      .DATA_WIDTH           (CVA6Cfg.DCACHE_LINE_WIDTH),
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:642:      .CACHELINE_BYTE_OFFSET(CVA6Cfg.DCACHE_OFFSET_WIDTH),
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:657:      .id_i                 ({{CVA6Cfg.AxiIdWidth - 4{1'b0}}, 4'b0111}),
+/media/sf_source_env/cva6-master/core/cache_subsystem/miss_handler.sv:671:      .WIDTH(CVA6Cfg.DCACHE_SET_ASSOC)
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:22:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:23:    parameter type icache_areq_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:24:    parameter type icache_arsp_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:25:    parameter type icache_dreq_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:26:    parameter type icache_drsp_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:27:    parameter type icache_req_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:28:    parameter type icache_rtrn_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:46:    input icache_areq_t icache_areq_i,  // to/from frontend
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:47:    output icache_arsp_t icache_areq_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:49:    input icache_dreq_t icache_dreq_i,  // to/from frontend
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:50:    output icache_drsp_t icache_dreq_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:79:      .CVA6Cfg(CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:80:      .icache_areq_t(icache_areq_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:81:      .icache_arsp_t(icache_arsp_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:82:      .icache_dreq_t(icache_dreq_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:83:      .icache_drsp_t(icache_drsp_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:84:      .icache_req_t(icache_req_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:85:      .icache_rtrn_t(icache_rtrn_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:109:      .CVA6Cfg(CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv:189:      .FPGA_EN     (CVA6Cfg.FpgaEn)
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:20:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:49:  localparam DCACHE_DIRTY_WIDTH = CVA6Cfg.DCACHE_SET_ASSOC * 2;
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:52:    logic [CVA6Cfg.DCACHE_TAG_WIDTH-1:0]  tag;    // tag array
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:53:    logic [CVA6Cfg.DCACHE_LINE_WIDTH-1:0] data;   // data array
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:58:    logic [(CVA6Cfg.DCACHE_TAG_WIDTH+7)/8-1:0] tag;  // byte enable into tag array
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:59:    logic [(CVA6Cfg.DCACHE_LINE_WIDTH+7)/8-1:0] data;  // byte enable into data array
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:60:    logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0]        vldrty; // bit enable into state array (valid for a pair of dirty/valid bits)
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:71:  logic        [                    NumPorts:0][  CVA6Cfg.DCACHE_SET_ASSOC-1:0] req;
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:72:  logic        [                    NumPorts:0][CVA6Cfg.DCACHE_INDEX_WIDTH-1:0] addr;
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:74:  cache_line_t [  CVA6Cfg.DCACHE_SET_ASSOC-1:0]                                 rdata;
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:75:  logic        [                    NumPorts:0][  CVA6Cfg.DCACHE_TAG_WIDTH-1:0] tag;
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:80:  logic        [  CVA6Cfg.DCACHE_SET_ASSOC-1:0]                                 hit_way;
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:101:  logic        [  CVA6Cfg.DCACHE_SET_ASSOC-1:0]                                 req_ram;
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:102:  logic        [CVA6Cfg.DCACHE_INDEX_WIDTH-1:0]                                 addr_ram;
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:105:  cache_line_t [  CVA6Cfg.DCACHE_SET_ASSOC-1:0]                                 rdata_ram;
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:114:          .CVA6Cfg(CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:157:      .CVA6Cfg(CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:198:  for (genvar i = 0; i < CVA6Cfg.DCACHE_SET_ASSOC; i++) begin : sram_block
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:200:        .DATA_WIDTH(CVA6Cfg.DCACHE_LINE_WIDTH),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:201:        .NUM_WORDS (CVA6Cfg.DCACHE_NUM_WORDS)
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:206:        .addr_i (addr_ram[CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.DCACHE_OFFSET_WIDTH]),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:216:        .DATA_WIDTH(CVA6Cfg.DCACHE_TAG_WIDTH),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:217:        .NUM_WORDS (CVA6Cfg.DCACHE_NUM_WORDS)
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:222:        .addr_i (addr_ram[CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.DCACHE_OFFSET_WIDTH]),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:242:  for (genvar i = 0; i < CVA6Cfg.DCACHE_SET_ASSOC; i++) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:252:      .NUM_WORDS (CVA6Cfg.DCACHE_NUM_WORDS)
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:258:      .addr_i (addr_ram[CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.DCACHE_OFFSET_WIDTH]),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:270:      .CVA6Cfg   (CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:272:      .ADDR_WIDTH(CVA6Cfg.DCACHE_INDEX_WIDTH),
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_nbdcache.sv:298:    assert (CVA6Cfg.DCACHE_LINE_WIDTH / CVA6Cfg.AxiDataWidth inside {2, 4, 8, 16})
+/media/sf_source_env/cva6-master/core/cache_subsystem/tag_cmp.sv:19:    parameter config_pkg::cva6_cfg_t CVA6Cfg    = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/tag_cmp.sv:28:    input logic [NR_PORTS-1:0][CVA6Cfg.DCACHE_SET_ASSOC-1:0] req_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/tag_cmp.sv:34:    output l_data_t [CVA6Cfg.DCACHE_SET_ASSOC-1:0] rdata_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/tag_cmp.sv:35:    input  logic    [NR_PORTS-1:0][CVA6Cfg.DCACHE_TAG_WIDTH-1:0] tag_i, // tag in - comes one cycle later
+/media/sf_source_env/cva6-master/core/cache_subsystem/tag_cmp.sv:36:    output logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] hit_way_o,  // we've got a hit on the corresponding way
+/media/sf_source_env/cva6-master/core/cache_subsystem/tag_cmp.sv:39:    output logic    [CVA6Cfg.DCACHE_SET_ASSOC-1:0] req_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/tag_cmp.sv:44:    input  l_data_t [CVA6Cfg.DCACHE_SET_ASSOC-1:0] rdata_i
+/media/sf_source_env/cva6-master/core/cache_subsystem/tag_cmp.sv:50:  logic [CVA6Cfg.DCACHE_TAG_WIDTH-1:0] sel_tag;
+/media/sf_source_env/cva6-master/core/cache_subsystem/tag_cmp.sv:57:  for (genvar j = 0; j < CVA6Cfg.DCACHE_SET_ASSOC; j++) begin : tag_cmp
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:21:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:23:    parameter int unsigned MetaFifoDepth = CVA6Cfg.DCACHE_MAX_TX,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:29:    parameter type icache_req_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:30:    parameter type icache_rtrn_t = logic
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:38:    input  icache_req_t  icache_data_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:41:    output icache_rtrn_t icache_rtrn_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:65:  localparam AxiNumWords = (CVA6Cfg.ICACHE_LINE_WIDTH/CVA6Cfg.AxiDataWidth) * (CVA6Cfg.ICACHE_LINE_WIDTH > CVA6Cfg.DCACHE_LINE_WIDTH)  +
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:66:                           (CVA6Cfg.DCACHE_LINE_WIDTH/CVA6Cfg.AxiDataWidth) * (CVA6Cfg.ICACHE_LINE_WIDTH <= CVA6Cfg.DCACHE_LINE_WIDTH) ;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:67:  localparam MaxNumWords = $clog2(CVA6Cfg.AxiDataWidth / 8);
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:68:  localparam AxiRdBlenIcache = CVA6Cfg.ICACHE_LINE_WIDTH / CVA6Cfg.AxiDataWidth - 1;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:69:  localparam AxiRdBlenDcache = CVA6Cfg.DCACHE_LINE_WIDTH / CVA6Cfg.AxiDataWidth - 1;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:76:  icache_req_t icache_data;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:88:  logic [CVA6Cfg.AxiAddrWidth-1:0] axi_rd_addr, axi_wr_addr;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:91:  logic [CVA6Cfg.AxiIdWidth-1:0]
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:93:  logic [AxiNumWords-1:0][CVA6Cfg.AxiDataWidth-1:0] axi_wr_data;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:94:  logic [AxiNumWords-1:0][CVA6Cfg.AxiUserWidth-1:0] axi_wr_user;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:95:  logic [CVA6Cfg.AxiDataWidth-1:0] axi_rd_data;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:96:  logic [CVA6Cfg.AxiUserWidth-1:0] axi_rd_user;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:97:  logic [AxiNumWords-1:0][(CVA6Cfg.AxiDataWidth/8)-1:0] axi_wr_be;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:100:  logic [$clog2(CVA6Cfg.AxiDataWidth/8)-1:0] amo_off_d, amo_off_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:104:  logic [CVA6Cfg.MEM_TID_WIDTH-1:0] icache_rtrn_tid_d, icache_rtrn_tid_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:105:  logic [CVA6Cfg.MEM_TID_WIDTH-1:0] dcache_rtrn_tid_d, dcache_rtrn_tid_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:106:  logic [CVA6Cfg.MEM_TID_WIDTH-1:0] dcache_rtrn_rd_tid, dcache_rtrn_wr_tid;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:144:    axi_wr_id_in = {{CVA6Cfg.AxiIdWidth-1{1'b0}}, arb_idx};
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:145:    axi_wr_data[0]  = {(CVA6Cfg.AxiDataWidth/CVA6Cfg.XLEN){dcache_data.data}};
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:148:    axi_wr_addr  = CVA6Cfg.AxiAddrWidth'(dcache_data.paddr);
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:159:    axi_rd_id_in = {{CVA6Cfg.AxiIdWidth-1{1'b0}}, arb_idx};
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:165:      axi_wr_user = {{64 - CVA6Cfg.AxiUserWidth{1'b0}}, dcache_data.user};
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:167:      axi_wr_user = {dcache_data.user, {64 - CVA6Cfg.AxiUserWidth{1'b0}}};
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:173:      axi_rd_addr = CVA6Cfg.AxiAddrWidth'(dcache_data.paddr);
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:181:      axi_rd_addr = CVA6Cfg.AxiAddrWidth'(icache_data.paddr);
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:211:              axi_wr_be[0][dcache_data.paddr[$clog2(CVA6Cfg.AxiDataWidth/8)-1:0]] = '1;  // byte
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:213:              axi_wr_be[0][dcache_data.paddr[$clog2(CVA6Cfg.AxiDataWidth/8)-1:0]+:2] = '1;  // hword
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:215:              axi_wr_be[0][dcache_data.paddr[$clog2(CVA6Cfg.AxiDataWidth/8)-1:0]+:4] = '1;  // word
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:217:              if (CVA6Cfg.IS_XLEN64)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:219:                    CVA6Cfg.AxiDataWidth/8
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:225:            if (CVA6Cfg.RVA) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:236:                axi_wr_be[0][dcache_data.paddr[$clog2(CVA6Cfg.AxiDataWidth/8)-1:0]] = '1;  // byte
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:238:                axi_wr_be[0][dcache_data.paddr[$clog2(CVA6Cfg.AxiDataWidth/8)-1:0]+:2] =
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:241:                axi_wr_be[0][dcache_data.paddr[$clog2(CVA6Cfg.AxiDataWidth/8)-1:0]+:4] =
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:244:                axi_wr_be[0][dcache_data.paddr[$clog2(CVA6Cfg.AxiDataWidth/8)-1:0]+:8] =
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:265:                  amo_off_d = dcache_data.paddr[$clog2(CVA6Cfg.AxiDataWidth/8)-
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:283:                  axi_wr_data[0] = ~{(CVA6Cfg.AxiDataWidth / CVA6Cfg.XLEN) {dcache_data.data}};
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:284:                  axi_wr_user = ~{(CVA6Cfg.AxiDataWidth / CVA6Cfg.XLEN) {dcache_data.user}};
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:373:      .FPGA_ALTERA(CVA6Cfg.FpgaAlteraEn),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:374:      .dtype(icache_req_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:376:      .FPGA_EN(CVA6Cfg.FpgaEn)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:392:      .FPGA_ALTERA(CVA6Cfg.FpgaAlteraEn),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:395:      .FPGA_EN(CVA6Cfg.FpgaEn)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:418:      .DATA_WIDTH(CVA6Cfg.MEM_TID_WIDTH),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:420:      .FPGA_EN   (CVA6Cfg.FpgaEn)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:431:      .data_o    (icache_rtrn_tid_d),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:436:      .DATA_WIDTH(CVA6Cfg.MEM_TID_WIDTH),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:438:      .FPGA_EN   (CVA6Cfg.FpgaEn)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:454:      .DATA_WIDTH(CVA6Cfg.MEM_TID_WIDTH),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:456:      .FPGA_EN   (CVA6Cfg.FpgaEn)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:484:      .DATA_WIDTH  (CVA6Cfg.AxiIdWidth + 1),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:487:      .FPGA_EN     (CVA6Cfg.FpgaEn)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:504:  logic [CVA6Cfg.ICACHE_USER_LINE_WIDTH/CVA6Cfg.AxiUserWidth-1:0][CVA6Cfg.AxiUserWidth-1:0]
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:506:  logic [CVA6Cfg.DCACHE_USER_LINE_WIDTH/CVA6Cfg.AxiUserWidth-1:0][CVA6Cfg.AxiUserWidth-1:0]
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:508:  logic [CVA6Cfg.ICACHE_LINE_WIDTH/CVA6Cfg.AxiDataWidth-1:0][CVA6Cfg.AxiDataWidth-1:0]
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:510:  logic [CVA6Cfg.DCACHE_LINE_WIDTH/CVA6Cfg.AxiDataWidth-1:0][CVA6Cfg.AxiDataWidth-1:0]
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:520:    icache_rtrn_o.tid      = icache_rtrn_tid_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:543:      if (CVA6Cfg.ICACHE_LINE_WIDTH == CVA6Cfg.AxiDataWidth) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:547:          axi_rd_data, icache_rd_shift_q[CVA6Cfg.ICACHE_LINE_WIDTH/CVA6Cfg.AxiDataWidth-1:1]
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:551:        axi_rd_user, icache_rd_shift_user_q[CVA6Cfg.ICACHE_USER_LINE_WIDTH/CVA6Cfg.AxiUserWidth-1:1]
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:562:      if (CVA6Cfg.DCACHE_LINE_WIDTH == CVA6Cfg.AxiDataWidth) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:566:          axi_rd_data, dcache_rd_shift_q[CVA6Cfg.DCACHE_LINE_WIDTH/CVA6Cfg.AxiDataWidth-1:1]
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:570:        axi_rd_user, dcache_rd_shift_user_q[CVA6Cfg.DCACHE_USER_LINE_WIDTH/CVA6Cfg.AxiUserWidth-1:1]
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:577:    end else if (CVA6Cfg.RVA && dcache_sc_rtrn) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:619:      dcache_rtrn_inv_d.idx = inval_addr_i[CVA6Cfg.DCACHE_INDEX_WIDTH-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:628:    end else if (CVA6Cfg.RVA && invalidate) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:633:      dcache_rtrn_inv_d.idx = dcache_data.paddr[CVA6Cfg.DCACHE_INDEX_WIDTH-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:643:      if (CVA6Cfg.RVA && axi_rd_id_out[1]) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:662:      if (CVA6Cfg.RVA && wr_id_out[1]) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:704:      icache_rtrn_tid_q      <= '0;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:719:      icache_rtrn_tid_q      <= icache_rtrn_tid_d;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_axi_adapter.sv:734:      .CVA6Cfg    (CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:17://              Define CVA6Cfg.DCacheType if you want to use this cache
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:26:    parameter config_pkg::cva6_cfg_t CVA6Cfg        = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:27:    parameter type                   icache_areq_t  = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:28:    parameter type                   icache_arsp_t  = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:29:    parameter type                   icache_dreq_t  = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:30:    parameter type                   icache_drsp_t  = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:33:    parameter type                   icache_req_t   = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:34:    parameter type                   icache_rtrn_t  = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:46:    input icache_areq_t icache_areq_i,  // to/from frontend
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:47:    output icache_arsp_t icache_areq_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:49:    input icache_dreq_t icache_dreq_i,  // to/from frontend
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:50:    output icache_drsp_t icache_dreq_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:58:    output logic [NumPorts-1:0][CVA6Cfg.DCACHE_SET_ASSOC-1:0] miss_vld_bits_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:83:    logic [CVA6Cfg.DCACHE_INDEX_WIDTH-1:0]     idx;  // physical address to invalidate
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:84:    logic [CVA6Cfg.DCACHE_SET_ASSOC_WIDTH-1:0] way;  // way to invalidate
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:90:    logic [CVA6Cfg.DCACHE_SET_ASSOC_WIDTH-1:0] way;  // way to replace
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:91:    logic [CVA6Cfg.PLEN-1:0] paddr;  // physical address
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:92:    logic [CVA6Cfg.XLEN-1:0] data;  // word width of processor (no block stores at the moment)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:93:    logic [CVA6Cfg.DCACHE_USER_WIDTH-1:0]          user;        // user width of processor (no block stores at the moment)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:95:    logic [CVA6Cfg.MEM_TID_WIDTH-1:0] tid;  // thread id (used as transaction id in Ariane)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:101:    logic [CVA6Cfg.DCACHE_LINE_WIDTH-1:0] data;  // full cache line width
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:102:    logic [CVA6Cfg.DCACHE_USER_LINE_WIDTH-1:0] user;  // user bits
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:104:    logic [CVA6Cfg.MEM_TID_WIDTH-1:0] tid;  // thread id (used as transaction id in Ariane)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:108:  icache_req_t  icache_adapter;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:109:  icache_rtrn_t adapter_icache;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:118:      .CVA6Cfg(CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:119:      .icache_areq_t(icache_areq_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:120:      .icache_arsp_t(icache_arsp_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:121:      .icache_dreq_t(icache_dreq_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:122:      .icache_drsp_t(icache_drsp_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:123:      .icache_req_t(icache_req_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:124:      .icache_rtrn_t(icache_rtrn_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:149:      .CVA6Cfg(CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:187:      .CVA6Cfg(CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:190:      .icache_req_t(icache_req_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:191:      .icache_rtrn_t(icache_rtrn_t)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:210:      .CVA6Cfg(CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:216:      .icache_req_t(icache_req_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:217:      .icache_rtrn_t(icache_rtrn_t)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv:257:  for (genvar j = 0; j < CVA6Cfg.XLEN / 8; j++) begin : gen_invalid_write_assertion
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:20:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:28:    parameter logic [CVA6Cfg.MEM_TID_WIDTH-1:0] RdAmoTxId = 1
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:50:    output logic [NumPorts-1:0][CVA6Cfg.DCACHE_SET_ASSOC-1:0] miss_vld_bits_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:59:  localparam DCACHE_CL_IDX_WIDTH = $clog2(CVA6Cfg.DCACHE_NUM_WORDS);
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:62:    logic [CVA6Cfg.DCACHE_TAG_WIDTH+(CVA6Cfg.DCACHE_INDEX_WIDTH-CVA6Cfg.XLEN_ALIGN_BYTES)-1:0] wtag;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:63:    logic [CVA6Cfg.XLEN-1:0] data;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:64:    logic [CVA6Cfg.DCACHE_USER_WIDTH-1:0] user;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:65:    logic [(CVA6Cfg.XLEN/8)-1:0] dirty;  // byte is dirty
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:66:    logic [(CVA6Cfg.XLEN/8)-1:0] valid;  // byte is valid
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:67:    logic [(CVA6Cfg.XLEN/8)-1:0] txblock;  // byte is part of transaction in-flight
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:69:    logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] hit_oh;  // valid way in the cache
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:78:  logic     [      CVA6Cfg.DCACHE_SET_ASSOC-1:0]                                  wr_cl_we;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:79:  logic     [      CVA6Cfg.DCACHE_TAG_WIDTH-1:0]                                  wr_cl_tag;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:81:  logic     [   CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0]                                  wr_cl_off;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:82:  logic     [     CVA6Cfg.DCACHE_LINE_WIDTH-1:0]                                  wr_cl_data;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:83:  logic     [CVA6Cfg.DCACHE_USER_LINE_WIDTH-1:0]                                  wr_cl_user;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:84:  logic     [   CVA6Cfg.DCACHE_LINE_WIDTH/8-1:0]                                  wr_cl_data_be;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:85:  logic     [      CVA6Cfg.DCACHE_SET_ASSOC-1:0]                                  wr_vld_bits;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:86:  logic     [      CVA6Cfg.DCACHE_SET_ASSOC-1:0]                                  wr_req;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:89:  logic     [   CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0]                                  wr_off;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:90:  logic     [                  CVA6Cfg.XLEN-1:0]                                  wr_data;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:91:  logic     [              (CVA6Cfg.XLEN/8)-1:0]                                  wr_data_be;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:92:  logic     [     CVA6Cfg.DCACHE_USER_WIDTH-1:0]                                  wr_user;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:99:  logic     [                      NumPorts-1:0][               CVA6Cfg.XLEN-1:0] miss_wdata;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:100:  logic     [                      NumPorts-1:0][  CVA6Cfg.DCACHE_USER_WIDTH-1:0] miss_wuser;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:101:  logic     [                      NumPorts-1:0][               CVA6Cfg.PLEN-1:0] miss_paddr;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:103:  logic     [                      NumPorts-1:0][      CVA6Cfg.MEM_TID_WIDTH-1:0] miss_id;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:106:  logic     [         CVA6Cfg.MEM_TID_WIDTH-1:0]                                  miss_rtrn_id;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:113:  logic     [                      NumPorts-1:0][   CVA6Cfg.DCACHE_TAG_WIDTH-1:0] rd_tag;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:115:  logic     [                      NumPorts-1:0][CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0] rd_off;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:116:  logic     [                  CVA6Cfg.XLEN-1:0]                                  rd_data;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:117:  logic     [     CVA6Cfg.DCACHE_USER_WIDTH-1:0]                                  rd_user;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:118:  logic     [      CVA6Cfg.DCACHE_SET_ASSOC-1:0]                                  rd_vld_bits;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:119:  logic     [      CVA6Cfg.DCACHE_SET_ASSOC-1:0]                                  rd_hit_oh;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:122:  logic     [         CVA6Cfg.DCACHE_MAX_TX-1:0][               CVA6Cfg.PLEN-1:0] tx_paddr;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:123:  logic     [         CVA6Cfg.DCACHE_MAX_TX-1:0]                                  tx_vld;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:126:  wbuffer_t [     CVA6Cfg.WtDcacheWbufDepth-1:0]                                  wbuffer_data;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:134:      .CVA6Cfg(CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:196:    if ((k == 0 && (CVA6Cfg.MmuPresent || CVA6Cfg.RVZCMT )) || (k == 1) || (k == 2 && CVA6Cfg.EnableAccelerator)) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:199:          .CVA6Cfg(CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:243:      assign miss_wdata[k] = {{CVA6Cfg.XLEN} {1'b0}};
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:244:      assign miss_wuser[k] = {{CVA6Cfg.DCACHE_USER_WIDTH} {1'b0}};
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:245:      assign miss_vld_bits_o[k] = {{CVA6Cfg.DCACHE_SET_ASSOC} {1'b0}};
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:246:      assign miss_paddr[k] = {{CVA6Cfg.PLEN} {1'b0}};
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:249:      assign miss_id[k] = {{CVA6Cfg.MEM_TID_WIDTH} {1'b0}};
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:250:      assign rd_tag[k] = {{CVA6Cfg.DCACHE_TAG_WIDTH} {1'b0}};
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:252:      assign rd_off[k] = {{CVA6Cfg.DCACHE_OFFSET_WIDTH} {1'b0}};
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:266:      .CVA6Cfg(CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:327:      .CVA6Cfg(CVA6Cfg),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache.sv:385:    assert (CVA6Cfg.DCACHE_INDEX_WIDTH <= 12)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:20:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:24:    parameter logic [CVA6Cfg.MEM_TID_WIDTH-1:0] RdTxId = 1
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:36:    output logic [CVA6Cfg.XLEN-1:0] miss_wdata_o,  // unused (set to 0)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:37:    output logic [CVA6Cfg.DCACHE_USER_WIDTH-1:0] miss_wuser_o,  // unused (set to 0)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:38:    output logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] miss_vld_bits_o,  // valid bits at the missed index
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:39:    output logic [CVA6Cfg.PLEN-1:0] miss_paddr_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:42:    output logic [CVA6Cfg.MEM_TID_WIDTH-1:0] miss_id_o,  // set to constant ID
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:48:    output logic [CVA6Cfg.DCACHE_TAG_WIDTH-1:0] rd_tag_o,  // tag in - comes one cycle later
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:50:    output logic [CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0] rd_off_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:54:    input logic [CVA6Cfg.XLEN-1:0] rd_data_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:55:    input logic [CVA6Cfg.DCACHE_USER_WIDTH-1:0] rd_user_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:56:    input logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] rd_vld_bits_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:57:    input logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] rd_hit_oh_i
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:73:  logic [CVA6Cfg.DCACHE_TAG_WIDTH-1:0] address_tag_d, address_tag_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:75:  logic [CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0] address_off_d, address_off_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:76:  logic [CVA6Cfg.DcacheIdWidth-1:0] id_d, id_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:77:  logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] vld_data_d, vld_data_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:88:  assign address_idx_d = (req_port_o.data_gnt) ? req_port_i.address_index[CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.DCACHE_OFFSET_WIDTH] : address_idx_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:89:  assign address_off_d = (req_port_o.data_gnt) ? req_port_i.address_index[CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0]                  : address_off_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:107:      CVA6Cfg,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:108:      {{{64-CVA6Cfg.DCACHE_TAG_WIDTH-CVA6Cfg.DCACHE_INDEX_WIDTH}{1'b0}}, address_tag_q, {CVA6Cfg.DCACHE_INDEX_WIDTH{1'b0}}}
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_ctrl.sv:295:    assert (CVA6Cfg.DCACHE_INDEX_WIDTH <= 12)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:33:    parameter config_pkg::cva6_cfg_t CVA6Cfg             = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:42:    input logic [NumPorts-1:0][CVA6Cfg.DCACHE_TAG_WIDTH-1:0] rd_tag_i,  // tag in - comes one cycle later
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:44:    input logic [NumPorts-1:0][CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0] rd_off_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:49:    output logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] rd_vld_bits_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:50:    output logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] rd_hit_oh_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:51:    output logic [CVA6Cfg.XLEN-1:0] rd_data_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:52:    output logic [CVA6Cfg.DCACHE_USER_WIDTH-1:0] rd_user_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:57:    input logic [      CVA6Cfg.DCACHE_SET_ASSOC-1:0] wr_cl_we_i,       // writes a full cacheline
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:58:    input logic [      CVA6Cfg.DCACHE_TAG_WIDTH-1:0] wr_cl_tag_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:60:    input logic [   CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0] wr_cl_off_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:61:    input logic [     CVA6Cfg.DCACHE_LINE_WIDTH-1:0] wr_cl_data_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:62:    input logic [CVA6Cfg.DCACHE_USER_LINE_WIDTH-1:0] wr_cl_user_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:63:    input logic [   CVA6Cfg.DCACHE_LINE_WIDTH/8-1:0] wr_cl_data_be_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:64:    input logic [      CVA6Cfg.DCACHE_SET_ASSOC-1:0] wr_vld_bits_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:67:    input logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] wr_req_i,  // write a single word to offset off_i[:3]
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:70:    input logic [CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0] wr_off_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:71:    input logic [CVA6Cfg.XLEN-1:0] wr_data_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:72:    input logic [CVA6Cfg.DCACHE_USER_WIDTH-1:0] wr_user_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:73:    input logic [(CVA6Cfg.XLEN/8)-1:0] wr_data_be_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:76:    input wbuffer_t [CVA6Cfg.WtDcacheWbufDepth-1:0] wbuffer_data_i
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:79:  localparam DCACHE_NUM_BANKS = CVA6Cfg.DCACHE_LINE_WIDTH / CVA6Cfg.XLEN;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:91:  // number of bits needed to address AXI data. If AxiDataWidth equals CVA6Cfg.XLEN this parameter
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:93:  localparam AXI_OFFSET_WIDTH = CVA6Cfg.AxiDataWidth == CVA6Cfg.XLEN ? $clog2(
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:94:      CVA6Cfg.AxiDataWidth / 8
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:96:      CVA6Cfg.AxiDataWidth / 8
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:101:  logic [DCACHE_NUM_BANKS-1:0][CVA6Cfg.DCACHE_SET_ASSOC-1:0][(CVA6Cfg.XLEN/8)-1:0] bank_be;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:104:  logic [CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0] bank_off_d, bank_off_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:106:  logic [DCACHE_NUM_BANKS-1:0][CVA6Cfg.DCACHE_SET_ASSOC-1:0][CVA6Cfg.XLEN-1:0] bank_wdata;  //
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:107:  logic [DCACHE_NUM_BANKS-1:0][CVA6Cfg.DCACHE_SET_ASSOC-1:0][CVA6Cfg.XLEN-1:0] bank_rdata;  //
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:108:  logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0][CVA6Cfg.XLEN-1:0] rdata_cl;  // selected word from each cacheline
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:109:  logic [DCACHE_NUM_BANKS-1:0][CVA6Cfg.DCACHE_SET_ASSOC-1:0][CVA6Cfg.DCACHE_USER_WIDTH-1:0] bank_wuser;  //
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:110:  logic [DCACHE_NUM_BANKS-1:0][CVA6Cfg.DCACHE_SET_ASSOC-1:0][CVA6Cfg.DCACHE_USER_WIDTH-1:0] bank_ruser;  //
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:111:  logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0][CVA6Cfg.DCACHE_USER_WIDTH-1:0]                      ruser_cl;          // selected word from each cacheline
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:113:  logic [CVA6Cfg.DCACHE_TAG_WIDTH-1:0] rd_tag;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:114:  logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] vld_req;  // bit enable for valid regs
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:116:  logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] vld_wdata;  // valid bits to write
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:117:  logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0][CVA6Cfg.DCACHE_TAG_WIDTH-1:0]            tag_rdata;                    // these are the tags coming from the tagmem
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:122:  logic [CVA6Cfg.WtDcacheWbufDepth-1:0] wbuffer_hit_oh;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:123:  logic [(CVA6Cfg.XLEN/8)-1:0] wbuffer_be;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:124:  logic [CVA6Cfg.XLEN-1:0] wbuffer_rdata, rdata;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:125:  logic [CVA6Cfg.DCACHE_USER_WIDTH-1:0] wbuffer_ruser, ruser;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:126:  logic [CVA6Cfg.PLEN-1:0] wbuffer_cmp_addr;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:145:    for (genvar j = 0; j < CVA6Cfg.DCACHE_SET_ASSOC; j++) begin : gen_bank_way
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:146:      assign bank_be[k][j]   = (wr_cl_we_i[j] & wr_cl_vld_i)  ? wr_cl_data_be_i[k*(CVA6Cfg.XLEN/8) +: (CVA6Cfg.XLEN/8)] :
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:149:      assign bank_wdata[k][j] = (wr_cl_we_i[j] & wr_cl_vld_i) ?  wr_cl_data_i[k*CVA6Cfg.XLEN +: CVA6Cfg.XLEN] :
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:151:      assign bank_wuser[k][j] = (wr_cl_we_i[j] & wr_cl_vld_i) ?  wr_cl_user_i[k*CVA6Cfg.DCACHE_USER_WIDTH +: CVA6Cfg.DCACHE_USER_WIDTH] :
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:197:      bank_collision[k] = rd_off_i[k][CVA6Cfg.DCACHE_OFFSET_WIDTH-1:CVA6Cfg.XLEN_ALIGN_BYTES] == wr_off_i[CVA6Cfg.DCACHE_OFFSET_WIDTH-1:CVA6Cfg.XLEN_ALIGN_BYTES];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:208:              rd_off_i[vld_sel_d][CVA6Cfg.DCACHE_OFFSET_WIDTH-1:CVA6Cfg.XLEN_ALIGN_BYTES]);
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:209:          bank_idx[rd_off_i[vld_sel_d][CVA6Cfg.DCACHE_OFFSET_WIDTH-1:CVA6Cfg.XLEN_ALIGN_BYTES]] = rd_idx_i[vld_sel_d];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:217:              wr_off_i[CVA6Cfg.DCACHE_OFFSET_WIDTH-1:CVA6Cfg.XLEN_ALIGN_BYTES]
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:220:              dcache_cl_bin2oh(wr_off_i[CVA6Cfg.DCACHE_OFFSET_WIDTH-1:CVA6Cfg.XLEN_ALIGN_BYTES]);
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:230:  logic [CVA6Cfg.DCACHE_OFFSET_WIDTH-CVA6Cfg.XLEN_ALIGN_BYTES-1:0] wr_cl_off;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:231:  logic [CVA6Cfg.DCACHE_OFFSET_WIDTH-CVA6Cfg.XLEN_ALIGN_BYTES-1:0] wr_cl_nc_off;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:232:  logic [                   $clog2(CVA6Cfg.WtDcacheWbufDepth)-1:0] wbuffer_hit_idx;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:233:  logic [                    $clog2(CVA6Cfg.DCACHE_SET_ASSOC)-1:0] rd_hit_idx;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:241:  for (genvar i = 0; i < CVA6Cfg.DCACHE_SET_ASSOC; i++) begin : gen_tag_cmpsel
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:245:    assign rdata_cl[i] = bank_rdata[bank_off_q[CVA6Cfg.DCACHE_OFFSET_WIDTH-1:CVA6Cfg.XLEN_ALIGN_BYTES]][i];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:246:    assign ruser_cl[i] = bank_ruser[bank_off_q[CVA6Cfg.DCACHE_OFFSET_WIDTH-1:CVA6Cfg.XLEN_ALIGN_BYTES]][i];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:249:  for (genvar k = 0; k < CVA6Cfg.WtDcacheWbufDepth; k++) begin : gen_wbuffer_hit
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:250:    assign wbuffer_hit_oh[k] = (|wbuffer_data_i[k].valid) & ({{CVA6Cfg.XLEN_ALIGN_BYTES{1'b0}}, wbuffer_data_i[k].wtag} == (wbuffer_cmp_addr >> CVA6Cfg.XLEN_ALIGN_BYTES));
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:254:      .WIDTH(CVA6Cfg.WtDcacheWbufDepth)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:262:      .WIDTH(CVA6Cfg.DCACHE_SET_ASSOC)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:273:  if (CVA6Cfg.NOCType == config_pkg::NOC_TYPE_AXI4_ATOP) begin : gen_axi_offset
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:274:    // In case of an uncached read, return the desired CVA6Cfg.XLEN-bit segment of the most recent AXI read
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:275:    assign wr_cl_off     = (wr_cl_nc_i) ? (CVA6Cfg.AxiDataWidth == CVA6Cfg.XLEN) ? '0 :
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:276:                              {{CVA6Cfg.DCACHE_OFFSET_WIDTH-AXI_OFFSET_WIDTH{1'b0}}, wr_cl_off_i[AXI_OFFSET_WIDTH-1:CVA6Cfg.XLEN_ALIGN_BYTES]} :
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:277:                              wr_cl_off_i[CVA6Cfg.DCACHE_OFFSET_WIDTH-1:CVA6Cfg.XLEN_ALIGN_BYTES];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:279:    assign wr_cl_off = wr_cl_off_i[CVA6Cfg.DCACHE_OFFSET_WIDTH-1:3];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:284:      rdata = wr_cl_data_i[wr_cl_off*CVA6Cfg.XLEN+:CVA6Cfg.XLEN];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:285:      ruser = wr_cl_user_i[wr_cl_off*CVA6Cfg.DCACHE_USER_WIDTH+:CVA6Cfg.DCACHE_USER_WIDTH];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:293:  for (genvar k = 0; k < (CVA6Cfg.XLEN / 8); k++) begin : gen_rd_data
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:296:  for (genvar k = 0; k < CVA6Cfg.DCACHE_USER_WIDTH / 8; k++) begin : gen_rd_user
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:304:  logic [CVA6Cfg.DCACHE_TAG_WIDTH:0] vld_tag_rdata[CVA6Cfg.DCACHE_SET_ASSOC-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:309:        .USER_WIDTH (CVA6Cfg.DCACHE_SET_ASSOC * CVA6Cfg.DCACHE_USER_WIDTH),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:310:        .DATA_WIDTH (CVA6Cfg.DCACHE_SET_ASSOC * CVA6Cfg.XLEN),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:311:        .USER_EN    (CVA6Cfg.DATA_USER_EN),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:313:        .TECHNO_CUT (CVA6Cfg.TechnoCut),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:314:        .NUM_WORDS  (CVA6Cfg.DCACHE_NUM_WORDS)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:329:  for (genvar i = 0; i < CVA6Cfg.DCACHE_SET_ASSOC; i++) begin : gen_tag_srams
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:331:    assign tag_rdata[i]     = vld_tag_rdata[i][CVA6Cfg.DCACHE_TAG_WIDTH-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:332:    assign rd_vld_bits_o[i] = vld_tag_rdata[i][CVA6Cfg.DCACHE_TAG_WIDTH];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:337:        .DATA_WIDTH (CVA6Cfg.DCACHE_TAG_WIDTH + 1),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:339:        .TECHNO_CUT (CVA6Cfg.TechnoCut),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:340:        .NUM_WORDS  (CVA6Cfg.DCACHE_NUM_WORDS)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:377:    assert (CVA6Cfg.DCACHE_LINE_WIDTH >= CVA6Cfg.AxiDataWidth)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:383:    assert (CVA6Cfg.AxiDataWidth >= CVA6Cfg.XLEN)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:384:    else $fatal(1, "[l1 dcache] AXI data width needs to be greater or equal CVA6Cfg.XLEN");
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:389:    assert (CVA6Cfg.DCACHE_LINE_WIDTH > CVA6Cfg.XLEN)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:390:    else $fatal(1, "[l1 dcache] cache_line_size needs to be greater than CVA6Cfg.XLEN");
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:410:  logic vld_mirror[CVA6Cfg.DCACHE_NUM_WORDS-1:0][CVA6Cfg.DCACHE_SET_ASSOC-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:411:  logic [CVA6Cfg.DCACHE_TAG_WIDTH-1:0] tag_mirror[CVA6Cfg.DCACHE_NUM_WORDS-1:0][CVA6Cfg.DCACHE_SET_ASSOC-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:412:  logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] tag_write_duplicate_test;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:419:      for (int i = 0; i < CVA6Cfg.DCACHE_SET_ASSOC; i++) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_mem.sv:428:  for (genvar i = 0; i < CVA6Cfg.DCACHE_SET_ASSOC; i++) begin : gen_tag_dubl_test
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:21:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:25:    parameter logic [CVA6Cfg.MEM_TID_WIDTH-1:0] AmoTxId = 1,  // TX id to be used for AMOs
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:47:    input logic [NumPorts-1:0][CVA6Cfg.XLEN-1:0] miss_wdata_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:48:    input logic [NumPorts-1:0][CVA6Cfg.DCACHE_USER_WIDTH-1:0] miss_wuser_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:49:    input logic [NumPorts-1:0][CVA6Cfg.PLEN-1:0] miss_paddr_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:50:    input logic [NumPorts-1:0][CVA6Cfg.DCACHE_SET_ASSOC-1:0] miss_vld_bits_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:52:    input logic [NumPorts-1:0][CVA6Cfg.MEM_TID_WIDTH-1:0] miss_id_i,  // used as transaction ID
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:57:    output logic [CVA6Cfg.MEM_TID_WIDTH-1:0]                  miss_rtrn_id_o,     // only used for writes, set to zero for reads
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:59:    input  logic [CVA6Cfg.DCACHE_MAX_TX-1:0][CVA6Cfg.PLEN-1:0]  tx_paddr_i,         // used to check for address collisions with read operations
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:60:    input  logic [CVA6Cfg.DCACHE_MAX_TX-1:0]                   tx_vld_i,           // used to check for address collisions with read operations
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:64:    output logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] wr_cl_we_o,  // writes a full cacheline
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:65:    output logic [CVA6Cfg.DCACHE_TAG_WIDTH-1:0] wr_cl_tag_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:67:    output logic [CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0] wr_cl_off_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:68:    output logic [CVA6Cfg.DCACHE_LINE_WIDTH-1:0] wr_cl_data_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:69:    output logic [CVA6Cfg.DCACHE_USER_LINE_WIDTH-1:0] wr_cl_user_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:70:    output logic [CVA6Cfg.DCACHE_LINE_WIDTH/8-1:0] wr_cl_data_be_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:71:    output logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] wr_vld_bits_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:81:  function automatic logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] dcache_way_bin2oh(
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:82:      input logic [CVA6Cfg.DCACHE_SET_ASSOC_WIDTH-1:0] in);
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:83:    logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] out;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:95:  function automatic logic [CVA6Cfg.PLEN-1:0] paddrSizeAlign(input logic [CVA6Cfg.PLEN-1:0] paddr,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:97:    logic [CVA6Cfg.PLEN-1:0] out;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:103:      3'b111:  out[CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0] = '0;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:123:    logic [CVA6Cfg.PLEN-1:0]                     paddr;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:125:    logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0]         vld_bits;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:126:    logic [CVA6Cfg.MEM_TID_WIDTH-1:0]            id;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:128:    logic [$clog2(CVA6Cfg.DCACHE_SET_ASSOC)-1:0] repl_way;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:133:  logic [$clog2(CVA6Cfg.DCACHE_SET_ASSOC)-1:0] repl_way, inv_way, rnd_way;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:145:  logic [CVA6Cfg.XLEN-1:0] amo_data, amo_data_a, amo_data_b;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:146:  logic [CVA6Cfg.XLEN-1:0] amo_user;  //DCACHE USER ? CVA6Cfg.DCACHE_USER_WIDTH
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:147:  logic [CVA6Cfg.PLEN-1:0] tmp_paddr;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:165:  assign flush_done = (cnt_q == CVA6Cfg.DCACHE_NUM_WORDS - 1);
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:193:      .WIDTH(CVA6Cfg.DCACHE_SET_ASSOC)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:203:      .OutWidth (CVA6Cfg.DCACHE_SET_ASSOC_WIDTH)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:228:    assign mshr_rdrd_collision[k]   = (mshr_q.paddr[CVA6Cfg.PLEN-1:CVA6Cfg.DCACHE_OFFSET_WIDTH] == miss_paddr_i[k][CVA6Cfg.PLEN-1:CVA6Cfg.DCACHE_OFFSET_WIDTH]) && (mshr_vld_q | mshr_vld_q1);
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:234:  assign mshr_rdwr_collision = (mshr_q.paddr[CVA6Cfg.PLEN-1:CVA6Cfg.DCACHE_OFFSET_WIDTH] == miss_paddr_i[NumPorts-1][CVA6Cfg.PLEN-1:CVA6Cfg.DCACHE_OFFSET_WIDTH]) && mshr_vld_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:239:    for (int k = 0; k < CVA6Cfg.DCACHE_MAX_TX; k++) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:240:      tx_rdwr_collision |= (miss_paddr_i[miss_port_idx][CVA6Cfg.PLEN-1:CVA6Cfg.DCACHE_OFFSET_WIDTH] == tx_paddr_i[k][CVA6Cfg.PLEN-1:CVA6Cfg.DCACHE_OFFSET_WIDTH]) && tx_vld_i[k];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:250:  if (CVA6Cfg.RVA) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:251:    if (CVA6Cfg.IS_XLEN64) begin : gen_amo_64b_data
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:260:    if (CVA6Cfg.RVA) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:261:      if (CVA6Cfg.IS_XLEN64) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:270:      if (CVA6Cfg.DATA_USER_EN) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:278:  if (CVA6Cfg.RVA) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:280:    if (CVA6Cfg.NOCType == config_pkg::NOC_TYPE_AXI4_ATOP) begin : gen_axi_rtrn_mux
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:281:      if (CVA6Cfg.AxiDataWidth > 64) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:283:            CVA6Cfg.AxiDataWidth/8
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:289:      assign amo_rtrn_mux = mem_rtrn_i.data[amo_req_i.operand_a[CVA6Cfg.DCACHE_OFFSET_WIDTH-1:3]*64+:64];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:322:  assign mem_data_o.tid = (CVA6Cfg.RVA && amo_sel) ? AmoTxId : miss_id_i[miss_port_idx];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:323:  assign mem_data_o.nc = (CVA6Cfg.RVA && amo_sel) ? 1'b1 : miss_nc_i[miss_port_idx];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:324:  assign mem_data_o.way = (CVA6Cfg.RVA && amo_sel) ? '0 : repl_way;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:325:  assign mem_data_o.data = (CVA6Cfg.RVA && amo_sel) ? amo_data : miss_wdata_i[miss_port_idx];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:326:  assign mem_data_o.user = (CVA6Cfg.RVA && amo_sel) ? amo_user : miss_wuser_i[miss_port_idx];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:327:  assign mem_data_o.size   = (CVA6Cfg.RVA && amo_sel) ? {1'b0, amo_req_i.size} : miss_size_i [miss_port_idx];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:328:  assign mem_data_o.amo_op = (CVA6Cfg.RVA && amo_sel) ? amo_req_i.amo_op : AMO_NONE;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:330:  assign tmp_paddr         = (CVA6Cfg.RVA && amo_sel) ? amo_req_i.operand_a[CVA6Cfg.PLEN-1:0] : miss_paddr_i[miss_port_idx];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:355:  logic [$clog2(CVA6Cfg.DCACHE_MAX_TX + 1)-1:0] stores_inflight_d, stores_inflight_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:388:          if (CVA6Cfg.RVA) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:438:                           (inv_vld)  ? mem_rtrn_i.inv.idx[CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.DCACHE_OFFSET_WIDTH] :
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:439:                                        mshr_q.paddr[CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.DCACHE_OFFSET_WIDTH];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:441:  assign wr_cl_tag_o = mshr_q.paddr[CVA6Cfg.DCACHE_TAG_WIDTH+CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.DCACHE_INDEX_WIDTH];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:442:  assign wr_cl_off_o = mshr_q.paddr[CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:486:        end else if (CVA6Cfg.RVA && amo_req_i.req) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:576:        if (CVA6Cfg.RVA) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_missunit.sv:591:        if (CVA6Cfg.RVA) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:56:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:73:    output logic [CVA6Cfg.PLEN-1:0] miss_paddr_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:76:    output logic [CVA6Cfg.XLEN-1:0] miss_wdata_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:77:    output logic [CVA6Cfg.DCACHE_USER_WIDTH-1:0] miss_wuser_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:78:    output logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] miss_vld_bits_o,  // unused here (set to 0)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:81:    output logic [CVA6Cfg.MEM_TID_WIDTH-1:0]          miss_id_o,       // ID of this transaction (wbuffer uses all IDs from 0 to DCACHE_MAX_TX-1)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:84:    input logic [CVA6Cfg.MEM_TID_WIDTH-1:0] miss_rtrn_id_i,  // transaction ID to clear
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:86:    output logic [CVA6Cfg.DCACHE_TAG_WIDTH-1:0] rd_tag_o,  // tag in - comes one cycle later
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:88:    output logic [CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0] rd_off_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:92:    input logic [CVA6Cfg.XLEN-1:0] rd_data_i,  // unused
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:93:    input logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] rd_vld_bits_i,  // unused
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:94:    input logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] rd_hit_oh_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:99:    output logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] wr_req_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:102:    output logic [CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0] wr_off_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:103:    output logic [CVA6Cfg.XLEN-1:0] wr_data_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:104:    output logic [(CVA6Cfg.XLEN/8)-1:0] wr_data_be_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:105:    output logic [CVA6Cfg.DCACHE_USER_WIDTH-1:0] wr_user_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:107:    output wbuffer_t [CVA6Cfg.WtDcacheWbufDepth-1:0] wbuffer_data_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:108:    output logic [CVA6Cfg.DCACHE_MAX_TX-1:0][CVA6Cfg.PLEN-1:0]     tx_paddr_o,      // used to check for address collisions with read operations
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:109:    output logic [CVA6Cfg.DCACHE_MAX_TX-1:0] tx_vld_o
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:112:  function automatic logic [(CVA6Cfg.XLEN/8)-1:0] to_byte_enable8(
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:113:      input logic [CVA6Cfg.XLEN_ALIGN_BYTES-1:0] offset, input logic [1:0] size);
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:114:    logic [(CVA6Cfg.XLEN/8)-1:0] be;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:125:  function automatic logic [(CVA6Cfg.XLEN/8)-1:0] to_byte_enable4(
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:126:      input logic [CVA6Cfg.XLEN_ALIGN_BYTES-1:0] offset, input logic [1:0] size);
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:138:  function automatic logic [CVA6Cfg.XLEN-1:0] repData64(
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:139:      input logic [CVA6Cfg.XLEN-1:0] data, input logic [CVA6Cfg.XLEN_ALIGN_BYTES-1:0] offset,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:141:    logic [CVA6Cfg.XLEN-1:0] out;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:151:  function automatic logic [CVA6Cfg.XLEN-1:0] repData32(
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:152:      input logic [CVA6Cfg.XLEN-1:0] data, input logic [CVA6Cfg.XLEN_ALIGN_BYTES-1:0] offset,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:154:    logic [CVA6Cfg.XLEN-1:0] out;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:165:    logic [(CVA6Cfg.XLEN/8)-1:0]                  be;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:166:    logic [$clog2(CVA6Cfg.WtDcacheWbufDepth)-1:0] ptr;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:169:  tx_stat_t [CVA6Cfg.DCACHE_MAX_TX-1:0] tx_stat_d, tx_stat_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:170:  wbuffer_t [CVA6Cfg.WtDcacheWbufDepth-1:0] wbuffer_d, wbuffer_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:171:  logic [CVA6Cfg.WtDcacheWbufDepth-1:0] valid;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:172:  logic [CVA6Cfg.WtDcacheWbufDepth-1:0] dirty;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:173:  logic [CVA6Cfg.WtDcacheWbufDepth-1:0] tocheck;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:174:  logic [CVA6Cfg.WtDcacheWbufDepth-1:0] wbuffer_hit_oh, inval_hit;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:175:  //logic     [CVA6Cfg.WtDcacheWbufDepth-1:0][7:0]    bdirty;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:176:  logic [CVA6Cfg.WtDcacheWbufDepth-1:0][(CVA6Cfg.XLEN/8)-1:0] bdirty;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:178:  logic [$clog2(CVA6Cfg.WtDcacheWbufDepth)-1:0]
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:180:  logic [CVA6Cfg.MEM_TID_WIDTH-1:0] tx_id, rtrn_id;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:182:  logic [CVA6Cfg.XLEN_ALIGN_BYTES-1:0] bdirty_off;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:183:  logic [(CVA6Cfg.XLEN/8)-1:0] tx_be;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:184:  logic [CVA6Cfg.PLEN-1:0] wr_paddr, rd_paddr, extract_tag;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:185:  logic [CVA6Cfg.DCACHE_TAG_WIDTH-1:0] rd_tag_d, rd_tag_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:186:  logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] rd_hit_oh_d, rd_hit_oh_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:190:  logic [CVA6Cfg.WtDcacheWbufDepth-1:0] ni_pending_d, ni_pending_q;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:197:  logic [CVA6Cfg.PLEN-1:0] debug_paddr[CVA6Cfg.WtDcacheWbufDepth-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:204:  logic [CVA6Cfg.DCACHE_TAG_WIDTH-1:0] miss_tag;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:207:  assign miss_tag = miss_paddr_o[CVA6Cfg.DCACHE_INDEX_WIDTH+:CVA6Cfg.DCACHE_TAG_WIDTH];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:209:      CVA6Cfg,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:211:        {64 - CVA6Cfg.DCACHE_TAG_WIDTH - CVA6Cfg.DCACHE_INDEX_WIDTH{1'b0}},
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:213:        {CVA6Cfg.DCACHE_INDEX_WIDTH{1'b0}}
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:219:      CVA6Cfg,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:221:        {64 - CVA6Cfg.DCACHE_TAG_WIDTH - CVA6Cfg.DCACHE_INDEX_WIDTH{1'b0}},
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:223:        {CVA6Cfg.DCACHE_INDEX_WIDTH{1'b0}}
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:231:  for (genvar k = 0; k < CVA6Cfg.DCACHE_MAX_TX; k++) begin : gen_tx_vld
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:234:      {CVA6Cfg.XLEN_ALIGN_BYTES{1'b0}}, wbuffer_q[tx_stat_q[k].ptr].wtag << CVA6Cfg.XLEN_ALIGN_BYTES
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:251:      .WIDTH(CVA6Cfg.XLEN / 8)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:269:  if (CVA6Cfg.IS_XLEN64) begin : gen_size_64b
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:276:  assign miss_wdata_o = CVA6Cfg.IS_XLEN64 ? repData64(
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:281:  if (CVA6Cfg.DATA_USER_EN) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:282:    assign miss_wuser_o = CVA6Cfg.IS_XLEN64 ? repData64(
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:291:  assign tx_be = CVA6Cfg.IS_XLEN64 ? to_byte_enable8(
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:304:      .DATA_WIDTH  ($clog2(CVA6Cfg.DCACHE_MAX_TX)),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:305:      .DEPTH       (CVA6Cfg.DCACHE_MAX_TX),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:306:      .FPGA_EN     (CVA6Cfg.FpgaEn)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:354:      .NumIn    (CVA6Cfg.DCACHE_MAX_TX),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:375:  assign extract_tag = rd_paddr >> CVA6Cfg.DCACHE_INDEX_WIDTH;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:376:  assign rd_tag_d = extract_tag[CVA6Cfg.DCACHE_TAG_WIDTH-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:381:    {CVA6Cfg.XLEN_ALIGN_BYTES{1'b0}}, wbuffer_check_mux.wtag << CVA6Cfg.XLEN_ALIGN_BYTES
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:385:  assign rd_idx_o = rd_paddr[CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.DCACHE_OFFSET_WIDTH];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:386:  assign rd_off_o = rd_paddr[CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:395:    {CVA6Cfg.XLEN_ALIGN_BYTES{1'b0}}, wbuffer_q[rtrn_ptr].wtag << CVA6Cfg.XLEN_ALIGN_BYTES
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:397:  assign wr_idx_o = wr_paddr[CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.DCACHE_OFFSET_WIDTH];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:398:  assign wr_off_o = wr_paddr[CVA6Cfg.DCACHE_OFFSET_WIDTH-1:0];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:407:  logic [CVA6Cfg.WtDcacheWbufDepth-1:0][DCACHE_CL_IDX_WIDTH-1:0] wtag_comp;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:412:  for (genvar k = 0; k < CVA6Cfg.WtDcacheWbufDepth; k++) begin : gen_flags
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:414:    if (CVA6Cfg.DebugEn) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:416:        {CVA6Cfg.XLEN_ALIGN_BYTES{1'b0}}, wbuffer_q[k].wtag << CVA6Cfg.XLEN_ALIGN_BYTES
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:428:    assign wbuffer_hit_oh[k] = valid[k] & (wbuffer_q[k].wtag == {req_port_i.address_tag, req_port_i.address_index[CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.XLEN_ALIGN_BYTES]});
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:433:    assign wtag_comp[k] = wbuffer_q[k].wtag[CVA6Cfg.DCACHE_INDEX_WIDTH-CVA6Cfg.XLEN_ALIGN_BYTES-1:CVA6Cfg.DCACHE_OFFSET_WIDTH-CVA6Cfg.XLEN_ALIGN_BYTES];
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:446:      .WIDTH(CVA6Cfg.WtDcacheWbufDepth)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:455:      .WIDTH(CVA6Cfg.WtDcacheWbufDepth)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:464:      .NumIn   (CVA6Cfg.WtDcacheWbufDepth),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:483:      .NumIn   (CVA6Cfg.WtDcacheWbufDepth),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:512:  assign ni_conflict = CVA6Cfg.NonIdemPotenceEn && is_ni && ni_inside;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:534:    for (int k = 0; k < CVA6Cfg.WtDcacheWbufDepth; k++) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:543:      for (int k = 0; k < (CVA6Cfg.XLEN / 8); k++) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:565:      for (int k = 0; k < (CVA6Cfg.XLEN / 8); k++) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:586:          req_port_i.address_index[CVA6Cfg.DCACHE_INDEX_WIDTH-1:CVA6Cfg.XLEN_ALIGN_BYTES]
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:590:        for (int k = 0; k < (CVA6Cfg.XLEN / 8); k++) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:595:            if (CVA6Cfg.DATA_USER_EN) begin
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:677:  for (genvar k = 0; k < CVA6Cfg.WtDcacheWbufDepth; k++) begin : gen_assert1
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_dcache_wbuffer.sv:678:    for (genvar j = 0; j < (CVA6Cfg.XLEN / 8); j++) begin : gen_assert2
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:56:    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:57:    parameter type icache_req_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:58:    parameter type icache_rtrn_t = logic,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:68:    input  icache_req_t  icache_data_i,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:71:    output icache_rtrn_t icache_rtrn_o,
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:87:  icache_req_t icache_data;
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:109:  // logic [CVA6Cfg.MEM_TID_WIDTH-1:0]          l15_req_o.l15_threadid;              // currently 0 or 1
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:111:  // logic [CVA6Cfg.DCACHE_SET_ASSOC_WIDTH-1:0]          l15_req_o.l15_l1rplway;              // way to replace
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:124:  assign l15_req_o.l15_size                 = (arb_idx)        ? (dcache_data.size == 3'b111) ?  ((CVA6Cfg.DCACHE_OFFSET_WIDTH == 3'b100) ? 3'b101  : 
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:125:                                                                                                  (CVA6Cfg.DCACHE_OFFSET_WIDTH == 3'b101) ? 3'b110  : 3'b111) : 
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:144:  if (CVA6Cfg.NOCType == config_pkg::NOC_TYPE_L15_BIG_ENDIAN)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:146:  else if (CVA6Cfg.NOCType == config_pkg::NOC_TYPE_L15_LITTLE_ENDIAN)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:202:      .dtype(icache_req_t),
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:307:  if (CVA6Cfg.NOCType == config_pkg::NOC_TYPE_L15_BIG_ENDIAN) begin : gen_swap
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:400:    assert (CVA6Cfg.DCACHE_SET_ASSOC >= CVA6Cfg.ICACHE_SET_ASSOC)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:406:    assert (CVA6Cfg.DCACHE_SET_ASSOC >= CVA6Cfg.DCACHE_SET_ASSOC)
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_l15_adapter.sv:412:    assert (16 >= CVA6Cfg.DCACHE_INDEX_WIDTH && 16 >= CVA6Cfg.ICACHE_INDEX_WIDTH)

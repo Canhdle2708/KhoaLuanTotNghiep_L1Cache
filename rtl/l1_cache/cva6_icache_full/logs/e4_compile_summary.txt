@@ -1,0 +1,8 @@
+PHASE E4 compile summary
+Generated: Wed May 27 03:44:05 AM UTC 2026
+Harness: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/cva6_icache_compile_harness.sv
+Filelist: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/cva6_icache_full.f
+Compile script: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/compile_icache_only.sh
+Compile log: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/logs/compile_icache_only.log
+Compile status: 1
+Result: FAIL. Check compile log for missing type/file/syntax details.

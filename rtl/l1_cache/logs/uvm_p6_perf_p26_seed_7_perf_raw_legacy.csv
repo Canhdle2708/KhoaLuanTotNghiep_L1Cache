@@ -1,0 +1,2 @@
+test_name,cache_mode,bench_name,seed,cycles,instr_access,loads,stores,mem_reads,mem_writes,ic_miss,ic_refill,dc_miss,read_miss,write_miss,result
+uvm_p6_perf_test,FULL_L1,uvm_p6_perf,7,366351,178989,8260,4130,114,32,76,76,70,38,32,PASS

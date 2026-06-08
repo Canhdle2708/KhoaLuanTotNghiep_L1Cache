@@ -1,0 +1,111 @@
+E5 compile/lint status extract
+Generated: Wed May 27 07:23:35 AM UTC 2026
+
+---- compile_icache_only.log key lines ----
+8:[TOOL] verilator
+9:%Error-PKGNODECL: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/packages/riscv_pkg.sv:25:21: Package/class 'cva6_config_pkg' not found, and needs to be predeclared (IEEE 1800-2017 26.3)
+12:                  ... For error description see https://verilator.org/warn/PKGNODECL?v=5.020
+14:        ... See the manual at https://verilator.org/verilator_doc.html for more assistance.
+16:[STEP DONE] RUN compile_icache_only.sh STATUS=1
+26:[TOOL] verilator
+31:                     ... For warning description see https://verilator.org/warn/WIDTHTRUNC?v=5.020
+32:                     ... Use "/* verilator lint_off WIDTHTRUNC */" and lint_on around source to disable this message.
+81:%Error: Verilator internal fault, sorry. Suggest trying --debug --gdbbt
+82:%Error: Command Failed ulimit -s unlimited 2>/dev/null; exec /usr/bin/verilator_bin --lint-only --timing -Wno-fatal -f /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/.cva6_icache_run.f --top-module cva6_icache_compile_harness
+84:[STEP DONE] RUN compile_icache_only.sh STATUS=255
+94:[TOOL] verilator
+99:                     ... For warning description see https://verilator.org/warn/WIDTHTRUNC?v=5.020
+100:                     ... Use "/* verilator lint_off WIDTHTRUNC */" and lint_on around source to disable this message.
+149:%Error: Verilator internal fault, sorry. Suggest trying --debug --gdbbt
+150:%Error: Command Failed ulimit -s unlimited 2>/dev/null; exec /usr/bin/verilator_bin --lint-only --timing -Wno-fatal -f /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/.cva6_icache_run.f --top-module cva6_icache_compile_harness
+152:[STEP DONE] RUN compile_icache_only.sh STATUS=255
+159:[VL_FILELIST] /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/cva6_icache_full_verilator_lint.f
+161:%Error: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/tc_sram_verilator_blackbox.sv:1:1: Unknown verilator comment: '/*verilator lint-only blackbox for vendor SRAM model.*/'
+162:    1 | /*verilator lint-only blackbox for vendor SRAM model.*/ 
+166:[STEP DONE] RUN lint_icache_only.sh STATUS=1
+173:[VL_FILELIST] /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/cva6_icache_full_verilator_lint.f
+175:%Error: Verilator internal fault, sorry. Suggest trying --debug --gdbbt
+176:%Error: Command Failed ulimit -s unlimited 2>/dev/null; exec /usr/bin/verilator_bin --lint-only --timing -Wno-fatal -Wno-WIDTHTRUNC -Wno-WIDTHEXPAND -Wno-UNSIGNED -f /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/cva6_icache_full_verilator_lint.f --top-module cva6_icache_compile_harness
+178:[STEP DONE] RUN lint_icache_only.sh STATUS=255
+
+---- compile_icache_only.log tail ----
+%Warning-WIDTHTRUNC: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/util/sram_cache.sv:42:44: Logical operator COND expects 1 bit on the Conditional Test, but Conditional Test's VARREF 'USER_EN' generates 32 bits.
+                                                                                                                              : ... note: In instance 'cva6_icache_compile_harness.i_cva6_icache.gen_sram[0].data_sram'
+   42 |   localparam DATA_AND_USER_WIDTH = USER_EN ? DATA_WIDTH + USER_WIDTH : DATA_WIDTH;
+      |                                            ^
+%Warning-WIDTHTRUNC: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/vendor/tech_cells_generic/tc_sram.sv:96:31: Operator ASSIGN expects 64 bits on the Assign RHS, but Assign RHS's REPLICATE generates 2048 bits.
+                                                                                                                                                : ... note: In instance 'cva6_icache_compile_harness.i_cva6_icache.gen_sram[0].tag_sram.genblk1.data_sram.gen_cut[0].i_tc_sram_wrapper.i_tc_sram'
+   96 |         "random": init_val[i] = {DataWidth{$urandom()}};
+      |                               ^
+%Warning-WIDTHEXPAND: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/vendor/tech_cells_generic/tc_sram.sv:93:7: Operator CASE expects 48 bits on the Case expression, but Case expression's VARREF 'SimInit' generates 32 bits.
+                                                                                                                                                : ... note: In instance 'cva6_icache_compile_harness.i_cva6_icache.gen_sram[0].tag_sram.genblk1.data_sram.gen_cut[0].i_tc_sram_wrapper.i_tc_sram'
+   93 |       case (SimInit)
+      |       ^~~~
+%Warning-WIDTHEXPAND: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/util/sram.sv:59:38: Operator ASSIGN expects 8 bits on the Assign RHS, but Assign RHS's VARREF 'be_i' generates 3 bits.
+                                                                                                                         : ... note: In instance 'cva6_icache_compile_harness.i_cva6_icache.gen_sram[0].tag_sram.genblk1.data_sram'
+   59 |     be_aligned[BE_WIDTH_ALIGNED-1:0] = be_i;
+      |                                      ^
+%Warning-WIDTHEXPAND: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/vendor/common_cells/lfsr.sv:298:17: Operator GT expects 32 bits on the LHS, but LHS's VARREF 'RstVal' generates 8 bits.
+                                                                                                                                         : ... note: In instance 'cva6_icache_compile_harness.i_cva6_icache.i_lfsr'
+  298 |   assert(RstVal > unsigned'(0)) else
+      |                 ^
+%Warning-WIDTHEXPAND: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/cva6_icache.sv:159:109: Operator SHIFTL expects 32 bits on the LHS, but LHS's REPLICATE generates 4 bits.
+                                                                                                                             : ... note: In instance 'cva6_icache_compile_harness.i_cva6_icache'
+  159 |                          ( paddr_is_nc  & mem_data_req_o ) ? {{ICACHE_OFFSET_WIDTH-1{1'b0}}, cl_offset_q[2]}<<2 :  
+      |                                                                                                             ^~
+%Warning-WIDTHEXPAND: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/cva6_icache.sv:159:60: Operator COND expects 32 bits on the Conditional False, but Conditional False's VARREF 'cl_offset_q' generates 4 bits.
+                                                                                                                            : ... note: In instance 'cva6_icache_compile_harness.i_cva6_icache'
+  159 |                          ( paddr_is_nc  & mem_data_req_o ) ? {{ICACHE_OFFSET_WIDTH-1{1'b0}}, cl_offset_q[2]}<<2 :  
+      |                                                            ^
+%Warning-WIDTHTRUNC: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/cva6_icache.sv:158:24: Operator ASSIGNW expects 4 bits on the Assign RHS, but Assign RHS's COND generates 32 bits.
+                                                                                                                           : ... note: In instance 'cva6_icache_compile_harness.i_cva6_icache'
+  158 |     assign cl_offset_d = ( dreq_o.ready & dreq_i.req)      ? (dreq_i.vaddr >> CVA6Cfg.FETCH_ALIGN_BITS) << CVA6Cfg.FETCH_ALIGN_BITS :
+      |                        ^
+%Warning-WIDTHTRUNC: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/cva6_icache.sv:429:47: Logical operator COND expects 1 bit on the Conditional Test, but Conditional Test's SEL generates 32 bits.
+                                                                                                                           : ... note: In instance 'cva6_icache_compile_harness.i_cva6_icache'
+  429 |     assign cl_user[i] = CVA6Cfg.FETCH_USER_EN ? cl_ruser[i][{cl_offset_q, 3'b0}+:CVA6Cfg.FETCH_USER_WIDTH] : '0;
+      |                                               ^
+%Warning-WIDTHTRUNC: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/cva6_icache.sv:444:43: Logical operator COND expects 1 bit on the Conditional Test, but Conditional Test's SEL generates 32 bits.
+                                                                                                                           : ... note: In instance 'cva6_icache_compile_harness.i_cva6_icache'
+  444 |       dreq_o.user = CVA6Cfg.FETCH_USER_EN ? cl_user[hit_idx] : '0;
+      |                                           ^
+%Warning-WIDTHTRUNC: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/cva6_icache.sv:447:43: Logical operator COND expects 1 bit on the Conditional Test, but Conditional Test's SEL generates 32 bits.
+                                                                                                                           : ... note: In instance 'cva6_icache_compile_harness.i_cva6_icache'
+  447 |       dreq_o.user = CVA6Cfg.FETCH_USER_EN ? mem_rtrn_i.user[{cl_offset_q, 3'b0}+:CVA6Cfg.FETCH_USER_WIDTH] : '0;
+      |                                           ^
+%Warning-UNSIGNED: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/vendor/tech_cells_generic/tc_sram.sv:118:36: Comparison is constant due to unsigned arithmetic
+                                                                                                                                               : ... note: In instance 'cva6_icache_compile_harness.i_cva6_icache.gen_sram[0].tag_sram.genblk1.data_sram.gen_cut[0].i_tc_sram_wrapper.i_tc_sram'
+  118 |         for (int unsigned j = 0; j < (Latency-1); j++) begin
+      |                                    ^
+%Error: Verilator internal fault, sorry. Suggest trying --debug --gdbbt
+%Error: Command Failed ulimit -s unlimited 2>/dev/null; exec /usr/bin/verilator_bin --lint-only --timing -Wno-fatal -f /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/.cva6_icache_run.f --top-module cva6_icache_compile_harness
+============================================================
+[STEP DONE] RUN compile_icache_only.sh STATUS=255
+[TIME] Wed May 27 07:12:12 AM UTC 2026
+============================================================
+============================================================
+[STEP] RUN lint_icache_only.sh - Verilator lint
+[TIME] Wed May 27 07:15:29 AM UTC 2026
+[ICACHE_OUT] /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full
+[VL_FILELIST] /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/cva6_icache_full_verilator_lint.f
+============================================================
+%Error: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/tc_sram_verilator_blackbox.sv:1:1: Unknown verilator comment: '/*verilator lint-only blackbox for vendor SRAM model.*/'
+    1 | /*verilator lint-only blackbox for vendor SRAM model.*/ 
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%Error: Exiting due to 1 error(s)
+============================================================
+[STEP DONE] RUN lint_icache_only.sh STATUS=1
+[TIME] Wed May 27 07:15:29 AM UTC 2026
+============================================================
+============================================================
+[STEP] RUN lint_icache_only.sh - Verilator lint
+[TIME] Wed May 27 07:19:16 AM UTC 2026
+[ICACHE_OUT] /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full
+[VL_FILELIST] /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/cva6_icache_full_verilator_lint.f
+============================================================
+%Error: Verilator internal fault, sorry. Suggest trying --debug --gdbbt
+%Error: Command Failed ulimit -s unlimited 2>/dev/null; exec /usr/bin/verilator_bin --lint-only --timing -Wno-fatal -Wno-WIDTHTRUNC -Wno-WIDTHEXPAND -Wno-UNSIGNED -f /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/cva6_icache_full_verilator_lint.f --top-module cva6_icache_compile_harness
+============================================================
+[STEP DONE] RUN lint_icache_only.sh STATUS=255
+[TIME] Wed May 27 07:19:18 AM UTC 2026
+============================================================

@@ -1,0 +1,2 @@
+test_name,cache_mode,bench_name,seed,cycles,instr_access,loads,stores,mem_reads,mem_writes,ic_miss,ic_refill,dc_miss,read_miss,write_miss,result
+uvm_p3_corner_ordering_test,FULL_L1,uvm_p3_corner_ordering,0,356,18,3,5,10,2,5,5,9,5,4,PASS

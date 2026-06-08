@@ -1,0 +1,4 @@
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv
+/media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv
+/media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv
+/media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv

@@ -1,0 +1,15 @@
+/media/sf_source_env/cva6-master/common/local/util/sram_cache.sv
+/media/sf_source_env/cva6-master/common/local/util/sram.sv
+/media/sf_source_env/cva6-master/common/local/util/tc_sram_fpga_wrapper.sv
+/media/sf_source_env/cva6-master/common/local/util/tc_sram_wrapper_cache_techno.sv
+/media/sf_source_env/cva6-master/common/local/util/tc_sram_wrapper.sv
+/media/sf_source_env/cva6-master/corev_apu/instr_tracing/rv_tracer-main/rtl/lzc.sv
+/media/sf_source_env/cva6-master/pd/synth/tc_sram_wrapper_256_64_00000008_00000001_00000001_none_0.sv
+/media/sf_source_env/cva6-master/vendor/pulp-platform/common_cells/src/cf_math_pkg.sv
+/media/sf_source_env/cva6-master/vendor/pulp-platform/common_cells/src/deprecated/sram.sv
+/media/sf_source_env/cva6-master/vendor/pulp-platform/common_cells/src/lfsr_16bit.sv
+/media/sf_source_env/cva6-master/vendor/pulp-platform/common_cells/src/lfsr_8bit.sv
+/media/sf_source_env/cva6-master/vendor/pulp-platform/common_cells/src/lfsr.sv
+/media/sf_source_env/cva6-master/vendor/pulp-platform/common_cells/src/lzc.sv
+/media/sf_source_env/cva6-master/vendor/pulp-platform/tech_cells_generic/src/fpga/tc_sram_xilinx.sv
+/media/sf_source_env/cva6-master/vendor/pulp-platform/tech_cells_generic/src/rtl/tc_sram.sv

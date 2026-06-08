@@ -1,0 +1,293 @@
+HANDOFF NOTE - CV32E40P + HPDCache D-Cache Integration
+Date: 2026-05-26
+
+1. Project context
+------------------
+This project integrates an L1 D-Cache into the CV32E40P RISC-V core.
+
+Current direction:
+- Use CV32E40P as the main core.
+- Focus only on D-Cache first.
+- Do not integrate I-Cache yet.
+- D-Cache is based on HPDCache modified with write-back + VBUF.
+
+Target architecture:
+
+CV32E40P instruction port
+  -> direct instruction memory model
+
+CV32E40P data port
+  -> cv32_data_to_hpdcache_adapter
+  -> HPDCache write-back + VBUF
+  -> data memory model
+
+2. Workspace rule
+-----------------
+Original Windows workspace:
+
+C:\source_env\cv32\work\cv32e40p-master
+
+Simulation is run in Ubuntu VirtualBox through shared folder. Do not use the
+Windows path in Ubuntu terminal commands.
+
+Find the Ubuntu workspace path with:
+
+find /media -maxdepth 8 -type d -name "cv32e40p-master" 2>/dev/null
+
+Known working Ubuntu path during this integration:
+
+/media/sf_source_env/cv32/work/cv32e40p-master
+
+3. Important folders
+--------------------
+Main project folder:
+
+rtl/l1_cache
+
+Important subfolders:
+
+rtl/l1_cache/original
+  - Original reference files.
+  - Do not modify.
+
+rtl/l1_cache/work
+  - Editable integration work.
+  - Contains adapter, wrapper, top-level integration, testbenches, scripts,
+    patched HPDCache files, and waves.
+
+rtl/l1_cache/docs
+  - Design notes, phase reports, testplan, performance plan.
+
+rtl/l1_cache/logs
+  - Compile/simulation logs.
+  - Main running log: rtl/l1_cache/logs/error.log
+
+4. What has been completed
+--------------------------
+Phase 0 - Scan:
+- Workspace and interface scan completed.
+- Report:
+  rtl/l1_cache/docs/00_scan_cv32_hpdcache.md
+
+Phase 1 - Baseline original/no-cache:
+- Baseline CV32E40P no-cache simulation passes.
+- PASS marker:
+  [PHASE1][PASS] baseline no-cache load/store completed at cycle 15
+- Log:
+  rtl/l1_cache/logs/01_baseline_original.log
+- Waveform:
+  rtl/l1_cache/work/waves/01_baseline_original.vcd
+- Report:
+  rtl/l1_cache/docs/01_baseline_original_result.md
+
+Phase 2 - CV32 data interface to HPDCache adapter:
+- Adapter created and tested with fake HPDCache-style stimulus.
+- PASS marker:
+  [PHASE2][PASS] adapter basic completed 8 checks
+- Important files:
+  rtl/l1_cache/work/rtl/cv32_data_to_hpdcache_adapter.sv
+  rtl/l1_cache/work/rtl/hpdcache_cv32_wrapper.sv
+  rtl/l1_cache/work/tb/tb_cv32_dcache_adapter_basic.sv
+- Log:
+  rtl/l1_cache/logs/02_adapter_basic.log
+- Waveform:
+  rtl/l1_cache/work/waves/02_adapter_basic.vcd
+- Report:
+  rtl/l1_cache/docs/02_adapter_design_result.md
+
+Phase 3 - CV32E40P + HPDCache D-Cache basic integration:
+- Real CV32E40P core is connected to adapter + HPDCache WB/VBUF + memory model.
+- Instruction path is still direct to instruction memory.
+- PASS marker:
+  [PHASE3][PASS] CV32E40P + HPDCache basic done cycles=90 loads=3 stores=5 mem_reads=5 mem_writes=2 read_miss=5 write_miss=4
+- Important files:
+  rtl/l1_cache/work/rtl/cv32e40p_l1_dcache_top.sv
+  rtl/l1_cache/work/tb/tb_cv32e40p_dcache_basic.sv
+  rtl/l1_cache/work/sim/run_cv32_dcache_basic.sh
+  rtl/l1_cache/work/sim/cv32e40p_dcache_basic.f
+- Patched HPDCache files used by the integration:
+  rtl/l1_cache/work/hpdcache_patched/src/hpdcache.sv
+  rtl/l1_cache/work/hpdcache_patched/src/head_hpdcache_ctrl.sv
+  rtl/l1_cache/work/hpdcache_patched/src/head_hpdcache_ctrl_pe.sv
+  rtl/l1_cache/work/hpdcache_patched/src/head_hpdcache_vbuf.sv
+- Log:
+  rtl/l1_cache/logs/03_cv32_dcache_basic.log
+- Main waveform:
+  rtl/l1_cache/work/waves/03_cv32_dcache_basic.vcd
+- Report:
+  rtl/l1_cache/docs/03_cv32_dcache_basic_result.md
+
+Phase 4 - Waveform checklist:
+- GTKWave savefile and checklist were created.
+- Checklist:
+  rtl/l1_cache/docs/04_waveform_checklist_dcache.md
+- GTKWave savefile:
+  rtl/l1_cache/work/waves/dcache_basic.gtkw
+
+Phase 5 - Random smoke:
+- Random smoke test passes for seeds 1, 2, and 3.
+- Important file:
+  rtl/l1_cache/work/tb/tb_cv32e40p_dcache_random.sv
+- Logs:
+  rtl/l1_cache/logs/04_random_seed_1.log
+  rtl/l1_cache/logs/04_random_seed_2.log
+  rtl/l1_cache/logs/04_random_seed_3.log
+- Waveforms:
+  rtl/l1_cache/work/waves/04_random_seed_1.vcd
+  rtl/l1_cache/work/waves/04_random_seed_2.vcd
+  rtl/l1_cache/work/waves/04_random_seed_3.vcd
+- Summary:
+  rtl/l1_cache/docs/05_random_smoke_summary.md
+
+Phase 6 - D-Cache testplan:
+- D-Cache testplan was created with 60 check items.
+- File:
+  rtl/l1_cache/docs/TESTPLAN_DCache_CV32_HPDCache.md
+- Groups:
+  Basic Integration
+  Load Path
+  Store Path
+  Dirty / Write-Back
+  VBUF
+  Replacement / Refill
+  Arbiter / Memory Contention
+  Corner Cases
+  Performance Measurement
+
+Phase 7 - Performance measurement plan:
+- Performance measurement plan was created.
+- File:
+  rtl/l1_cache/docs/PERFORMANCE_MEASUREMENT_PLAN.md
+
+Phase 8 - Make/run script:
+- Makefile flow now passes.
+- Important file:
+  rtl/l1_cache/work/sim/Makefile
+- These targets pass:
+  make build
+  make run
+  make run_baseline
+  make run_adapter_basic
+  make run_cv32_dcache_random
+
+5. How to run in Ubuntu
+-----------------------
+Use this from Ubuntu:
+
+ROOT_WORKSPACE=$(find /media -maxdepth 8 -type d -name "cv32e40p-master" 2>/dev/null | grep "/work/" | head -n 1)
+cd "$ROOT_WORKSPACE/rtl/l1_cache/work/sim" || exit 1
+
+Run build:
+
+make build
+
+Run main integrated D-Cache basic test:
+
+make run
+
+Run baseline no-cache:
+
+make run_baseline
+
+Run adapter basic:
+
+make run_adapter_basic
+
+Run random smoke seeds 1/2/3:
+
+make run_cv32_dcache_random
+
+Open main waveform:
+
+make wave_basic
+
+Or directly:
+
+gtkwave "$ROOT_WORKSPACE/rtl/l1_cache/work/waves/03_cv32_dcache_basic.vcd" \
+        "$ROOT_WORKSPACE/rtl/l1_cache/work/waves/dcache_basic.gtkw" &
+
+6. Current known notes
+----------------------
+- The latest flow passes with Verilator.
+- The log file error.log still contains old historical failures from earlier
+  debug attempts. Check the latest step markers and per-phase logs for the
+  current pass/fail status.
+- Some logs show "Clock skew detected" because the repo is on a VirtualBox
+  shared folder. This has not blocked functional pass.
+- The current design is a functional integration/debug setup, not final
+  performance-optimized RTL.
+- I-Cache is not integrated yet.
+
+7. Suggested next work
+----------------------
+Recommended next steps:
+
+1. Use GTKWave on 03_cv32_dcache_basic.vcd and follow:
+   rtl/l1_cache/docs/04_waveform_checklist_dcache.md
+
+2. Start implementing/checking testplan items from:
+   rtl/l1_cache/docs/TESTPLAN_DCache_CV32_HPDCache.md
+
+3. Add stricter automatic checkers:
+   - post-reset X/Z checker
+   - timeout/deadlock checker
+   - scoreboard for load/store data
+   - valid/ready protocol checks
+
+4. Add more counters:
+   - hit_count
+   - miss_count
+   - refill_count
+   - dirty_eviction_count
+   - writeback_count
+   - vbuf_alloc_count
+   - vbuf_full_stall_cycles
+   - data_stall_cycles
+
+5. Improve tests:
+   - load hit/miss directed test
+   - store hit/miss directed test
+   - dirty eviction test
+   - VBUF alloc/drain/full test
+   - same-index different-tag conflict test
+   - memory latency/backpressure test
+
+6. After functional confidence is higher, start performance comparison using:
+   rtl/l1_cache/docs/PERFORMANCE_MEASUREMENT_PLAN.md
+
+8. What to zip and send
+-----------------------
+Best option if the teammate already has the same cv32e40p-master repo:
+
+Send only:
+
+rtl/l1_cache
+
+This includes docs, logs, work files, scripts, patched HPDCache files, and the
+HPDCache tree used by this integration.
+
+If sending from Windows, recommended folder to zip:
+
+C:\source_env\cv32\work\cv32e40p-master\rtl\l1_cache
+
+Optional:
+- Include waveforms if the teammate wants to open GTKWave immediately.
+- Exclude obj_dir* and msim* folders if the zip is too large.
+
+If the teammate does not have the CV32E40P repo, zip the full repo:
+
+C:\source_env\cv32\work\cv32e40p-master
+
+Do not zip only C:\source_env\cv32\work unless you really want to send every
+project under that folder.
+
+9. Suggested message to Codex on teammate side
+----------------------------------------------
+Ask Codex to:
+
+"Read rtl/l1_cache/docs/HANDOFF_NOTE_FOR_TEAMMATE.txt, then inspect the current
+CV32E40P + HPDCache D-Cache integration. First run make build and make run from
+rtl/l1_cache/work/sim in Ubuntu. Then use the D-Cache testplan to continue
+directed verification, starting from load hit/miss and dirty eviction/VBUF
+behavior. Do not modify rtl/l1_cache/original."
+

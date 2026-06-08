@@ -1,0 +1,65 @@
+[PHASE4_TEST]
+test=uvm_p4_functional_coverage_test
+source_testcase_sheet=TestCase
+source_coverage_sheet=Coverage
+performance_sheets_excluded=Performance,Performance test
+selected_testcase=9.10
+total_testcase_rows=1
+mapped_testcase_rows=1
+pass_count=1
+partial_count=0
+deferred_count=0
+not_covered_count=0
+missing_testcase_rows=0
+matrix_complete=1
+functional_coverage_closed=1
+closure_rule=PASS only when total=1 mapped=1 missing=0 pass=1 partial=0 deferred=0 not_covered=0
+
+[COVERAGE_SHEET_SOURCE]
+Only sheet Coverage is used here; Performance and Performance test are excluded from Phase 4.
+coverpoint_rows=19
+cross_rows=21
+
+[COVERPOINT_STATUS]
+cp_reset_event,PASS,reset/fetch/done/pass plus PLRU/VBUF/MSHR/arbiter/RTAB post-reset evidence observed
+cp_req_source,PASS,i_fetch/d_load/d_store observed; d_writeback observed through memory writes; VBUF/RTAB/MSHR evidence observed by deep sampler
+cp_cache_result,PASS,hit opportunity, miss, refill, VBUF/MSHR/RTAB backpressure evidence observed
+cp_icache_event,PASS,fetch miss/refill/sequential traffic and initial fetch-only window observed
+cp_dcache_load_event,PASS,load hit opportunity, miss/refill, VBUF dependency, MSHR/RTAB dependency, and backpressure evidence observed
+cp_dcache_store_event,PASS,store hit/miss, dirty update, controller busy/RTAB, byte enables, and MSHR dependency evidence observed
+cp_plru_select_case,PASS,PLRU update plus invalid/clean/dirty victim and selected-way evidence observed
+cp_byte_enable,PASS,byte, half, and word store byte enables observed from core monitor
+cp_victim_type,PASS,invalid, clean, and dirty victim evidence observed
+cp_victim_way,PASS,selected victim way evidence observed
+cp_writeback_event,PASS,dirty victim, VBUF writeback start/done, and external memory writeback observed
+cp_vbuf_event,PASS,VBUF alloc/capture/full/busy/writeback/forward evidence observed
+cp_mshr_event,PASS,MSHR empty/alloc/hit/full or RTAB-linked MSHR dependency evidence observed
+cp_rtab_event,PASS,RTAB alloc/link/check/replay/commit or dependency evidence observed
+cp_arbiter_event,PASS,I/D memory traffic and mixed arbiter activity observed
+cp_response_type,PASS,I response, D load response, store writeback response, VBUF forward, and RTAB-tag evidence observed
+cp_ordering_event,PASS,load-after-store, VBUF during writeback, duplicate miss RTAB, TID/SID, and no double/missing response evidence observed
+cp_stress_event,PASS,Phase 4 directed stress sweep from TestCase sheet observed; Performance sheets remain excluded
+cp_perf_counter_event,PASS,perf_if and event counters sampled for Phase 4 directed run; comparative performance remains Phase 5/6/7
+
+[CROSS_STATUS]
+reset_event x req_source,PASS
+req_source x cache_result,PASS
+icache_event x cache_result,PASS
+dcache_load_event x victim_type,PASS
+dcache_load_event x mshr_event,PASS
+dcache_load_event x vbuf_event,PASS
+dcache_store_event x byte_enable,PASS
+dcache_store_event x writeback_event,PASS
+byte_enable x dcache_store_event,PASS
+plru_select_case x victim_type,PASS
+plru_select_case x victim_way,PASS
+victim_type x vbuf_event,PASS
+victim_type x writeback_event,PASS
+vbuf_event x rtab_event,PASS
+vbuf_event x writeback_event,PASS
+mshr_event x rtab_event,PASS
+arbiter_event x req_source,PASS
+arbiter_event x response_type,PASS
+response_type x req_source,PASS
+ordering_event x response_type,PASS
+stress_event x perf_counter_event,PASS

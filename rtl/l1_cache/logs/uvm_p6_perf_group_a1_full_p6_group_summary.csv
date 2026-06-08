@@ -1,0 +1,2 @@
+phase,selected_group,run_kind,selected_count,pass_count,fail_count,deferred_count,blocked_count,not_run_count,group_status,summary_csv,matrix_csv
+6,A1,full,8,8,0,0,0,21,PASS,../../logs/uvm_p6_perf_group_a1_full_p6_summary.csv,../../logs/uvm_p6_perf_group_a1_full_p6_matrix.csv

@@ -1,0 +1,8 @@
+check_id,group,bench_name,status,hit_count,pass,fail_reason,required_events,observed_events
+ICACHE_CK_01,B,icache_basic,PASS,8,1,NONE,first_fetch_cold_miss;no_wrong_instruction,done=1;checksum=1;miss=8;instr_mismatch=0
+ICACHE_CK_02,B,icache_basic,PASS,16,1,NONE,memory_read;refill;correct_instruction_response,done=1;checksum=1;l1_read_req=8;l1_read_rsp=8;refill_req=8;refill_done=8;instr_rsp=35;instr_mismatch=0
+ICACHE_CK_03,B,icache_basic,PASS,6,1,NONE,fetch_same_address_again_hits;correct_response,done=1;checksum=1;repeated_fetch_addr=6;hit_proxy=27;instr_mismatch=0
+ICACHE_CK_04,B,icache_basic,PASS,6,1,NONE,hit_response;no_new_memory_read_for_hit_line,done=1;checksum=1;repeated_fetch_addr=6;duplicate_l1_read_line=0;l1_read_req=8
+ICACHE_CK_05,B,icache_basic,PASS,31,1,NONE,sequential_same_line;sequential_next_line;correct_offset_data,done=1;checksum=1;same_line_seq=25;next_line_seq=6;instr_mismatch=0
+ICACHE_CK_06,B,icache_basic,PASS,1,1,NONE,branch_redirect_no_old_path_commit;target_response_correct,done=1;checksum=1;bad_path_store=0;repeated_fetch_addr=6;instr_mismatch=0
+ICACHE_CK_07,B,icache_basic,PASS,1,1,NONE,fetch_only_miss_hit;no_dcache_dirty_or_vbuf_activity,done=1;checksum=1;fetch_only_dcache_activity=0;fetch_only_vbuf_or_write=0;miss=8;hit_proxy=27

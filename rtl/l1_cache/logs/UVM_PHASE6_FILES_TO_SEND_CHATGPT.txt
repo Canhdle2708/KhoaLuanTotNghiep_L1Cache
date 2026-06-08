@@ -1,0 +1,27 @@
+After running Phase 6 commands, send/read this primary bundle:
+
+../../logs/UVM_PHASE6_REVIEW_BUNDLE.txt
+
+Useful source result files:
+
+../../logs/uvm_p6_perf_summary.csv
+../../logs/uvm_p6_perf_test_matrix.csv
+../../logs/uvm_p6_group_summary.csv
+../../logs/uvm_p6_perf_raw.csv
+../../docs/UVM_PHASE6_CHATGPT_REVIEW.md
+../../docs/UVM_PHASE6_PERFORMANCE_TEST_PLAN_OR_RESULT.md
+
+Useful command logs:
+
+../../logs/QUESTA_p6_runner_syntax_check.log
+../../logs/QUESTA_p6_perf_group_a1_full.log
+../../logs/QUESTA_p6_perf_group_a2_full.log
+../../logs/QUESTA_p6_perf_group_b_mem_latency_full.log
+../../logs/QUESTA_p6_perf_group_b_no_wait_full.log
+../../logs/QUESTA_p6_perf_group_b_fixed_wait_full.log
+../../logs/QUESTA_p6_perf_group_b_long_wait_full.log
+../../logs/QUESTA_p6_perf_group_c_b2b_full.log
+../../logs/QUESTA_p6_perf_group_d_long_full.log
+../../logs/QUESTA_p6_perf_group_e_mode_compare_full.log
+../../logs/QUESTA_p6_perf_all_full.log
+../../logs/QUESTA_p6_collect_review_bundle.log

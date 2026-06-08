@@ -1,0 +1,70 @@
+# UVM Phase 7 Final Regression Report
+
+## Executive summary
+
+Phase 7 is the final evidence regression and packaging pass for the Full L1 UVM work. It checks the existing Phase 4, Phase 5, and Phase 6 evidence without adding new deep checkers or rerunning the full simulation suite.
+
+Current accepted status: **PHASE7_READY_FOR_CHECK**. Run `collect_p7_final_review_bundle.sh` or the Makefile targets to regenerate this report from the latest logs and produce the final `PHASE7_PASS` or `PHASE7_FAIL` conclusion.
+
+## Environment
+
+| item | value |
+| --- | --- |
+| Questa root | `/home/vboxuser/altera/25.1std` |
+| License path | `/media/sf_source_env/LR-166346_License.dat` |
+| HPDCACHE_SRC_MODE | `base` |
+| Ubuntu repo path | `/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master` |
+| Alternate Ubuntu repo path | `/media/sf_SOURCE_ENV/cv32_full_l1_cache/cv32e40p-master` |
+| Windows repo path | `C:\source_env\cv32_full_l1_cache\cv32e40p-master` |
+
+## Phase summary
+
+| phase | summary | current evidence |
+| --- | --- | --- |
+| Phase 0 | Bring-up and repository integration. | Preserved by earlier phase evidence. |
+| Phase 1 | Smoke/basic UVM execution. | Preserved by accepted Questa logs. |
+| Phase 2 | Monitor and scoreboard sanity. | Preserved by transaction/count logs and accepted closure. |
+| Phase 3 | Directed cache/order/writeback tests. | Preserved by Phase 3/4/6 evidence. |
+| Phase 4 | Functional coverage. | 57/57 PASS in `uvm_phase4_coverage_summary.txt`. |
+| Phase 5 | Performance collector. | PASS in `uvm_p5_perf_collector_full_summary.csv`. |
+| Phase 6 | Performance tests. | P1-P29 PASS, fail=0, deferred=0, blocked=0 in current closure. |
+
+## Key evidence table
+
+| item | source | status condition |
+| --- | --- | --- |
+| Phase 4 coverage | `../../logs/uvm_phase4_coverage_summary.txt`, `../../logs/uvm_phase4_testplan_coverage_matrix.csv` | 57/57 PASS, no missing/deferred rows. |
+| Phase 5 collector | `../../logs/uvm_p5_perf_collector_full_summary.csv` | `pass=PASS`, `timeout=0`, `scoreboard_errors=0`. |
+| Phase 6 closure | `../../logs/QUESTA_p6_perf_closure_full_after_mode_compare.log` | `[UVM][P6_CLOSURE][PASS]`, 29/29 PASS. |
+| P15 random wait | `../../logs/uvm_p6_p15_random_wait_distribution.csv` | Random wait rows PASS with multiple observed read latencies. |
+| P26 multi-seed | `../../logs/uvm_p6_p26_multiseed_summary.csv` | All selected seeds PASS. |
+| P27-P29 mode compare | `../../logs/uvm_p6_mode_compare_summary.csv` | True NO_CACHE, DCACHE_ONLY, FULL_L1 rows have `reliable_for_report=1`. |
+
+## Phase 6 highlight
+
+- P15 random wait PASS with true randomized memory latency distribution.
+- P26 multi-seed PASS across five selected seeds.
+- P27-P29 PASS using true UVM wrappers: NO_CACHE, DCACHE_ONLY, and FULL_L1.
+
+## Mode comparison summary
+
+| mode | cycles | traffic/instr | speedup vs no-cache | notes |
+| --- | ---: | ---: | ---: | --- |
+| NO_CACHE | 401631 | 1.001743 | 1.000000 | Direct I/D memory, no cache hit/miss metrics. |
+| DCACHE_ONLY | 402436 | 1.000388 | 0.998000 | Direct ifetch, HPDCache data path, D-cache miss count 80. |
+| FULL_L1 | 302701 | 0.001810 | 1.326824 | CVA6 I-cache plus HPDCache data path, I-cache miss/refill 195/195, D-cache miss count 80. |
+
+## Known notes and limitations
+
+- P17-P22 are passive-monitor temporal performance evidence, not formal deep microarchitecture proof.
+- Phase 8 can optionally add deep evidence add-ons for arbiter, MSHR, RTAB, and VBUF.
+- Phase 7 intentionally performs final regression/report packaging only; it does not change Phase 4/5/6 behavior.
+- The historical `UVM_PHASE6_FINAL_REVIEW_BUNDLE.txt` is still useful context, but the accepted final Phase 6 status is the current post-mode-compare closure log.
+
+## Final conclusion
+
+Run the Phase 7 regression and bundle commands to regenerate this report and produce the final conclusion markers:
+
+- `[UVM][P7_REGRESSION][PASS]` or `[UVM][P7_REGRESSION][FAIL]`
+- `[UVM][P7_BUNDLE][PASS]` or `[UVM][P7_BUNDLE][FAIL]`
+

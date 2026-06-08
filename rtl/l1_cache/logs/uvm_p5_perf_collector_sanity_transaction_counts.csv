@@ -1,0 +1,2 @@
+test_name,cache_mode,bench_name,seed,result,cycles,instr_accept,instr_rsp,data_load_accept,data_store_accept,data_load_rsp,icache_read_req,icache_read_rsp,dcache_read_req,dcache_read_rsp,dcache_write_addr,dcache_write_data,dcache_write_rsp,observed_mem_read_total,dut_instr_count,dut_load_count,dut_store_count,dut_mem_read_count,dut_mem_write_count,scoreboard_errors,scoreboard_warnings
+uvm_p5_perf_collector_test,FULL_L1,uvm_p5_perf_collector,0,PASS,3425,161,161,56,16,56,41,41,15,15,5,5,5,56,162,56,16,56,5,0,1

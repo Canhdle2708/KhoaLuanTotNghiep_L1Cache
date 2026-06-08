@@ -1,0 +1,2 @@
+test_name,cache_mode,bench_name,seed,cycles,instr_access,loads,stores,mem_reads,mem_writes,ic_miss,ic_refill,dc_miss,read_miss,write_miss,result
+uvm_p5_perf_collector_test,FULL_L1,uvm_p5_perf_collector,0,3425,162,56,16,56,5,41,41,17,15,2,PASS

@@ -1,0 +1,135 @@
+### /media/sf_source_env/cva6-master/common/local/util/sram_cache.sv
+21:module sram_cache #(
+
+### /media/sf_source_env/cva6-master/common/local/util/sram.sv
+21:module sram #(
+
+### /media/sf_source_env/cva6-master/common/local/util/tc_sram_fpga_wrapper.sv
+10:module tc_sram_wrapper #(
+
+### /media/sf_source_env/cva6-master/common/local/util/tc_sram_wrapper_cache_techno.sv
+13:module tc_sram_wrapper_cache_techno #(
+
+### /media/sf_source_env/cva6-master/common/local/util/tc_sram_wrapper.sv
+10:module tc_sram_wrapper #(
+
+### /media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache_axi_wrapper.sv
+16:module cva6_icache_axi_wrapper
+
+### /media/sf_source_env/cva6-master/core/cache_subsystem/cva6_icache.sv
+28:module cva6_icache
+122:  typedef enum logic [2:0] {
+
+### /media/sf_source_env/cva6-master/core/cache_subsystem/std_cache_subsystem.sv
+18:module std_cache_subsystem
+
+### /media/sf_source_env/cva6-master/core/cache_subsystem/wt_cache_subsystem.sv
+22:module wt_cache_subsystem
+
+### /media/sf_source_env/cva6-master/core/include/ariane_pkg.sv
+29:package ariane_pkg;
+77:  typedef struct packed {
+159:  typedef enum logic {
+172:  typedef enum logic [2:0] {
+180:  typedef struct packed {
+185:  typedef struct packed {
+190:  typedef enum logic [3:0] {
+275:  typedef enum logic [7:0] {  // basic ALU op
+543:  typedef struct packed {
+651:  typedef enum logic [3:0] {
+672:  typedef struct packed {
+680:  typedef enum logic [1:0] {
+691:  typedef struct packed {
+700:  typedef struct packed {
+
+### /media/sf_source_env/cva6-master/core/include/build_config_pkg.sv
+1:package build_config_pkg;
+
+### /media/sf_source_env/cva6-master/core/include/config_pkg.sv
+10:package config_pkg;
+21:  typedef enum {
+30:  typedef enum logic [2:0] {
+39:  typedef enum logic {
+45:  typedef enum logic [3:0] {
+55:  typedef enum {
+62:  typedef struct packed {
+268:  typedef struct packed {
+
+### /media/sf_source_env/cva6-master/core/include/riscv_pkg.sv
+18:package riscv;
+31:  typedef enum logic [1:0] {
+39:  typedef enum logic [1:0] {
+46:  typedef enum logic [1:0] {
+53:  typedef enum logic [1:0] {
+60:  typedef struct packed {
+82:  typedef struct packed {
+100:  typedef struct packed {
+131:  typedef struct packed {
+145:  typedef struct packed {
+154:  typedef struct packed {
+164:  typedef struct packed {
+174:  typedef struct packed {
+185:  typedef struct packed {
+193:  typedef struct packed {
+202:  typedef struct packed {
+209:  typedef struct packed {
+220:  typedef union packed {
+306:  typedef struct packed {
+321:  typedef struct packed {
+391:  typedef enum logic [11:0] {
+800:  typedef enum logic [2:0] {
+810:  typedef struct packed {
+816:  typedef union packed {
+822:  typedef struct packed {
+830:  typedef enum logic [1:0] {
+838:  typedef enum logic [2:0] {
+845:  typedef struct packed {
+852:  typedef struct packed {
+862:  typedef struct packed {
+1013:  typedef struct {
+
+### /media/sf_source_env/cva6-master/core/include/std_cache_pkg.sv
+18:package std_cache_pkg;
+22:  typedef struct packed {
+31:  typedef struct packed {
+41:  typedef struct packed {
+53:  typedef struct packed {
+
+### /media/sf_source_env/cva6-master/core/include/wt_cache_pkg.sv
+18:package wt_cache_pkg;
+30:  typedef enum logic [1:0] {
+37:  typedef enum logic [2:0] {
+45:  typedef enum logic [0:0] {
+
+### /media/sf_source_env/cva6-master/corev_apu/instr_tracing/rv_tracer-main/rtl/lzc.sv
+17:module lzc #(
+
+### /media/sf_source_env/cva6-master/pd/synth/tc_sram_wrapper_256_64_00000008_00000001_00000001_none_0.sv
+10:module tc_sram_wrapper_256_64_00000008_00000001_00000001_none_0 #(
+
+### /media/sf_source_env/cva6-master/vendor/pulp-platform/common_cells/src/cf_math_pkg.sv
+18:package cf_math_pkg;
+
+### /media/sf_source_env/cva6-master/vendor/pulp-platform/common_cells/src/deprecated/sram.sv
+14:module sram #(
+
+### /media/sf_source_env/cva6-master/vendor/pulp-platform/common_cells/src/lfsr_16bit.sv
+21:module lfsr_16bit #(
+
+### /media/sf_source_env/cva6-master/vendor/pulp-platform/common_cells/src/lfsr_8bit.sv
+17:module lfsr_8bit #(
+
+### /media/sf_source_env/cva6-master/vendor/pulp-platform/common_cells/src/lfsr.sv
+22:module lfsr #(
+
+### /media/sf_source_env/cva6-master/vendor/pulp-platform/common_cells/src/lzc.sv
+25:module lzc #(
+
+### /media/sf_source_env/cva6-master/vendor/pulp-platform/tech_cells_generic/src/fpga/tc_sram_xilinx.sv
+19:module tc_sram #(
+57:  typedef logic [DataWidthAligned-1:0]     data_aligned_t;
+58:  typedef logic [BytesPerByte*BeWidth-1:0] be_aligned_t;
+
+### /media/sf_source_env/cva6-master/vendor/pulp-platform/tech_cells_generic/src/rtl/tc_sram.sv
+56:module tc_sram #(
+

@@ -1,0 +1,2 @@
+test_name,cache_mode,bench_name,seed,result,cycles,instr_accept,instr_rsp,data_load_accept,data_store_accept,data_load_rsp,icache_read_req,icache_read_rsp,dcache_read_req,dcache_read_rsp,dcache_write_addr,dcache_write_data,dcache_write_rsp,observed_mem_read_total,dut_instr_count,dut_load_count,dut_store_count,dut_mem_read_count,dut_mem_write_count,scoreboard_errors,scoreboard_warnings
+uvm_p4_functional_coverage_test,FULL_L1,uvm_p4_functional_coverage,0,PASS,303711,140160,140160,30056,20016,30056,44,44,16,16,6,6,6,60,140163,30056,20016,60,6,0,1

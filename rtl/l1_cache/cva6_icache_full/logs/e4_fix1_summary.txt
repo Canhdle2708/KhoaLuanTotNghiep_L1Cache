@@ -1,0 +1,8 @@
+E4_FIX1 summary
+Generated: Wed May 27 07:12:12 AM UTC 2026
+Fix: moved cv32a6_imac_sv32_config_pkg.sv before riscv_pkg.sv
+Filelist: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/sim/cva6_icache_full.f
+Harness: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/rtl/cva6_icache_compile_harness.sv
+Compile log: /media/sf_source_env/cv32_full_l1_cache/rtl/l1_cache/icache/cva6_icache_full/logs/compile_icache_only.log
+Compile status: 255
+Result: FAIL. Next action must inspect compile log.

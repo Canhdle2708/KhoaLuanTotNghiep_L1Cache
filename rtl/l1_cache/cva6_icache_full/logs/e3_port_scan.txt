@@ -1,0 +1,108 @@
+PHASE E3 port scan
+Generated: Wed May 27 03:29:19 AM UTC 2026
+
+## Module header
+module cva6_icache
+  import ariane_pkg::*;
+  import wt_cache_pkg::*;
+#(
+    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+    parameter type icache_areq_t = logic,
+    parameter type icache_arsp_t = logic,
+    parameter type icache_dreq_t = logic,
+    parameter type icache_drsp_t = logic,
+    parameter type icache_req_t = logic,
+    parameter type icache_rtrn_t = logic,
+    /// ID to be used for read transactions
+    parameter logic [CVA6Cfg.MEM_TID_WIDTH-1:0] RdTxId = 0
+) (
+    input logic clk_i,
+    input logic rst_ni,
+
+    /// flush the icache, flush and kill have to be asserted together
+    input  logic         flush_i,
+    /// enable icache
+    input  logic         en_i,
+    /// to performance counter
+    output logic         miss_o,
+    // address translation requests
+    input  icache_areq_t areq_i,
+    output icache_arsp_t areq_o,
+    // data requests
+    input  icache_dreq_t dreq_i,
+    output icache_drsp_t dreq_o,
+    // refill port
+    input  logic         mem_rtrn_vld_i,
+    input  icache_rtrn_t mem_rtrn_i,
+    output logic         mem_data_req_o,
+    input  logic         mem_data_ack_i,
+    output icache_req_t  mem_data_o
+);
+
+## Field usage
+50:    output logic         miss_o,
+52:    input  icache_areq_t areq_i,
+53:    output icache_arsp_t areq_o,
+55:    input  icache_dreq_t dreq_i,
+56:    output icache_drsp_t dreq_o,
+58:    input  logic         mem_rtrn_vld_i,
+59:    input  icache_rtrn_t mem_rtrn_i,
+60:    output logic         mem_data_req_o,
+61:    input  logic         mem_data_ack_i,
+62:    output icache_req_t  mem_data_o
+137:  assign cl_tag_d  = (areq_i.fetch_valid) ? areq_i.fetch_paddr[CVA6Cfg.ICACHE_TAG_WIDTH+CVA6Cfg.ICACHE_INDEX_WIDTH-1:CVA6Cfg.ICACHE_INDEX_WIDTH] : cl_tag_q;
+145:  assign dreq_o.ex = areq_i.fetch_exception;
+149:  assign vaddr_d = (dreq_o.ready & dreq_i.req) ? dreq_i.vaddr : vaddr_q;
+150:  assign areq_o.fetch_vaddr = (vaddr_q >> CVA6Cfg.FETCH_ALIGN_BITS) << CVA6Cfg.FETCH_ALIGN_BITS;
+158:    assign cl_offset_d = ( dreq_o.ready & dreq_i.req)      ? (dreq_i.vaddr >> CVA6Cfg.FETCH_ALIGN_BITS) << CVA6Cfg.FETCH_ALIGN_BITS :
+159:                         ( paddr_is_nc  & mem_data_req_o ) ? {{ICACHE_OFFSET_WIDTH-1{1'b0}}, cl_offset_q[2]}<<2 : // needed since we transfer 32bit over a 64bit AXI bus in this case
+162:    assign mem_data_o.paddr = (paddr_is_nc) ? {cl_tag_d, vaddr_q[CVA6Cfg.ICACHE_INDEX_WIDTH-1:3], 3'b0} :                                         // align to 64bit
+167:    assign cl_offset_d = (dreq_o.ready & dreq_i.req) ? {dreq_i.vaddr >> 2, 2'b0} : cl_offset_q;
+170:    assign mem_data_o.paddr = (paddr_is_nc) ? {cl_tag_d, vaddr_q[CVA6Cfg.ICACHE_INDEX_WIDTH-1:2], 2'b0} :                                         // align to 32bit
+175:  assign mem_data_o.tid = RdTxId;
+177:  assign mem_data_o.nc  = paddr_is_nc;
+179:  assign mem_data_o.way = repl_way;
+180:  assign dreq_o.vaddr   = vaddr_q;
+190:      CVA6Cfg, {{64 - CVA6Cfg.PLEN{1'b0}}, areq_i.fetch_paddr}
+204:    dreq_o.ready = 1'b0;
+205:    areq_o.fetch_req = 1'b0;
+206:    dreq_o.valid = 1'b0;
+207:    mem_data_req_o = 1'b0;
+209:    miss_o = 1'b0;
+216:    if (mem_rtrn_vld_i && mem_rtrn_i.rtype == ICACHE_INV_REQ) begin
+244:          if (!mem_rtrn_vld_i) begin
+245:            dreq_o.ready = 1'b1;
+247:            if (dreq_i.req) begin
+252:          if (dreq_i.kill_s1) begin
+264:        areq_o.fetch_req = '1;
+270:        if (areq_i.fetch_valid && (!dreq_i.spec || ((CVA6Cfg.NonIdemPotenceEn && !addr_ni) || (!CVA6Cfg.NonIdemPotenceEn)))) begin
+275:          end else if (((|cl_hit && cache_en_q) || areq_i.fetch_exception.valid) && !inv_q) begin
+276:            dreq_o.valid = ~dreq_i.kill_s2;  // just don't output in this case
+282:            if (!mem_rtrn_vld_i) begin
+283:              dreq_o.ready = 1'b1;
+284:              if (dreq_i.req) begin
+290:            if (dreq_i.kill_s1) begin
+294:          end else if (dreq_i.kill_s2) begin
+301:            mem_data_req_o = 1'b1;
+302:            if (mem_data_ack_i) begin
+303:              miss_o  = ~paddr_is_nc;
+308:        end else if (dreq_i.kill_s2 || flush_d) begin
+319:        if (mem_rtrn_vld_i && mem_rtrn_i.rtype == ICACHE_IFILL_ACK) begin
+322:          if (!(dreq_i.kill_s2 || flush_d)) begin
+323:            dreq_o.valid = 1'b1;
+328:        end else if (dreq_i.kill_s2 || flush_d) begin
+337:        areq_o.fetch_req = '1;
+338:        if (areq_i.fetch_valid) begin
+347:        if (mem_rtrn_vld_i && mem_rtrn_i.rtype == ICACHE_IFILL_ACK) begin
+374:                    (inv_en)         ? mem_rtrn_i.inv.idx[CVA6Cfg.ICACHE_INDEX_WIDTH-1:ICACHE_OFFSET_WIDTH] :
+378:                    (mem_rtrn_i.inv.all && inv_en)  ? '1                                    :
+379:                    (mem_rtrn_i.inv.vld && inv_en)  ? icache_way_bin2oh(
+380:      mem_rtrn_i.inv.way
+443:      dreq_o.data = cl_sel[hit_idx];
+444:      dreq_o.user = CVA6Cfg.FETCH_USER_EN ? cl_user[hit_idx] : '0;
+446:      dreq_o.data = mem_rtrn_i.data[{cl_offset_q, 3'b0}+:CVA6Cfg.FETCH_WIDTH];
+447:      dreq_o.user = CVA6Cfg.FETCH_USER_EN ? mem_rtrn_i.user[{cl_offset_q, 3'b0}+:CVA6Cfg.FETCH_USER_WIDTH] : '0;
+498:        .wuser_i(mem_rtrn_i.user),
+499:        .wdata_i(mem_rtrn_i.data),
+541:    @(posedge clk_i) disable iff (!rst_ni) cache_wren |-> !(mem_rtrn_i.inv.all | mem_rtrn_i.inv.vld))
+546:    @(posedge clk_i) disable iff (!rst_ni) (mem_rtrn_i.inv.all | mem_rtrn_i.inv.vld) |-> !cache_wren)

@@ -1,0 +1,1 @@
+[COV_SUMMARY] total=46 pass=46 fail=0 not_run=0 instrumentation_missing=0 excluded=0

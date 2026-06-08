@@ -1,0 +1,2 @@
+test_name,cache_mode,bench_name,seed,result,cycles,instr_accept,instr_rsp,data_load_accept,data_store_accept,data_load_rsp,icache_read_req,icache_read_rsp,dcache_read_req,dcache_read_rsp,dcache_write_addr,dcache_write_data,dcache_write_rsp,observed_mem_read_total,dut_instr_count,dut_load_count,dut_store_count,dut_mem_read_count,dut_mem_write_count,scoreboard_errors,scoreboard_warnings
+uvm_p3_writeback_directed_test,FULL_L1,uvm_p3_writeback_directed,0,PASS,356,18,18,3,5,3,5,5,5,5,2,2,2,10,18,3,5,10,2,0,0

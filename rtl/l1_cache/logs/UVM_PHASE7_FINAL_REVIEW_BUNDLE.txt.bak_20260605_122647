@@ -1,0 +1,318 @@
+============================================================
+UVM PHASE 7 FINAL REVIEW BUNDLE
+============================================================
+timestamp=Fri Jun  5 09:51:49 AM UTC 2026
+repo_path=/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master
+ubuntu_repo_path=/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master
+ubuntu_repo_alt=/media/sf_SOURCE_ENV/cv32_full_l1_cache/cv32e40p-master
+questa_root=/home/vboxuser/altera/25.1std
+license=/media/sf_source_env/LR-166346_License.dat
+hpdcache_src_mode=base
+
+============================================================
+FINAL FILE MANIFEST
+============================================================
+../../logs/UVM_PHASE7_FINAL_REVIEW_BUNDLE.txt
+../../docs/UVM_PHASE7_FINAL_REGRESSION_REPORT.md
+../../logs/uvm_phase7_regression_summary.csv
+../../logs/UVM_PHASE6_FINAL_REVIEW_BUNDLE.txt
+../../logs/uvm_p6_perf_test_matrix.csv
+../../logs/uvm_p6_mode_compare_summary.csv
+../../logs/uvm_p6_p15_random_wait_distribution.csv
+../../logs/uvm_p6_p26_multiseed_summary.csv
+../../logs/QUESTA_p6_perf_closure_full_after_mode_compare.log
+../../logs/QUESTA_phase7_final_regression.log
+../../logs/QUESTA_phase7_final_regression_fix.log
+../../logs/QUESTA_phase7_collect_final_bundle.log
+../../logs/QUESTA_phase7_collect_final_bundle_fix.log
+../../logs/QUESTA_phase7_final_check.log
+../../logs/QUESTA_phase7_fix_check.log
+../../logs/QUESTA_p6_perf_mode_compare_full.log
+../../logs/QUESTA_p6_perf_mode_compare_no_cache_full.log
+../../logs/QUESTA_p6_perf_mode_compare_dcache_only_full.log
+../../logs/QUESTA_p6_perf_mode_compare_full_l1_full.log
+../../logs/uvm_phase4_coverage_summary.txt
+../../logs/uvm_phase4_testplan_coverage_matrix.csv
+../../logs/uvm_p5_perf_collector_full_summary.csv
+../../logs/uvm_p5_perf_collector_full_questa.log
+../../docs/UVM_PHASE6_PERFORMANCE_TEST_PLAN_OR_RESULT.md
+../../docs/UVM_PHASE6E_MODE_COMPARE_PLAN_OR_RESULT.md
+
+============================================================
+PHASE 4 SUMMARY
+============================================================
+[PHASE4_TEST]
+test=uvm_p4_functional_coverage_test
+source_testcase_sheet=TestCase
+source_coverage_sheet=Coverage
+performance_sheets_excluded=Performance,Performance test
+total_testcase_rows=57
+mapped_testcase_rows=57
+pass_count=57
+partial_count=0
+deferred_count=0
+not_covered_count=0
+missing_testcase_rows=0
+matrix_complete=1
+functional_coverage_closed=1
+closure_rule=PASS only when total=57 mapped=57 missing=0 pass=57 partial=0 deferred=0 not_covered=0
+
+[COVERAGE_SHEET_SOURCE]
+Only sheet Coverage is used here; Performance and Performance test are excluded from Phase 4.
+coverpoint_rows=19
+cross_rows=21
+
+[COVERPOINT_STATUS]
+cp_reset_event,PASS,reset/fetch/done/pass plus PLRU/VBUF/MSHR/arbiter/RTAB post-reset evidence observed
+cp_req_source,PASS,i_fetch/d_load/d_store observed; d_writeback observed through memory writes; VBUF/RTAB/MSHR evidence observed by deep sampler
+cp_cache_result,PASS,hit opportunity, miss, refill, VBUF/MSHR/RTAB backpressure evidence observed
+cp_icache_event,PASS,fetch miss/refill/sequential traffic and initial fetch-only window observed
+cp_dcache_load_event,PASS,load hit opportunity, miss/refill, VBUF dependency, MSHR/RTAB dependency, and backpressure evidence observed
+cp_dcache_store_event,PASS,store hit/miss, dirty update, controller busy/RTAB, byte enables, and MSHR dependency evidence observed
+cp_plru_select_case,PASS,PLRU update plus invalid/clean/dirty victim and selected-way evidence observed
+cp_byte_enable,PASS,byte, half, and word store byte enables observed from core monitor
+cp_victim_type,PASS,invalid, clean, and dirty victim evidence observed
+cp_victim_way,PASS,selected victim way evidence observed
+cp_writeback_event,PASS,dirty victim, VBUF writeback start/done, and external memory writeback observed
+cp_vbuf_event,PASS,VBUF alloc/capture/full/busy/writeback/forward evidence observed
+cp_mshr_event,PASS,MSHR empty/alloc/hit/full or RTAB-linked MSHR dependency evidence observed
+cp_rtab_event,PASS,RTAB alloc/link/check/replay/commit or dependency evidence observed
+cp_arbiter_event,PASS,I/D memory traffic and mixed arbiter activity observed
+cp_response_type,PASS,I response, D load response, store writeback response, VBUF forward, and RTAB-tag evidence observed
+cp_ordering_event,PASS,load-after-store, VBUF during writeback, duplicate miss RTAB, TID/SID, and no double/missing response evidence observed
+cp_stress_event,PASS,Phase 4 directed stress sweep from TestCase sheet observed; Performance sheets remain excluded
+cp_perf_counter_event,PASS,perf_if and event counters sampled for Phase 4 directed run; comparative performance remains Phase 5/6/7
+
+[CROSS_STATUS]
+reset_event x req_source,PASS
+req_source x cache_result,PASS
+icache_event x cache_result,PASS
+dcache_load_event x victim_type,PASS
+dcache_load_event x mshr_event,PASS
+dcache_load_event x vbuf_event,PASS
+dcache_store_event x byte_enable,PASS
+dcache_store_event x writeback_event,PASS
+byte_enable x dcache_store_event,PASS
+plru_select_case x victim_type,PASS
+plru_select_case x victim_way,PASS
+victim_type x vbuf_event,PASS
+victim_type x writeback_event,PASS
+vbuf_event x rtab_event,PASS
+vbuf_event x writeback_event,PASS
+mshr_event x rtab_event,PASS
+arbiter_event x req_source,PASS
+arbiter_event x response_type,PASS
+response_type x req_source,PASS
+ordering_event x response_type,PASS
+stress_event x perf_counter_event,PASS
+
+============================================================
+PHASE 5 SUMMARY
+============================================================
+test_name,bench_name,cache_mode,seed,max_cycles,warmup_cycles,measurement_start_cycle,measurement_end_cycle,measured_cycles,pass,timeout,scoreboard_errors,scoreboard_warnings,instr_count,load_count,store_count,mem_read_count,mem_write_count,icache_miss_count,icache_refill_count,dcache_miss_count,read_miss_count,write_miss_count,instr_accept_count,instr_rsp_count,load_accept_count,load_rsp_count,store_accept_count,icache_read_req_count,icache_read_rsp_count,dcache_read_req_count,dcache_read_rsp_count,dcache_write_addr_count,dcache_write_data_count,dcache_write_rsp_count,ifetch_latency_count,ifetch_latency_min,ifetch_latency_avg,ifetch_latency_max,load_latency_count,load_latency_min,load_latency_avg,load_latency_max,mem_read_latency_count,mem_read_latency_min,mem_read_latency_avg,mem_read_latency_max,mem_write_latency_count,mem_write_latency_min,mem_write_latency_avg,mem_write_latency_max,instr_per_cycle,load_per_cycle,store_per_cycle,mem_read_per_kinstr,mem_write_per_kinstr,memory_traffic_per_instruction,icache_miss_rate,dcache_miss_rate,refill_per_miss,writeback_per_store,notes
+uvm_p5_perf_collector_test,uvm_p5_perf_collector,FULL_L1,0,200000,0,4,3425,3421,PASS,0,0,1,162,56,16,56,5,41,41,17,15,2,161,161,56,56,16,41,41,15,15,5,5,5,161,1,12.683230,116,56,3,23.071429,179,56,42,42.000000,42,5,82,82.000000,82,0.047355,0.016369,0.004677,345.679012,30.864198,0.376543,0.253086,0.236111,1.000000,0.312500,store_latency=N/A_no_core_store_completion_event;hit_miss_split_latency=N/A_no_direct_hit_classification;dirty_vbuf_mshr_rtab_latency=N/A_optional_deep_metrics
+
+============================================================
+PHASE 6 SUMMARY
+============================================================
+phase,selected_group,run_kind,selected_count,pass_count,fail_count,deferred_count,blocked_count,not_run_count,group_status,summary_csv,matrix_csv
+6,ALL,full,29,29,0,0,0,0,PASS,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_test_matrix.csv
+
+[UVM][P6_CLOSURE][SUMMARY] run_kind=full
+[UVM][P6_TEST][P1][PASS] perf_icache_fetch_hit_latency reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P2][PASS] perf_icache_fetch_miss_refill_latency reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P3][PASS] perf_dcache_load_hit_latency reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P4][PASS] perf_dcache_load_miss_refill_latency reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P5][PASS] perf_dcache_store_hit_latency reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P6][PASS] perf_dcache_store_miss_refill_latency reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P7][PASS] perf_dirty_eviction_vbuf_writeback_latency reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P8][PASS] perf_instruction_fetch_throughput reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P9][PASS] perf_data_load_throughput reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P10][PASS] perf_data_store_throughput reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P11][PASS] perf_memory_refill_throughput reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P12][PASS] perf_dirty_writeback_throughput reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P13][PASS] perf_mem_latency_no_wait reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P14][PASS] perf_mem_latency_fixed_wait reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P15][PASS] perf_mem_latency_random_wait reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P16][PASS] perf_mem_latency_long_wait reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P17][PASS] perf_b2b_icache_fetch_hit reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P18][PASS] perf_b2b_dcache_load_hit reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P19][PASS] perf_b2b_dcache_store_hit reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P20][PASS] perf_b2b_load_after_store_same_line reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P21][PASS] perf_b2b_icache_dcache_miss_contention reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P22][PASS] perf_b2b_dcache_miss_vbuf_writeback reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P23][PASS] perf_long_run_1k reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P24][PASS] perf_long_run_10k reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P25][PASS] perf_long_run_100k reason=accepted_final_questa_uvm_log_pass
+[UVM][P6_TEST][P26][PASS] perf_multi_seed_random_stress reason=multi_seed_aggregate_all_selected_seeds_passed
+[UVM][P6_TEST][P27][PASS] perf_compare_same_benchmark_modes reason=true_three_mode_uvm_comparison_passed
+[UVM][P6_TEST][P28][PASS] perf_compare_memory_traffic_reduction reason=true_three_mode_uvm_comparison_passed
+[UVM][P6_TEST][P29][PASS] perf_compare_speedup_hit_miss reason=true_three_mode_uvm_comparison_passed
+[UVM][P6_CLOSURE][SUMMARY] pass=29/29 fail=0 deferred=0 blocked=0 matrix_csv=/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_test_matrix.csv summary_csv=/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv group_csv=/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_group_summary.csv
+[UVM][P6_CLOSURE][PASS]
+
+============================================================
+PHASE 6 MATRIX P1-P29
+============================================================
+test_id,test_name,group,status,reason,log_file,summary_csv,implemented,reliable_for_report
+P1,perf_icache_fetch_hit_latency,A1,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_a1_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P2,perf_icache_fetch_miss_refill_latency,A1,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_a1_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P3,perf_dcache_load_hit_latency,A1,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_a1_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P4,perf_dcache_load_miss_refill_latency,A1,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_a1_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P5,perf_dcache_store_hit_latency,A2,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_a2_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P6,perf_dcache_store_miss_refill_latency,A2,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_a2_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P7,perf_dirty_eviction_vbuf_writeback_latency,A2,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_a2_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P8,perf_instruction_fetch_throughput,A1,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_a1_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P9,perf_data_load_throughput,A1,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_a1_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P10,perf_data_store_throughput,A1,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_a1_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P11,perf_memory_refill_throughput,A1,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_a1_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P12,perf_dirty_writeback_throughput,A2,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_a2_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P13,perf_mem_latency_no_wait,B,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_b_no_wait_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P14,perf_mem_latency_fixed_wait,B,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_b_fixed_wait_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P15,perf_mem_latency_random_wait,B,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_p15_random_wait_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P16,perf_mem_latency_long_wait,B,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_b_long_wait_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P17,perf_b2b_icache_fetch_hit,C,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_c_b2b_full_rerun3.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P18,perf_b2b_dcache_load_hit,C,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_c_b2b_full_rerun3.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P19,perf_b2b_dcache_store_hit,C,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_c_b2b_full_rerun3.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P20,perf_b2b_load_after_store_same_line,C,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_c_b2b_full_rerun3.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P21,perf_b2b_icache_dcache_miss_contention,C,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_c_b2b_full_rerun3.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P22,perf_b2b_dcache_miss_vbuf_writeback,C,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_c_b2b_full_rerun3.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P23,perf_long_run_1k,D,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_d_long_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P24,perf_long_run_10k,D,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_d_long_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P25,perf_long_run_100k,D,PASS,accepted_final_questa_uvm_log_pass,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_group_d_long_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P26,perf_multi_seed_random_stress,D,PASS,multi_seed_aggregate_all_selected_seeds_passed,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_p26_multiseed_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P27,perf_compare_same_benchmark_modes,E,PASS,true_three_mode_uvm_comparison_passed,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_mode_compare_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P28,perf_compare_memory_traffic_reduction,E,PASS,true_three_mode_uvm_comparison_passed,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_mode_compare_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+P29,perf_compare_speedup_hit_miss,E,PASS,true_three_mode_uvm_comparison_passed,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/QUESTA_p6_perf_mode_compare_full.log,/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master/rtl/l1_cache/logs/uvm_p6_perf_summary.csv,1,1
+
+============================================================
+MODE COMPARISON SUMMARY
+============================================================
+test_id,benchmark_name,cache_mode,wrapper_name,wrapper_is_true_mode,seed,memory_latency_mode,random_wait_min,random_wait_max,max_cycles,measurement_start_cycle,measurement_end_cycle,measured_cycles,correctness_pass,timeout,scoreboard_errors,scoreboard_warnings,instr_count,load_count,store_count,mem_read_count,mem_write_count,refill_count,icache_miss_count,dcache_miss_count,icache_hit_rate,icache_miss_rate,dcache_hit_rate,dcache_miss_rate,memory_traffic_per_instruction,speedup_vs_no_cache,traffic_reduction_vs_no_cache,reliable_for_report,notes
+P27,uvm_p6_perf,NO_CACHE,cv32e40p_l1_no_cache_top,1,1,no_wait,0,0,1000000,4,401635,401631,PASS,0,0,4,200814,192,158,201006,158,0,0,0,N/A,N/A,N/A,N/A,1.001743,1.000000,0.000000,1,true_no_cache_direct_i_and_d_memory;cache_hit_miss_N/A;refill_count_zero_no_cache
+P28,uvm_p6_perf,NO_CACHE,cv32e40p_l1_no_cache_top,1,1,no_wait,0,0,1000000,4,401635,401631,PASS,0,0,4,200814,192,158,201006,158,0,0,0,N/A,N/A,N/A,N/A,1.001743,1.000000,0.000000,1,true_no_cache_direct_i_and_d_memory;cache_hit_miss_N/A;refill_count_zero_no_cache
+P29,uvm_p6_perf,NO_CACHE,cv32e40p_l1_no_cache_top,1,1,no_wait,0,0,1000000,4,401635,401631,PASS,0,0,4,200814,192,158,201006,158,0,0,0,N/A,N/A,N/A,N/A,1.001743,1.000000,0.000000,1,true_no_cache_direct_i_and_d_memory;cache_hit_miss_N/A;refill_count_zero_no_cache
+P27,uvm_p6_perf,DCACHE_ONLY,cv32e40p_l1_dcache_only_top,1,1,no_wait,0,0,1000000,4,402440,402436,PASS,0,0,5,200813,192,158,200855,36,80,0,80,N/A,N/A,0.771429,0.228571,1.000388,0.998000,0.001353,1,true_dcache_only_direct_ifetch_hpdcache_data;icache_hit_miss_N/A;refill_count_uses_dcache_miss_count
+P28,uvm_p6_perf,DCACHE_ONLY,cv32e40p_l1_dcache_only_top,1,1,no_wait,0,0,1000000,4,402440,402436,PASS,0,0,5,200813,192,158,200855,36,80,0,80,N/A,N/A,0.771429,0.228571,1.000388,0.998000,0.001353,1,true_dcache_only_direct_ifetch_hpdcache_data;icache_hit_miss_N/A;refill_count_uses_dcache_miss_count
+P29,uvm_p6_perf,DCACHE_ONLY,cv32e40p_l1_dcache_only_top,1,1,no_wait,0,0,1000000,4,402440,402436,PASS,0,0,5,200813,192,158,200855,36,80,0,80,N/A,N/A,0.771429,0.228571,1.000388,0.998000,0.001353,1,true_dcache_only_direct_ifetch_hpdcache_data;icache_hit_miss_N/A;refill_count_uses_dcache_miss_count
+P27,uvm_p6_perf,FULL_L1,cv32e40p_full_l1_cache_top,1,1,no_wait,0,0,1000000,4,302705,302701,PASS,0,0,1,150812,192,158,237,36,275,195,80,0.998707,0.001293,0.771429,0.228571,0.001810,1.326824,0.998193,1,true_full_l1_cva6_icache_plus_hpdcache;refill_count_icache_refill_plus_dcache_miss
+P28,uvm_p6_perf,FULL_L1,cv32e40p_full_l1_cache_top,1,1,no_wait,0,0,1000000,4,302705,302701,PASS,0,0,1,150812,192,158,237,36,275,195,80,0.998707,0.001293,0.771429,0.228571,0.001810,1.326824,0.998193,1,true_full_l1_cva6_icache_plus_hpdcache;refill_count_icache_refill_plus_dcache_miss
+P29,uvm_p6_perf,FULL_L1,cv32e40p_full_l1_cache_top,1,1,no_wait,0,0,1000000,4,302705,302701,PASS,0,0,1,150812,192,158,237,36,275,195,80,0.998707,0.001293,0.771429,0.228571,0.001810,1.326824,0.998193,1,true_full_l1_cva6_icache_plus_hpdcache;refill_count_icache_refill_plus_dcache_miss
+
+============================================================
+UVM_ERROR/UVM_FATAL SUMMARY
+============================================================
+../../logs/uvm_p5_perf_collector_full_questa.log,UVM_ERROR=0,UVM_FATAL=0
+../../logs/QUESTA_p6_perf_mode_compare_no_cache_full.log,UVM_ERROR=0,UVM_FATAL=0
+../../logs/QUESTA_p6_perf_mode_compare_dcache_only_full.log,UVM_ERROR=0,UVM_FATAL=0
+../../logs/QUESTA_p6_perf_mode_compare_full_l1_full.log,UVM_ERROR=0,UVM_FATAL=0
+../../logs/QUESTA_p6_perf_closure_full_after_mode_compare.log,UVM_ERROR=N/A,UVM_FATAL=N/A
+../../logs/QUESTA_p6_perf_mode_compare_full.log,UVM_ERROR=N/A,UVM_FATAL=N/A
+
+============================================================
+PHASE 7 REGRESSION SUMMARY CSV
+============================================================
+phase,item,source_file,expected_marker,observed_status,uvm_error,uvm_fatal,fail_count,blocked_count,deferred_count,pass_count,total_count,reliable_for_report,notes
+4,functional_coverage,../../logs/uvm_phase4_coverage_summary.txt,total_testcase_rows=57 mapped_testcase_rows=57 pass_count=57 partial_count=0 deferred_count=0 not_covered_count=0 missing_testcase_rows=0 matrix_complete=1 functional_coverage_closed=1,PASS,N/A,N/A,0,0,0,57,57,1,Phase4 functional coverage closed by summary keys total_testcase_rows=57 mapped_testcase_rows=57 pass_count=57
+5,performance_collector,../../logs/uvm_p5_perf_collector_full_summary.csv,pass=PASS timeout=0 scoreboard_errors=0,PASS,0,0,0,0,0,1,1,1,summary=uvm_p5_perf_collector_full_summary.csv; measured_cycles=3421 instr=162 loads=56 stores=16
+6,phase6_closure,../../logs/uvm_p6_perf_test_matrix.csv,[UVM][P6_CLOSURE][PASS] and pass=29/29 fail=0 deferred=0 blocked=0,PASS,N/A,N/A,0,0,0,29,29,1,Phase6 closure PASS 29/29 fail=0 deferred=0 blocked=0
+6,p15_random_wait,../../logs/uvm_p6_p15_random_wait_distribution.csv,all rows PASS and READ distinct_latency_count >= 2,PASS,N/A,N/A,0,0,0,2,2,1,random_wait true distribution read_distinct=21 write_distinct=9
+6,p26_multiseed,../../logs/uvm_p6_p26_multiseed_summary.csv,at least five selected seeds PASS with scoreboard_errors=0 timeout=0,PASS,N/A,N/A,0,0,0,5,5,1,multi-seed PASS 5/5 selected seeds
+6,mode_compare_p27_p29,../../logs/uvm_p6_mode_compare_summary.csv,[UVM][P6_MODE_COMPARE][PASS] and P27/P28/P29 reliable_for_report=1 across 3 modes,PASS,N/A,N/A,0,0,0,9,9,1,P27-P29 true 3-mode comparison reliable_for_report=1 for all rows
+
+============================================================
+FINAL REPORT EXCERPT
+============================================================
+# UVM Phase 7 Final Regression Report
+
+## Executive summary
+
+Phase 7 is a final evidence regression and report packaging pass. It does not add new deep checkers and does not rerun the full Questa simulation suite. The current evidence check status is **PASS**.
+
+Accepted final Phase 6 evidence is the post-mode-compare closure, not the older historical Phase 6 bundle snapshot. The current closure reports P1-P29 PASS, fail=0, deferred=0, blocked=0.
+
+## Environment
+
+| item | value |
+| --- | --- |
+| Questa root | `/home/vboxuser/altera/25.1std` |
+| License path | `/media/sf_source_env/LR-166346_License.dat` |
+| HPDCACHE_SRC_MODE | `base` |
+| Ubuntu repo path | `/media/sf_source_env/cv32_full_l1_cache/cv32e40p-master` |
+| Alternate Ubuntu repo path | `/media/sf_SOURCE_ENV/cv32_full_l1_cache/cv32e40p-master` |
+| Windows repo path | `C:\source_env\cv32_full_l1_cache\cv32e40p-master` |
+
+## Phase summary
+
+| phase | summary | status |
+| --- | --- | --- |
+| Phase 0 | Bring-up and repository integration evidence is preserved from earlier phases. | PASS by existing evidence chain |
+| Phase 1 | UVM smoke/basic execution path is covered by accepted Questa logs. | PASS by existing evidence chain |
+| Phase 2 | Monitor and scoreboard sanity are covered by accepted transaction/count logs. | PASS by existing evidence chain |
+| Phase 3 | Directed cache/order/writeback tests are covered by accepted Phase 3/4/6 evidence. | PASS by existing evidence chain |
+| Phase 4 | Functional coverage closure: 57/57 mapped testplan rows PASS. | PASS |
+| Phase 5 | Performance collector summary has pass=PASS, timeout=0, scoreboard_errors=0. | PASS |
+| Phase 6 | Performance test closure P1-P29 PASS, fail=0, deferred=0, blocked=0. | PASS |
+
+## Key evidence table
+
+| item | log/CSV | status | PASS marker / condition | UVM_ERROR | UVM_FATAL |
+| --- | --- | --- | --- | ---: | ---: |
+| Phase 4 coverage | `../../logs/uvm_phase4_coverage_summary.txt`, `../../logs/uvm_phase4_testplan_coverage_matrix.csv` | PASS | total_testcase_rows=57 mapped_testcase_rows=57 pass_count=57 partial/deferred/not_covered/missing=0 matrix_complete=1 functional_coverage_closed=1 | N/A | N/A |
+| Phase 5 performance collector | `../../logs/uvm_p5_perf_collector_full_summary.csv` | PASS | pass=PASS timeout=0 scoreboard_errors=0 | 0 | 0 |
+| Phase 6 closure | `../../logs/QUESTA_p6_perf_closure_full_after_mode_compare.log` | PASS | [UVM][P6_CLOSURE][PASS] | N/A | N/A |
+| P15 random wait | `../../logs/uvm_p6_p15_random_wait_distribution.csv` | PASS | random wait READ distinct latency >= 2 | N/A | N/A |
+| P26 multi-seed | `../../logs/uvm_p6_p26_multiseed_summary.csv` | PASS | selected seeds all PASS | N/A | N/A |
+| P27-P29 mode compare | `../../logs/QUESTA_p6_perf_mode_compare_full.log`, `../../logs/uvm_p6_mode_compare_summary.csv` | PASS | [UVM][P6_MODE_COMPARE][PASS] | N/A | N/A |
+
+## Phase 6 highlight
+
+- P15 random wait PASS: random_wait true distribution read_distinct=21 write_distinct=9.
+- P26 multi-seed PASS: multi-seed PASS 5/5 selected seeds.
+- P27-P29 true 3-mode comparison PASS: NO_CACHE, DCACHE_ONLY, and FULL_L1 wrappers are represented in `uvm_p6_mode_compare_summary.csv` with `reliable_for_report=1`.
+
+## Mode comparison summary
+
+| mode | cycles | traffic/instr | speedup vs no-cache | hit/miss notes |
+| --- | ---: | ---: | ---: | --- |
+| NO_CACHE | 401631 | 1.001743 | 1.000000 | ic_miss=0; dc_miss=0; true_no_cache_direct_i_and_d_memory;cache_hit_miss_N/A;refill_count_zero_no_cache |
+| DCACHE_ONLY | 402436 | 1.000388 | 0.998000 | ic_miss=0; dc_miss=80; true_dcache_only_direct_ifetch_hpdcache_data;icache_hit_miss_N/A;refill_count_uses_dcache_miss_count |
+| FULL_L1 | 302701 | 0.001810 | 1.326824 | ic_miss=195; dc_miss=80; true_full_l1_cva6_icache_plus_hpdcache;refill_count_icache_refill_plus_dcache_miss |
+
+## Known notes and limitations
+
+- P17-P22 are passive-monitor temporal performance evidence, not formal deep microarchitecture proof.
+- Phase 8 can optionally add deep evidence add-ons for arbiter, MSHR, RTAB, and VBUF.
+- Phase 7 intentionally performs evidence regression and packaging only; it does not add new feature-level behavior.
+- Phase 5 uses `uvm_p5_perf_collector_full_summary.csv` as the required current evidence file. The legacy `uvm_p5_perf_collector_summary.csv` name is an optional alias and must not fail Phase 7 when the full summary passes.
+- The historical `UVM_PHASE6_FINAL_REVIEW_BUNDLE.txt` is included for reviewer context, but the current accepted final Phase 6 status comes from `QUESTA_p6_perf_closure_full_after_mode_compare.log` and the current CSVs.
+
+## Final conclusion
+
+
+**PHASE7_PASS**: final evidence regression is clean, no required evidence is missing, and the Full L1 UVM evidence is ready for thesis/report use.
+
+============================================================
+MISSING FILE CHECK
+============================================================
+REQUIRED_PRESENT: ../../logs/UVM_PHASE7_FINAL_REVIEW_BUNDLE.txt
+REQUIRED_PRESENT: ../../docs/UVM_PHASE7_FINAL_REGRESSION_REPORT.md
+REQUIRED_PRESENT: ../../logs/uvm_phase7_regression_summary.csv
+OPTIONAL_PRESENT: ../../logs/UVM_PHASE6_FINAL_REVIEW_BUNDLE.txt
+REQUIRED_PRESENT: ../../logs/uvm_p6_perf_test_matrix.csv
+REQUIRED_PRESENT: ../../logs/uvm_p6_mode_compare_summary.csv
+REQUIRED_PRESENT: ../../logs/uvm_p6_p15_random_wait_distribution.csv
+REQUIRED_PRESENT: ../../logs/uvm_p6_p26_multiseed_summary.csv
+REQUIRED_PRESENT: ../../logs/QUESTA_p6_perf_closure_full_after_mode_compare.log
+REQUIRED_PRESENT: ../../logs/QUESTA_p6_perf_mode_compare_full.log
+REQUIRED_PRESENT: ../../logs/uvm_phase4_coverage_summary.txt
+REQUIRED_PRESENT: ../../logs/uvm_phase4_testplan_coverage_matrix.csv
+REQUIRED_PRESENT: ../../logs/uvm_p5_perf_collector_full_summary.csv
+OPTIONAL_MISSING: ../../logs/uvm_p5_perf_collector_summary.csv
+NO_REQUIRED_MISSING: all required Phase 7 files are present
+
+============================================================
+FINAL CONCLUSION
+============================================================
+PHASE7_PASS
+reason=all Phase 4/5/6 evidence checks passed; Phase 5 legacy summary alias is optional; Phase 6 closure is 29/29 with fail=0 deferred=0 blocked=0; mode compare rows are reliable_for_report=1; no required file missing

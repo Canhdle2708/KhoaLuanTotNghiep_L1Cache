@@ -1,0 +1,2 @@
+test_name,cache_mode,bench_name,seed,cycles,instr_access,loads,stores,mem_reads,mem_writes,ic_miss,ic_refill,dc_miss,read_miss,write_miss,result
+uvm_p4_functional_coverage_test,FULL_L1,uvm_p4_functional_coverage,0,303711,140163,30056,20016,60,6,44,44,18,16,2,PASS

@@ -1,0 +1,15 @@
+../../logs/UVM_PHASE6_FINAL_REVIEW_BUNDLE.txt
+../../logs/uvm_p6_perf_summary.csv
+../../logs/uvm_p6_perf_test_matrix.csv
+../../logs/uvm_p6_group_summary.csv
+../../logs/uvm_p6_p15_random_wait_distribution.csv
+../../logs/uvm_p6_p26_multiseed_summary.csv
+../../logs/uvm_p6_mode_compare_summary.csv
+../../docs/UVM_PHASE6_FINAL_CHATGPT_REVIEW.md
+../../docs/UVM_PHASE6_PERFORMANCE_TEST_PLAN_OR_RESULT.md
+../../docs/UVM_PHASE6_FINAL_UBUNTU_COMMANDS.md
+../../logs/QUESTA_p6_perf_p15_random_wait_full.log
+../../logs/QUESTA_p6_perf_p26_multiseed_full.log
+../../logs/QUESTA_p6_perf_mode_compare_full.log
+../../logs/QUESTA_p6_perf_closure_full.log
+../../logs/QUESTA_p6_normalize_clock_skew.log

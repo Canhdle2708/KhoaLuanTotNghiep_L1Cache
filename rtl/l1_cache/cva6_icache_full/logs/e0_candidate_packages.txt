@@ -1,0 +1,6 @@
+/media/sf_source_env/cva6-master/core/include/ariane_pkg.sv
+/media/sf_source_env/cva6-master/core/include/build_config_pkg.sv
+/media/sf_source_env/cva6-master/core/include/config_pkg.sv
+/media/sf_source_env/cva6-master/core/include/riscv_pkg.sv
+/media/sf_source_env/cva6-master/core/include/std_cache_pkg.sv
+/media/sf_source_env/cva6-master/core/include/wt_cache_pkg.sv

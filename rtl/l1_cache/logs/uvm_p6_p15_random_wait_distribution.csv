@@ -1,0 +1,3 @@
+test_id,memory_latency_mode,random_wait_min,random_wait_max,seed,sample_type,sample_count,observed_latency_min,observed_latency_avg,observed_latency_max,distinct_latency_count,distribution_summary,pass,notes
+P15,random_wait,0,20,1,READ,113,2,10.920354,22,21,2:7|3:9|4:6|5:9|6:6|7:3|8:8|9:4|10:4|11:7|12:4|13:1|14:5|15:7|16:6|17:4|18:6|19:6|20:5|21:4|22:2,PASS,memory_model=work_area_l1_mem_arbiter_lfsr_random_wait
+P15,random_wait,0,20,1,WRITE,32,1,10.187500,21,13,1:3|4:2|5:4|6:3|9:3|10:4|12:1|13:3|14:3|18:1|19:2|20:2|21:1,PASS,write_response_randomized_when_writeback_response_samples_exist

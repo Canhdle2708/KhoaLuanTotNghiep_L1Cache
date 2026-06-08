@@ -1,0 +1,36 @@
+module cva6_icache
+  import ariane_pkg::*;
+  import wt_cache_pkg::*;
+#(
+    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty,
+    parameter type icache_areq_t = logic,
+    parameter type icache_arsp_t = logic,
+    parameter type icache_dreq_t = logic,
+    parameter type icache_drsp_t = logic,
+    parameter type icache_req_t = logic,
+    parameter type icache_rtrn_t = logic,
+    /// ID to be used for read transactions
+    parameter logic [CVA6Cfg.MEM_TID_WIDTH-1:0] RdTxId = 0
+) (
+    input logic clk_i,
+    input logic rst_ni,
+
+    /// flush the icache, flush and kill have to be asserted together
+    input  logic         flush_i,
+    /// enable icache
+    input  logic         en_i,
+    /// to performance counter
+    output logic         miss_o,
+    // address translation requests
+    input  icache_areq_t areq_i,
+    output icache_arsp_t areq_o,
+    // data requests
+    input  icache_dreq_t dreq_i,
+    output icache_drsp_t dreq_o,
+    // refill port
+    input  logic         mem_rtrn_vld_i,
+    input  icache_rtrn_t mem_rtrn_i,
+    output logic         mem_data_req_o,
+    input  logic         mem_data_ack_i,
+    output icache_req_t  mem_data_o
+);
